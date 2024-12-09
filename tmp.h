@@ -4,7 +4,10 @@
     \date 
     \brief 
 */ 
+
 /**
-    \brief fonction global qui appelle toutes les autres fonctions du tp
+    \brief 
+    \param
 */
 void global(void);
+

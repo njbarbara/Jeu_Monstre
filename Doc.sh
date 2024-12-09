@@ -6,7 +6,7 @@ fi
 
 deb=$(cat *.h | head -n 6)
 
-funct=$(cat *.h  | grep -E '^(void|int|float|char)' | tr ';' ';\n')
+funct=$(cat *.h  | grep -E '^(void|int|float|char|ListeScore)' | tr ';' ';\n')
 
 touch tmp.h 
 

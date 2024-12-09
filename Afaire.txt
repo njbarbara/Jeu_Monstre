@@ -1,1 +1,17 @@
 Tache à faire : 
+- Relire 
+
+Najib : 
+- test score
+- Affichage Joueur 
+
+Aron : 
+- Affichage Monstre
+- * sur le menu principale
+
+
+(Après)
+Fonctionnalités : 
+- utiliser rand avec le modulo et le temps pour calculer les dégats 
+- afficher chaque img de monstre correspondant au monstre
+- 

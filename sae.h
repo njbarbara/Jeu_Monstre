@@ -85,3 +85,5 @@ ListeScore supprimerEntete(ListeScore l);
     \return
 */
 ListeScore supprimer(ListeScore l, int s);
+
+int menu(void);

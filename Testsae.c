@@ -13,7 +13,7 @@ void testInsertionEnTete(void){
 
     afficherScore(l);    
     
-    printf("Insertion d'un nouveau du score : \n");
+    printf("Insertion d'un nouveau du score 40 en tete de file : \n");
 
     l= ajouterEntete( l, 40);
 
@@ -34,7 +34,7 @@ void testInsertion(void){
 
     afficherScore(l);
 
-    printf("Insertion d'un nouveau du score : \n");
+    printf("Insertion du nouveau score 15 : \n");
     l= ajouter( l, 15);
 
     afficherScore(l);
@@ -80,7 +80,7 @@ void testSuppression(void){
     l=supprimer(l,30);
 
     printf("\n");
-    printf("Avant suppression : \n");
+    printf("Après suppression : \n");
     afficherScore(l);
     printf("\n");
 
@@ -93,14 +93,41 @@ void testMenu(void){
     printf("\n");
 }
 
+//TEST JOUEUR
+
+void testChargement(void){
+    int tmax =20, tlog;
+    Joueur * tabJoueur[tmax];
+
+    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+
+    affichListeJoueursScores(tabJoueur, tlog);
+}
+
+void testSauvegarde(void){
+    int tmax=20, tlog;
+    Joueur * tabJoueur[tmax];
+
+    tlog = chargement(tabJoueur, "../Documentation/Scores.txt", tmax);
+
+    affichListeJoueursScores(tabJoueur, tlog);
+
+}
+
+
 
 int main(void){//fonction principale
-    //Test de scores
-    /**/
+    //TEST SCORE
+    /*
     testInsertionEnTete();
     testInsertion();
     testSuppressionEnTete();
     testSuppression();
+    */
+
+    //TEST JOUEUR
+    testChargement();
+    testSauvegarde();
 
 
     return 0;

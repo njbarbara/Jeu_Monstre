@@ -7,7 +7,7 @@ ListeScore ensemble(void){
 
 void afficherScore(ListeScore l){
     if(l == NULL) return;
-    printf("La score est : %d \n", l->score);
+    printf("- %d \n", l->score);
     afficherScore(l->suiv);
 }
 
@@ -55,8 +55,6 @@ ListeScore supprimerEntete(ListeScore l){
     return l;
 }
 
-
-
 ListeScore supprimer(ListeScore l, int s){
     if(l == NULL) return NULL;
     if(s > l->score) return l;
@@ -67,4 +65,13 @@ ListeScore supprimer(ListeScore l, int s){
     return l;
 }
 
+int longueur(ListeScore l){
+    if(l==NULL) return 0;
+    return longueur(l->suiv)+1;
+}
 
+void sauvegardeListeScore(FILE *flot, ListeScore l){
+    if(l == NULL) return;
+    fprintf(flot,"%d", l->score);
+    sauvegardeListeScore(flot, l->suiv);
+}

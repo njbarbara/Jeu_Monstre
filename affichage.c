@@ -1,6 +1,8 @@
 #include "sae.h"
 
 
+//AFFICHAGE PRINCIPAL 
+
 int menu(void){
     int choix;
     printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
@@ -35,4 +37,17 @@ int menu(void){
         scanf("%d", &choix);
     }
     return choix;
+}
+
+
+
+//AFFICHAGE JOUEUR 
+void affichListeJoueursScores(Joueur * tabJoueur[], int tlog){
+    int i;
+
+    for(i =0; i<tlog; i++){
+        printf("Nom du joueur : %s\n",tabJoueur[i]->pseudo);
+        printf("scores associés : \n");
+        afficherScore(tabJoueur[i]->l);
+    }
 }

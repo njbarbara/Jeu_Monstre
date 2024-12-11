@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <stddef.h>
+#include <string.h>
 
 // !!!! 
 // corridor = pile/file mais plus file
@@ -96,3 +97,15 @@ ListeScore supprimerEntete(ListeScore l);
 */
 ListeScore supprimer(ListeScore l, int s);
 
+int longueur(ListeScore l);
+
+void sauvegardeListeScore(FILE *flot, ListeScore l);
+
+/*PARTIE JOUEUR */
+Joueur lireJoueur(FILE *flot);
+
+int chargement(Joueur * tabJoueur[], char *nomFich, int tmax);
+
+void sauvegardeScoreJoueur(Joueur * tabJoueur[], char *nomFich, int tlog);
+
+void affichListeJoueursScores(Joueur * tabJoueur[], int tlog);

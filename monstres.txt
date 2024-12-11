@@ -1,0 +1,2 @@
+goblin 20 2
+dragon 30 3

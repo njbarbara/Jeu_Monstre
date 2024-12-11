@@ -36,6 +36,7 @@ typedef struct{
 }Joueur;
 
 
+int menu(void);
 
 /*PARTIE SCORE*/
 
@@ -86,4 +87,3 @@ ListeScore supprimerEntete(ListeScore l);
 */
 ListeScore supprimer(ListeScore l, int s);
 
-int menu(void);

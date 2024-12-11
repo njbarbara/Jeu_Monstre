@@ -1,5 +1,5 @@
 exosae: sae.o Testsae.o affichage.o score.o
-	gcc sae.o Testsae.o affichage.o -o exosae
+	gcc sae.o Testsae.o affichage.o score.o -o exosae
 
 sae.o : sae.c sae.h
 	gcc -Wall -c sae.c

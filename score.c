@@ -50,7 +50,9 @@ ListeScore supprimerEntete(ListeScore l){
     tmp = l->suiv;
 
     free(l);
-    return tmp;
+    l = tmp;
+    
+    return l;
 }
 
 
@@ -64,3 +66,5 @@ ListeScore supprimer(ListeScore l, int s){
 
     return l;
 }
+
+

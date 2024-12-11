@@ -35,6 +35,15 @@ typedef struct{
     ListeScore l; //par ordre décroissant
 }Joueur;
 
+typedef struct maillonM{
+    Monstre m;
+    struct maillonM * suiv;
+}MaillonM;
+
+typedef struct{
+    MaillonM *t;
+    MaillonM *q;
+}File;
 
 
 /*PARTIE SCORE*/

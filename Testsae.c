@@ -102,16 +102,34 @@ void testChargement(void){
     tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
 
     affichListeJoueursScores(tabJoueur, tlog);
+
+    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
 }
 
 void testSauvegarde(void){
     int tmax=20, tlog;
     Joueur * tabJoueur[tmax];
 
-    tlog = chargement(tabJoueur, "../Documentation/Scores.txt", tmax);
+    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+
+    sauvegardeScoreJoueur(tabJoueur, "fichierSauvegarde/Scores.txt", tlog);
+
+    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
+
+}
+
+void testTriEchangeScore(void){
+
+    int tmax=20, tlog;
+    Joueur * tabJoueur[tmax];
+
+    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+
+    triEnchangeMeilleurScore(tabJoueur, tlog);
 
     affichListeJoueursScores(tabJoueur, tlog);
 
+    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
 }
 
 
@@ -126,9 +144,11 @@ int main(void){//fonction principale
     */
 
     //TEST JOUEUR
+    /*
     testChargement();
     testSauvegarde();
-
+    */
+    testTriEchangeScore();
 
     return 0;
 }

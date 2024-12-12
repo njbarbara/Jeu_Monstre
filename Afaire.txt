@@ -7,7 +7,7 @@ fois. Et on defile mis on refile pas le x-ième
 la pile si partie non finie content seulement les monstres,niveaux restant / on dépile 
 un monstre si elle est battu / une partie est finie si le joueur meurt
 - Le chargement d'une partie doit se faire à partir d'un fichier binaire,
- car la partie doit charger rapidement !!!
+ car la partie doit charger rapidement !!! ET DONC UTILISER DES TABLEAUX DYNAMIQUES
 
 
 Najib : 

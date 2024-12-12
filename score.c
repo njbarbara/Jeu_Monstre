@@ -72,6 +72,6 @@ int longueur(ListeScore l){
 
 void sauvegardeListeScore(FILE *flot, ListeScore l){
     if(l == NULL) return;
-    fprintf(flot,"%d", l->score);
+    fprintf(flot,"%d\n", l->score);
     sauvegardeListeScore(flot, l->suiv);
 }

@@ -96,7 +96,7 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog){
     }
 }
 
-void triEnchangeNom(Joueur * tabJoueur[], int tlog){
+void tri(Joueur * tabJoueur[], int tlog){
 
 }
 

@@ -109,6 +109,8 @@ int chargement(Joueur * tabJoueur[], char *nomFich, int tmax);
 void sauvegardeScoreJoueur(Joueur * tabJoueur[], char *nomFich, int tlog);
 
 void affichListeJoueursScores(Joueur * tabJoueur[], int tlog);
+void affichJoueurMeilleurs(Joueur * tabJoueur [], int tlog);
+
 
 int plusGrandScore(Joueur * tabJoueur[], int tlog);
 

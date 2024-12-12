@@ -51,3 +51,12 @@ void affichListeJoueursScores(Joueur * tabJoueur[], int tlog){
         afficherScore(tabJoueur[i]->l);
     }
 }
+
+void affichJoueurMeilleurs(Joueur * tabJoueur [], int tlog){
+    int i;
+
+    triEnchangeMeilleurScore(tabJoueur, tlog);
+
+    for(i=0; i<tlog; i++) printf("Nom du joueur : %s \t Son meilleur score : %d",tabJoueur[i]->pseudo, tabJoueur[i]->l->score);
+
+}

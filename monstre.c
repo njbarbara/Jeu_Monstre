@@ -21,7 +21,7 @@ File enfilerMonstre(File fM, Monstre monstre){
         printf("Problème malloc !");
         exit(1);
     }
-    maillonAEnfiler.m = monstre;
+    maillonAEnfiler->m = monstre;
     maillonAEnfiler->suiv = NULL;
     if(estVide(fM)){
         fM.t = maillonAEnfiler;
@@ -37,7 +37,7 @@ File defilerMonstre(File fM){
     MaillonM * aux;
     if(fM.t == NULL){
         printf("Opération interdite, la file est vide !!");
-        exti(1);
+        exit(1);
     }
     if(fM.t == fM.q){
         free(fM.t);
@@ -72,15 +72,16 @@ int longueurFileMonstres(File fM){
 
 
 void affichageMonstre(Monstre monstreAafficher){
-    printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", fM.t->m.nom, fM.t->m.PV, fM.t->m.degat, fM.t->m.nbArmes);
+    printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", monstreAafficher.nom, monstreAafficher.PV, monstreAafficher.degat, monstreAafficher.nbArmes);
 }
 
 
 void affichageFileMonstres(File fM){
     while(fM.t != NULL){
         affichageMonstre(fM.t->m);
+        fM.t = fM.t->suiv;
     }
-    pritnf("\n");
+    printf("\n");
 }
 
 
@@ -90,7 +91,7 @@ Monstre lireMonstre(FILE *flot){
     Monstre m;
     fgets(m.nom, 30, flot);
     m.nom[strlen(m.nom)-1] = '\0';
-    fscanf("%d%d", &m.PV, &m.degat);
+    fscanf(flot, "%d%d", &m.PV, &m.degat);
     return m;
 }
 
@@ -117,20 +118,24 @@ Monstre randomMonstre(File *fM){
     time_t seconds;
     Monstre monstreTour;
     seconds = time(NULL);
-    rep = (rand()+seconds)%longueur(fM);/*FAIRE LE CALCUL RANDOM*/
+    if(estVide(*fM)){
+        printf("La file est vide !");
+        exit(1);
+    }
+    rep = (rand()+seconds)%longueurFileMonstres(*fM);
     for(i=1;i<=rep;i++){
         monstreTour = tete(*fM);
         *fM = defilerMonstre(*fM);
-        if(i == rep) return monstreTour;
-        *fM = enfilerMonstre(*fM, monstreTour);
+        if(i != rep) *fM = enfilerMonstre(*fM, monstreTour);
     }
+    return monstreTour;
 }
 
-
+/*
 Pile premierGroupe(File *fM){
 
 }
-
+*/
 
 File deuxiemeGroupe(File fM){
     int i;

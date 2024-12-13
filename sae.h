@@ -102,7 +102,7 @@ int longueur(ListeScore l);
 void sauvegardeListeScore(FILE *flot, ListeScore l);
 
 /*PARTIE JOUEUR */
-Joueur lireJoueur(FILE *flot);
+Joueur lireJoueurScores(FILE *flot);
 
 int chargement(Joueur * tabJoueur[], char *nomFich, int tmax);
 

@@ -1,6 +1,6 @@
 #include "sae.h"
 
-Joueur lireJoueur(FILE *flot){
+Joueur lireJoueurScores(FILE *flot){
     Joueur j;
     int nb, i, scoresJ;
 
@@ -94,6 +94,17 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog){
         echange(tabJoueur, tlog-1,I);
         tlog--;
     }
+}
+
+int ajouter(Joueur * tabJoueur[], int tlog){
+    printf("Saisir le pseudo du joueur à créer : ")
+
+}
+
+
+int recherche(char nom[], Joueur * tabJoueur[], int tlog){
+    int i;
+    for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i]->pseudo)==0) return i;
 }
 
 /*

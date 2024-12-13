@@ -117,3 +117,5 @@ int plusGrandScore(Joueur * tabJoueur[], int tlog);
 void echange(Joueur * tabJoueur[], int i, int j);
 
 void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
+
+//int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

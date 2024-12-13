@@ -88,14 +88,12 @@ Monstre lireMonstre(FILE *flot){
     return m;
 }
 
-
-
 File chargementMonstres(void){
     FILE *flot;
     File fM;
     Monstre monstreAEnfiler;
     fM = fileVideMonstre();
-    flot = fopen("monstres.txt", "r");
+    flot = fopen("fichierSauvegarde/monstres.txt", "r");
     if(flot == NULL){
         printf("Probléme de chargement !");
         exit(1);
@@ -110,8 +108,10 @@ File chargementMonstres(void){
 
 Monstre randomMonstre(File *fM){
     int rep, i;
+    time_t seconds;
     Monstre monstreTour;
-    rep = 5/*FAIRE LE CALCUL RANDOM*/;
+    seconds = time(NULL);
+    rep = (rand()+seconds)%longueur(fM);/*FAIRE LE CALCUL RANDOM*/
     for(i=1;i<=rep;i++){
         monstreTour = tete(*fM);
         *fM = defilerMonstre(*fM);

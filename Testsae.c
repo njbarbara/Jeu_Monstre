@@ -145,15 +145,22 @@ void testFileMonstres(void){
     autreMonstre = tete(fM);
     affichageMonstre(autreMonstre);
     longueur = longueurFileMonstres(fM);
-    printf("Longueur de la file : %d", longueur);
+    printf("Longueur de la file : %d\n", longueur);
     i = estVide(fM);
-    printf("File vide ? %d", i);
+    printf("File vide ? %d\n", i);
     affichageFileMonstres(fM);
     fM = defilerMonstre(fM);
     i = estVide(fM);
-    printf("File vide ? %d", i);
+    printf("File vide ? %d\n", i);
     affichageFileMonstres(fM);
 }
+
+void testChargementMonstres(void){
+    File fM;
+    fM = chargementMonstres();
+    affichageFileMonstres(fM);
+}
+
 
 
 int main(void){//fonction principale
@@ -172,6 +179,6 @@ int main(void){//fonction principale
     */
     //testTriEchangeScore();
     testFileMonstres();
-
+    //testChargementMonstres();
     return 0;
 }

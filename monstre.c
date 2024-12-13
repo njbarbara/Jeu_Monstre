@@ -92,6 +92,7 @@ Monstre lireMonstre(FILE *flot){
     fgets(m.nom, 30, flot);
     m.nom[strlen(m.nom)-1] = '\0';
     fscanf(flot, "%d%d", &m.PV, &m.degat);
+    m.nbArmes = 0;
     return m;
 }
 
@@ -107,6 +108,7 @@ File chargementMonstres(void){
     }
     monstreAEnfiler = lireMonstre(flot);
     while(!feof(flot)){
+        affichageFileMonstres(fM);
         fM = enfilerMonstre(fM, monstreAEnfiler);
         monstreAEnfiler = lireMonstre(flot);
     }

@@ -136,4 +136,15 @@ int longueurFileMonstres(File fM);
 void affichageMonstre(Monstre monstreAafficher);
 
 void affichageFileMonstres(File fM);
+
+
+Monstre lireMonstre(FILE *flot);
+
+File chargementMonstres(void);
+
+Monstre randomMonstre(File *fM);
+
+File deuxiemeGroupe(File fM);
+
+
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

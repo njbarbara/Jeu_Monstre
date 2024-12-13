@@ -1,2 +1,4 @@
-goblin 20 2
-dragon 30 3
+goblin Géant
+20 2
+dragon Rouge
+30 3

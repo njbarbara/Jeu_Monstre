@@ -61,7 +61,7 @@ Monstre tete(File fM){
     return fM.t->m;
 }
 
-int longueur(File fM){
+int longueurFileMonstres(File fM){
     int l=0;
     while(fM.t != NULL){
         l += 1;
@@ -70,9 +70,15 @@ int longueur(File fM){
     return l;
 }
 
+
+void affichageMonstre(Monstre monstreAafficher){
+    printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", fM.t->m.nom, fM.t->m.PV, fM.t->m.degat, fM.t->m.nbArmes);
+}
+
+
 void affichageFileMonstres(File fM){
     while(fM.t != NULL){
-        printf("%d", fM.t->m);
+        affichageMonstre(fM.t->m);
     }
     pritnf("\n");
 }

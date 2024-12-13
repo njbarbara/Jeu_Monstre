@@ -117,3 +117,22 @@ int plusGrandScore(Joueur * tabJoueur[], int tlog);
 void echange(Joueur * tabJoueur[], int i, int j);
 
 void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
+
+
+/*Fonctions pour les monstres*/
+
+File fileVideMonstre(void);
+
+File enfilerMonstre(File fM, Monstre monstre);
+
+File defilerMonstre(File fM);
+
+int estVide(File fM);
+
+Monstre tete(File fM);
+
+int longueurFileMonstres(File fM);
+
+void affichageMonstre(Monstre monstreAafficher);
+
+void affichageFileMonstres(File fM);

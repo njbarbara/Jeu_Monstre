@@ -133,6 +133,29 @@ void testTriEchangeScore(void){
 }
 
 
+void testFileMonstres(void){
+    File fM;
+    int longueur, i;
+    Monstre testMonstre, autreMonstre;
+    fM = fileVideMonstre();
+    strcpy(testMonstre.nom, "dragon");
+    testMonstre.PV = 20;
+    testMonstre.degat = 2;
+    testMonstre.nbArmes = 3;
+    fM = enfilerMonstre(fM, testMonstre);
+    autreMonstre = tete(fM);
+    affichageMonstre(autreMonstre);
+    longueur = longueurFileMonstres(fM);
+    printf("Longueur de la file : %d", longueur);
+    i = estVide(fM);
+    printf("File vide ? %d", i);
+    affichageFileMonstres(fM);
+    fM = defilerMonstre(fM);
+    i = estVide(fM);
+    printf("File vide ? %d", i);
+    affichageFileMonstres(fM);
+}
+
 
 int main(void){//fonction principale
     //TEST SCORE
@@ -148,7 +171,8 @@ int main(void){//fonction principale
     testChargement();
     testSauvegarde();
     */
-    testTriEchangeScore();
+    //testTriEchangeScore();
+    testFileMonstres();
 
     return 0;
 }

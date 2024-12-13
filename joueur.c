@@ -96,7 +96,28 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog){
     }
 }
 
-void tri(Joueur * tabJoueur[], int tlog){
+/*
+int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
+    int m, inf =0, sup = nb-1;
+
+    while(inf<=sup){
+        m = (inf + sup)/2;
+
+        if(strcmp(tabJoueur[m]->pseudo, nom)>0) sup = m-1;
+        else if (strcmp(tabJoueur[m]->pseudo, nom)<0) inf = m+1;
+        else{
+            *trouve =1;
+            return m;
+        }
+
+    }
+    *trouve = 0;
+    return inf; 
+}
+*/
+
+// JE VAIS LA FAIRE APRÈS
+void triDico(Joueur * tabJoueur[], int tlog){
 
 }
 

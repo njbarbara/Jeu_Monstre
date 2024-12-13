@@ -136,3 +136,4 @@ int longueurFileMonstres(File fM);
 void affichageMonstre(Monstre monstreAafficher);
 
 void affichageFileMonstres(File fM);
+//int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

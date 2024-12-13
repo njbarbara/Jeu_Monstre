@@ -119,7 +119,6 @@ void testSauvegarde(void){
 }
 
 void testTriEchangeScore(void){
-
     int tmax=20, tlog;
     Joueur * tabJoueur[tmax];
 

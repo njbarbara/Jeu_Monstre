@@ -1,5 +1,5 @@
-exosae: sae.o Testsae.o affichage.o score.o joueur.o
-	gcc sae.o Testsae.o affichage.o score.o joueur.o -o exosae
+exosae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o
+	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o -o exosae
 
 sae.o : sae.c sae.h
 	gcc -Wall -c sae.c

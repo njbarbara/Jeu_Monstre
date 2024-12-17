@@ -100,14 +100,14 @@ PileM pileVide(void){
     return NULL;
 }
 
-PileM empiler(PileM p, int x){
+PileM empiler(PileM p, Monstre val){
     MaillonM *m;
     m =(MaillonM *)malloc(sizeof(MaillonM));
     if(m == NULL){
         printf("Pb allocation mémoire");
         exit(1);
     }
-    m->nbre=x;
+    m->monstre=val;
     m->suiv=p;//Insertion en tête
     return m;
 }
@@ -140,6 +140,7 @@ int hauteur(PileM p){
 }
 
 /*Fonctions des monstres*/
+
 //Utiliser un tableau 
 Monstre lireMonstre(FILE *flot){
     Monstre m;

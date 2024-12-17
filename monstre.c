@@ -84,9 +84,63 @@ void affichageFileMonstres(File fM){
     printf("\n");
 }
 
+/*Pile Monstre*/
+
+Booleen Pilevide(PileM p){
+    if(p == NULL){
+        return FALSE;
+    }
+    else{
+        return TRUE;
+    }
+
+}
+
+PileM pileVide(void){   
+    return NULL;
+}
+
+PileM empiler(PileM p, int x){
+    MaillonM *m;
+    m =(MaillonM *)malloc(sizeof(MaillonM));
+    if(m == NULL){
+        printf("Pb allocation mémoire");
+        exit(1);
+    }
+    m->nbre=x;
+    m->suiv=p;//Insertion en tête
+    return m;
+}
+
+PileM depiler(PileM p){ 
+    MaillonM *m;
+
+    if(vide(p)){
+        printf("Opération interdite");
+        exit(1);        
+    }
+    m = p;
+    p=p->suiv;
+    free(m);
+    return p;
+}
+
+int sommet(PileM p){
+    return p->monstre;
+}
+
+int hauteur(PileM p){
+    int cpt=0;
+    MaillonM * ptm = p;
+    while (ptm != NULL){
+        cpt++;
+        ptm = ptm->suiv;
+    } 
+    return cpt;
+}
 
 /*Fonctions des monstres*/
-
+//Utiliser un tableau 
 Monstre lireMonstre(FILE *flot){
     Monstre m;
     fgets(m.nom, 30, flot);
@@ -132,12 +186,6 @@ Monstre randomMonstre(File *fM){
     }
     return monstreTour;
 }
-
-/*
-Pile premierGroupe(File *fM){
-
-}
-*/
 
 File deuxiemeGroupe(File fM){
     int i;

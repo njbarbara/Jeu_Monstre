@@ -16,6 +16,11 @@
 // corridor = pile/file mais plus file
 // !!!!
 
+typedef enum{
+    FALSE,
+    TRUE
+}Booleen;
+
 typedef struct{
     char nom[30];
     int PV;
@@ -39,7 +44,7 @@ typedef struct{
 typedef struct maillonM{
     Monstre m;
     struct maillonM * suiv;
-}MaillonM;
+}MaillonM, *PileM;
 
 typedef struct{
     MaillonM *t;
@@ -102,6 +107,7 @@ int longueur(ListeScore l);
 void sauvegardeListeScore(FILE *flot, ListeScore l);
 
 /*PARTIE JOUEUR */
+
 Joueur lireJoueurScores(FILE *flot);
 
 int chargement(Joueur * tabJoueur[], char *nomFich, int tmax);
@@ -119,7 +125,7 @@ void echange(Joueur * tabJoueur[], int i, int j);
 void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
 
 
-/*Fonctions pour les monstres*/
+/*PARTIE MONSTRES*/
 
 File fileVideMonstre(void);
 

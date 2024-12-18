@@ -142,11 +142,10 @@ int hauteur(PileM p){
 /*Fonctions des monstres*/
 
 
-int decalageAGauche(Monstre **tab, int indice, int tlog){
+void decalageAGauche(Monstre **tab, int indice, int tlog){
     int i;
     for(i=indice;i<tlog-1;i++)
         tab[i] = tab[i+1];
-    return tlog - 1;
 }
 
 void afficheTabMonstre(Monstre **tab, int tlog){
@@ -191,31 +190,25 @@ int chargementMonstres(Monstre **tabMonstres){
     return k;
 }
 
-Monstre randomMonstre(File *fM){
-    int rep, i;
+Monstre randomMonstre(Monstre **tabMonstres, int *tlog){
+    int indice;
     time_t seconds;
-    Monstre monstreTour;
+    Monstre monstreChoisi;
     seconds = time(NULL);
-    if(estVide(*fM)){
-        printf("La file est vide !");
-        exit(1);
-    }
-    rep = (rand()+seconds)%longueurFileMonstres(*fM);
-    for(i=1;i<=rep;i++){
-        monstreTour = tete(*fM);
-        *fM = defilerMonstre(*fM);
-        if(i != rep) *fM = enfilerMonstre(*fM, monstreTour);
-    }
-    return monstreTour;
+    indice = (rand()+seconds)%(*tlog);
+    monstreChoisi = *tabMonstres[indice];
+    decalageAGauche(tabMonstres, indice, *tlog);
+    *tlog -= 1;
+    return monstreChoisi;
 }
 
-File deuxiemeGroupe(File fM){
+File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog){
     int i;
     Monstre monstrePartie;
     File fG2;
     fG2 = fileVideMonstre();
     for(i=3;i<=5;i++){
-        monstrePartie = randomMonstre(&fM);
+        monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
         fG2 = enfilerMonstre(fM, monstrePartie);
     }

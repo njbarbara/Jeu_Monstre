@@ -117,6 +117,7 @@ void sauvegardeScoreJoueur(Joueur * tabJoueur[], char *nomFich, int tlog);
 void affichListeJoueursScores(Joueur * tabJoueur[], int tlog);
 void affichJoueurMeilleurs(Joueur * tabJoueur [], int tlog);
 
+int rechercheDico(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);
 
 int plusGrandScore(Joueur * tabJoueur[], int tlog);
 
@@ -146,6 +147,7 @@ void affichageMonstre(Monstre monstreAafficher);
 void affichageFileMonstres(File fM);
 
 //Pile 
+
 int hauteur(PileM p);
 
 Booleen EstPilevide(PileM p);

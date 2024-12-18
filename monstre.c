@@ -215,7 +215,7 @@ PileM premierGroupe(Monstre **tabMonstres, int *tlog){
     Monstre monstrePartie;
     PileM pG2;
     pG2 = pileVide();
-    for(i=5;i>=3;i--){
+    for(i=4;i>=3;i--){
         monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
         pG2 = empiler(pG2, monstrePartie);

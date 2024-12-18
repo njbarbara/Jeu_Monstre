@@ -1,5 +1,5 @@
-exosae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o
-	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o -o exosae
+exosae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o
+	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o -o exosae
 
 sae.o : sae.c sae.h
 	gcc -Wall -c sae.c
@@ -18,6 +18,9 @@ monstre.o : monstre.c sae.h
 
 joueur.o : joueur.c sae.h 
 	gcc -Wall -c joueur.c
+
+attaque.o : attaque.c sae.h
+	gcc -Wall -c attaque.c 
 
 partie.o : partie.c sae.h
 	gcc -Wall -c partie.c 

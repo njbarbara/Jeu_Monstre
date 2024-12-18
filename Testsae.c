@@ -214,6 +214,12 @@ void testDeuxiemeGroupe(void){
 }
 
 
+void testChoixArmeJoueur(void){
+    Arme a;
+    a = choixArmeJoueur();
+    printf("Arme choisi %c", a);
+}
+
 
 int main(void){//fonction principale
     //TEST SCORE
@@ -235,5 +241,6 @@ int main(void){//fonction principale
     //testChargementMonstresEtRandomMonstre();
     //testPremierGroupe();
     //testDeuxiemeGroupe();
+    testChoixArmeJoueur();
     return 0;
 }

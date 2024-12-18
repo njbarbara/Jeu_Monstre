@@ -21,6 +21,8 @@ typedef enum{
     TRUE
 }Booleen;
 
+typedef enum{P, F, C, O, S}Arme;
+
 typedef struct{
     char nom[30];
     int PV;
@@ -189,3 +191,7 @@ void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int t
 void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
 
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);
+
+
+/*Fonctions concernant les attaques*/
+Arme choixArmeJoueur(void);

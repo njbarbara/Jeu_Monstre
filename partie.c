@@ -1,5 +1,5 @@
 #include "sae.h"
-
+/*
 Pile pileVide(void){
     return NULL;
 }
@@ -23,3 +23,4 @@ void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, Pile pM, int tl
 void sauvegardePartie(){
 
 }
+*/

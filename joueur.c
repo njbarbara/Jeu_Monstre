@@ -97,7 +97,7 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog){
 }
 
 int ajouter(Joueur * tabJoueur[], int tlog){
-    printf("Saisir le pseudo du joueur à créer : ")
+    printf("Saisir le pseudo du joueur à créer : ");
 
 }
 

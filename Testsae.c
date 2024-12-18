@@ -156,9 +156,10 @@ void testFileMonstres(void){
 }
 
 void testChargementMonstres(void){
-    File fM;
-    fM = chargementMonstres();
-    affichageFileMonstres(fM);
+    Monstre *tab[2];
+    int tlog;
+    tlog = chargementMonstres(tab);
+    afficheTabMonstre(tab, tlog);
 }
 
 
@@ -178,7 +179,7 @@ int main(void){//fonction principale
     testSauvegarde();
     */
     //testTriEchangeScore();
-    testFileMonstres();
-    //testChargementMonstres();
+    //testFileMonstres();
+    testChargementMonstres();
     return 0;
 }

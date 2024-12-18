@@ -127,6 +127,8 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
 
 /*PARTIE MONSTRES*/
 
+//File
+
 File fileVideMonstre(void);
 
 File enfilerMonstre(File fM, Monstre monstre);
@@ -143,10 +145,16 @@ void affichageMonstre(Monstre monstreAafficher);
 
 void affichageFileMonstres(File fM);
 
+//tableau
 
-Monstre lireMonstre(FILE *flot);
+void afficheTabMonstre(Monstre **tab, int tlog);
 
-File chargementMonstres(void);
+int decalageAGauche(Monstre **tab, int indice, int tlog);
+
+
+Monstre* lireMonstre(FILE *flot);
+
+int chargementMonstres(Monstre **tabMonstres);
 
 Monstre randomMonstre(File *fM);
 

@@ -85,7 +85,7 @@ void affichageFileMonstres(File fM){
 }
 
 /*Pile Monstre*/
-
+/*
 Booleen Pilevide(PileM p){
     if(p == NULL){
         return FALSE;
@@ -138,36 +138,55 @@ int hauteur(PileM p){
     } 
     return cpt;
 }
-
+*/
 /*Fonctions des monstres*/
 
-//Utiliser un tableau 
-Monstre lireMonstre(FILE *flot){
-    Monstre m;
-    fgets(m.nom, 30, flot);
-    m.nom[strlen(m.nom)-1] = '\0';
-    fscanf(flot, "%d%d", &m.PV, &m.degat);
-    m.nbArmes = 0;
+
+int decalageAGauche(Monstre **tab, int indice, int tlog){
+    int i;
+    for(i=indice;i<tlog-1;i++)
+        tab[i] = tab[i+1];
+    return tlog - 1;
+}
+
+void afficheTabMonstre(Monstre **tab, int tlog){
+    int i;
+    for(i=0;i<tlog;i++)
+        affichageMonstre(*tab[i]);
+}
+
+
+
+Monstre* lireMonstre(FILE *flot){
+    Monstre *m;
+    m = (Monstre*)malloc(sizeof(Monstre));
+    if(m == NULL){
+        printf("Probléme malloc !");
+        exit(1);
+    }
+    fgets(m->nom, 30, flot);
+    m->nom[strlen(m->nom)-1] = '\0';
+    fscanf(flot, "%d%d", &m->PV, &m->degat);
+    m->nbArmes = 0;
     return m;
 }
 
-File chargementMonstres(void){
+int chargementMonstres(Monstre **tabMonstres){
+    int k=0;
     FILE *flot;
-    File fM;
-    Monstre monstreAEnfiler;
-    fM = fileVideMonstre();
+    Monstre *monstreAAjouter;
     flot = fopen("fichierSauvegarde/monstres.txt", "r");
     if(flot == NULL){
         printf("Probléme de chargement !");
         exit(1);
     }
-    monstreAEnfiler = lireMonstre(flot);
+    monstreAAjouter = lireMonstre(flot);
     while(!feof(flot)){
-        affichageFileMonstres(fM);
-        fM = enfilerMonstre(fM, monstreAEnfiler);
-        monstreAEnfiler = lireMonstre(flot);
+        tabMonstres[k] = monstreAAjouter;
+        monstreAAjouter = lireMonstre(flot);
+        k += 1;
     }
-    return fM;
+    return k;
 }
 
 Monstre randomMonstre(File *fM){

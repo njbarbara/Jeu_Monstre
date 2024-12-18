@@ -8,17 +8,21 @@ Pile pileVide(void){
 void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog){
     FILE *flot;
     Joueur j;
-    int nbPile=0, nbFile;
+    int nbPile, nbFile;
 
-    flot = fopen("fichierSauvegarde/", "r");
+    flot = fopen(nomFich, "r");
 
-    int recherche(tabJoueur, tlog, nom, trouve);
+    recherche(tabJoueur, tlog, j.nom, trouve);
 
-    fscanf(flot, "%s%d%d%d", j.nom);
+    fscanf(flot, "%s%d%d%d%d", j.nom);
 
+    pos = recherche(tabJoueur, tlog, j.nom, trouve);
+
+    
     while(!feof(flot)){
-        for(int i = 0; i < tlog; i++) enfilerMonstre(fM, lireMonstre(flot));
-        
+        for(int i = 0; i < nbPile; i++) enfilerMonstre(fM, lireMonstre(flot));
+        fscanf(flot, "%d", &nbFile);
+        for(int i = 0; i < nbFile; i++) empilerMonstre(pM, lireMonstre(flot));
     }
 }
 
@@ -27,4 +31,3 @@ void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int t
 void sauvegardePartie(){
 
 }
-*/

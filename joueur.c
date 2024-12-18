@@ -108,7 +108,7 @@ int recherche(char nom[], Joueur * tabJoueur[], int tlog){
 */
 
 int rechercheDico(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
-    int m, inf =0, sup = nb-1;
+    int m, inf =0, sup = tlog-1;
 
     while(inf<=sup){
         m = (inf + sup)/2;

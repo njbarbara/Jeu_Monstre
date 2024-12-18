@@ -36,7 +36,6 @@ int chargement(Joueur * tabJoueur[], char *nomFich, int tmax){
             fclose(flot);
             return tlog;
         }
-
         tabJoueur[tlog] = (Joueur *)malloc(sizeof(Joueur));
         if(tabJoueur[tlog]==NULL){
             printf("Problème malloc \n");
@@ -107,8 +106,8 @@ int recherche(char nom[], Joueur * tabJoueur[], int tlog){
     for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i]->pseudo)==0) return i;
 }
 */
-/*
-int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
+
+int rechercheDico(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
     int m, inf =0, sup = nb-1;
 
     while(inf<=sup){
@@ -125,7 +124,7 @@ int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
     *trouve = 0;
     return inf; 
 }
-*/
+
 
 // JE VAIS LA FAIRE APRÈS
 void triDico(Joueur * tabJoueur[], int tlog){

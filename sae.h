@@ -145,6 +145,19 @@ void affichageMonstre(Monstre monstreAafficher);
 
 void affichageFileMonstres(File fM);
 
+//Pile 
+int hauteur(PileM p);
+
+Booleen EstPilevide(PileM p);
+
+PileM empiler(PileM p, Monstre val);
+
+PileM depiler(PileM p);
+
+Monstre sommet(PileM p);
+
+int hauteur(PileM p);
+
 //tableau
 
 void afficheTabMonstre(Monstre **tab, int tlog);
@@ -159,6 +172,8 @@ int chargementMonstres(Monstre **tabMonstres);
 Monstre randomMonstre(File *fM);
 
 File deuxiemeGroupe(File fM);
+
+
 
 
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

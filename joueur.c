@@ -28,7 +28,7 @@ int chargement(Joueur * tabJoueur[], char *nomFich, int tmax){
         exit(1);
     }
 
-    nouvJ = lireJoueur(flot);
+    nouvJ = lireJoueurScores(flot);
 
     while(!feof(flot)){
         if(tlog == tmax){
@@ -45,7 +45,7 @@ int chargement(Joueur * tabJoueur[], char *nomFich, int tmax){
         }
         *tabJoueur[tlog] = nouvJ;
         tlog++;
-        nouvJ = lireJoueur(flot);
+        nouvJ = lireJoueurScores(flot);
     }
 
     fclose(flot);
@@ -95,8 +95,8 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog){
         tlog--;
     }
 }
-
-int ajouter(Joueur * tabJoueur[], int tlog){
+/*
+int ajouterJoueur(Joueur * tabJoueur[], int tlog){
     printf("Saisir le pseudo du joueur à créer : ");
 
 }
@@ -106,7 +106,7 @@ int recherche(char nom[], Joueur * tabJoueur[], int tlog){
     int i;
     for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i]->pseudo)==0) return i;
 }
-
+*/
 /*
 int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve){
     int m, inf =0, sup = nb-1;

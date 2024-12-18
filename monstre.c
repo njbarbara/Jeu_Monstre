@@ -85,8 +85,8 @@ void affichageFileMonstres(File fM){
 }
 
 /*Pile Monstre*/
-/*
-Booleen Pilevide(PileM p){
+
+Booleen EstPilevide(PileM p){
     if(p == NULL){
         return FALSE;
     }
@@ -101,32 +101,32 @@ PileM pileVide(void){
 }
 
 PileM empiler(PileM p, Monstre val){
-    MaillonM *m;
-    m =(MaillonM *)malloc(sizeof(MaillonM));
-    if(m == NULL){
+    MaillonM *Mt;
+    Mt =(MaillonM *)malloc(sizeof(MaillonM));
+    if(Mt == NULL){
         printf("Pb allocation mémoire");
         exit(1);
     }
-    m->monstre=val;
-    m->suiv=p;//Insertion en tête
-    return m;
+    Mt->m=val;
+    Mt->suiv=p;//Insertion en tête
+    return Mt;
 }
 
 PileM depiler(PileM p){ 
-    MaillonM *m;
+    MaillonM *Mt;
 
-    if(vide(p)){
+    if(EstPilevide(p)){
         printf("Opération interdite");
         exit(1);        
     }
-    m = p;
+    Mt = p;
     p=p->suiv;
-    free(m);
+    free(Mt);
     return p;
 }
 
-int sommet(PileM p){
-    return p->monstre;
+Monstre sommet(PileM p){
+    return p->m;
 }
 
 int hauteur(PileM p){
@@ -138,7 +138,7 @@ int hauteur(PileM p){
     } 
     return cpt;
 }
-*/
+
 /*Fonctions des monstres*/
 
 

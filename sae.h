@@ -165,7 +165,7 @@ void afficheTabMonstre(Monstre **tab, int tlog);
 int decalageAGauche(Monstre **tab, int indice, int tlog);
 
 
-Monstre* lireMonstre(FILE *flot);
+Monstre lireMonstre(FILE *flot);
 
 int chargementMonstres(Monstre **tabMonstres);
 

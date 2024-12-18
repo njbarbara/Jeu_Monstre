@@ -157,32 +157,34 @@ void afficheTabMonstre(Monstre **tab, int tlog){
 
 
 
-Monstre* lireMonstre(FILE *flot){
-    Monstre *m;
-    m = (Monstre*)malloc(sizeof(Monstre));
-    if(m == NULL){
-        printf("Probléme malloc !");
-        exit(1);
-    }
-    fgets(m->nom, 30, flot);
-    m->nom[strlen(m->nom)-1] = '\0';
-    fscanf(flot, "%d%d", &m->PV, &m->degat);
-    m->nbArmes = 0;
+Monstre lireMonstre(FILE *flot){
+    Monstre m;
+    fgets(m.nom, 30, flot);
+    m.nom[strlen(m.nom)-1] = '\0';
+    fscanf(flot, "%d%d%*c", &m.PV, &m.degat);
+    m.nbArmes = 0;
     return m;
 }
 
 int chargementMonstres(Monstre **tabMonstres){
     int k=0;
     FILE *flot;
-    Monstre *monstreAAjouter;
+    Monstre monstreAAjouter;
     flot = fopen("fichierSauvegarde/monstres.txt", "r");
     if(flot == NULL){
         printf("Probléme de chargement !");
         exit(1);
     }
+    
     monstreAAjouter = lireMonstre(flot);
     while(!feof(flot)){
-        tabMonstres[k] = monstreAAjouter;
+        
+        tabMonstres[k] = (Monstre*)malloc(sizeof(Monstre));
+        if(tabMonstres[k] == NULL){
+            printf("Probléme malloc !");
+            exit(1);
+        }
+        *tabMonstres[k] = monstreAAjouter;
         monstreAAjouter = lireMonstre(flot);
         k += 1;
     }

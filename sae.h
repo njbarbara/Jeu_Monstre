@@ -176,6 +176,10 @@ Monstre randomMonstre(Monstre **tabMonstres, int *tlog);
 File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog);
 
 
+/*Parties Déroulement du jeu */
 
+void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
+
+void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
 
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

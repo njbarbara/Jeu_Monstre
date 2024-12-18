@@ -155,12 +155,18 @@ void testFileMonstres(void){
     affichageFileMonstres(fM);
 }
 
-void testChargementMonstres(void){
-    Monstre *tab[2];
+void testChargementMonstresEtRandomMonstre(void){
+    Monstre *tab[2], testm;
     int tlog;
     tlog = chargementMonstres(tab);
     afficheTabMonstre(tab, tlog);
+    testm = randomMonstre(tab, &tlog);
+    printf("Monstre choisi : ");
+    affichageMonstre(testm);
+    printf("Tableau de monstres après random : \n");
+    afficheTabMonstre(tab, tlog);
 }
+
 
 
 
@@ -180,6 +186,6 @@ int main(void){//fonction principale
     */
     //testTriEchangeScore();
     //testFileMonstres();
-    testChargementMonstres();
+    testChargementMonstresEtRandomMonstre();
     return 0;
 }

@@ -155,8 +155,34 @@ void testFileMonstres(void){
     affichageFileMonstres(fM);
 }
 
+void testPileMonstre(void){
+    PileM pM;
+    int h, i;
+    Monstre testMonstre, autreMonstre;
+    pM = pileVide();
+    strcpy(testMonstre.nom, "dragon");
+    testMonstre.PV = 20;
+    testMonstre.degat = 2;
+    testMonstre.nbArmes = 3;
+    pM = empiler(pM, testMonstre);
+    autreMonstre = sommet(pM);
+    affichageMonstre(autreMonstre);
+    h = hauteur(pM);
+    printf("Hauteur de la pile : %d\n", h);
+    i = EstPilevide(pM);
+    printf("Pile vide ? %d\n", i);
+    affichagePileMonstre(pM);
+    pM = depiler(pM);
+    i = EstPilevide(pM);
+    printf("Pile vide ? %d\n", i);
+    if(i == 1){
+        printf("Plus de monstre à afficher\n");
+    }
+    else affichagePileMonstre(pM);
+}
+
 void testChargementMonstresEtRandomMonstre(void){
-    Monstre *tab[2], testm;
+    Monstre *tab[6], testm;
     int tlog;
     tlog = chargementMonstres(tab);
     afficheTabMonstre(tab, tlog);
@@ -167,6 +193,25 @@ void testChargementMonstresEtRandomMonstre(void){
     afficheTabMonstre(tab, tlog);
 }
 
+
+void testPremierGroupe(void){
+    Monstre *tab[6];
+    int tlog;
+    PileM pM;
+    tlog = chargementMonstres(tab);
+    pM = premierGroupe(tab, &tlog);
+    affichagePileMonstre(pM);
+}
+
+
+void testDeuxiemeGroupe(void){
+    Monstre *tab[6];
+    int tlog;
+    File fM;
+    tlog = chargementMonstres(tab);
+    fM = deuxiemeGroupe(tab, &tlog);
+    affichageFileMonstres(fM);
+}
 
 
 
@@ -186,6 +231,9 @@ int main(void){//fonction principale
     */
     //testTriEchangeScore();
     //testFileMonstres();
-    testChargementMonstresEtRandomMonstre();
+    //testPileMonstre();
+    //testChargementMonstresEtRandomMonstre();
+    //testPremierGroupe();
+    //testDeuxiemeGroupe();
     return 0;
 }

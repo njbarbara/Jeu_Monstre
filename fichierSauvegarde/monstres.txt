@@ -4,4 +4,9 @@ dragon de feu
 30 3
 Mega Pekka
 50 4
-
+dragon de glace
+25 2
+Frankenstein
+40 1
+Zombie
+10 4

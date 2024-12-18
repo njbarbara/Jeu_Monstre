@@ -81,17 +81,16 @@ void affichageFileMonstres(File fM){
         affichageMonstre(fM.t->m);
         fM.t = fM.t->suiv;
     }
-    printf("\n");
 }
 
 /*Pile Monstre*/
 
 Booleen EstPilevide(PileM p){
     if(p == NULL){
-        return FALSE;
+        return TRUE;
     }
     else{
-        return TRUE;
+        return FALSE;
     }
 
 }
@@ -138,6 +137,15 @@ int hauteur(PileM p){
     } 
     return cpt;
 }
+
+void affichagePileMonstre(PileM p){
+    MaillonM * ptm = p;
+    while (ptm != NULL){
+        affichageMonstre(sommet(ptm));
+        ptm = ptm->suiv;
+    } 
+}
+
 
 /*Fonctions des monstres*/
 
@@ -202,7 +210,21 @@ Monstre randomMonstre(Monstre **tabMonstres, int *tlog){
     return monstreChoisi;
 }
 
-File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog){
+PileM premierGroupe(Monstre **tabMonstres, int *tlog){
+    int i;
+    Monstre monstrePartie;
+    PileM pG2;
+    pG2 = pileVide();
+    for(i=5;i>=3;i--){
+        monstrePartie = randomMonstre(tabMonstres, tlog);
+        monstrePartie.nbArmes = i;
+        pG2 = empiler(pG2, monstrePartie);
+    }
+    return pG2;
+}
+
+
+File deuxiemeGroupe(Monstre **tabMonstres, int *tlog){
     int i;
     Monstre monstrePartie;
     File fG2;
@@ -210,7 +232,7 @@ File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog){
     for(i=3;i<=5;i++){
         monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
-        fG2 = enfilerMonstre(fM, monstrePartie);
+        fG2 = enfilerMonstre(fG2, monstrePartie);
     }
     return fG2;
 }

@@ -152,6 +152,8 @@ int hauteur(PileM p);
 
 Booleen EstPilevide(PileM p);
 
+PileM pileVide(void);
+
 PileM empiler(PileM p, Monstre val);
 
 PileM depiler(PileM p);
@@ -159,6 +161,8 @@ PileM depiler(PileM p);
 Monstre sommet(PileM p);
 
 int hauteur(PileM p);
+
+void affichagePileMonstre(PileM p);
 
 //tableau
 
@@ -173,7 +177,9 @@ int chargementMonstres(Monstre **tabMonstres);
 
 Monstre randomMonstre(Monstre **tabMonstres, int *tlog);
 
-File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog);
+PileM premierGroupe(Monstre **tabMonstres, int *tlog);
+
+File deuxiemeGroupe(Monstre **tabMonstres, int *tlog);
 
 
 

@@ -182,6 +182,10 @@ PileM premierGroupe(Monstre **tabMonstres, int *tlog);
 File deuxiemeGroupe(Monstre **tabMonstres, int *tlog);
 
 
+/*Parties Déroulement du jeu */
 
+void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
+
+void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
 
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);

@@ -164,16 +164,16 @@ int hauteur(PileM p);
 
 void afficheTabMonstre(Monstre **tab, int tlog);
 
-int decalageAGauche(Monstre **tab, int indice, int tlog);
+void decalageAGauche(Monstre **tab, int indice, int tlog);
 
 
 Monstre lireMonstre(FILE *flot);
 
 int chargementMonstres(Monstre **tabMonstres);
 
-Monstre randomMonstre(File *fM);
+Monstre randomMonstre(Monstre **tabMonstres, int *tlog);
 
-File deuxiemeGroupe(File fM);
+File deuxiemeGroupe(File fM, Monstre **tabMonstres, int *tlog);
 
 
 

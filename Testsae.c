@@ -220,6 +220,14 @@ void testChoixArmeJoueur(void){
     printf("Arme choisi %c", a);
 }
 
+void testGagneAttaqueJoueur(void){
+    int a;
+    a = gagneAttaqueJoueur('P', 'F');
+    if(a == 2) printf("Rejouer");
+    if(a == 1) printf("Le joueur a gagné l'attaque");
+    if(a == 0) printf("Le monstre remporte l'attaque");
+}
+
 
 int main(void){//fonction principale
     //TEST SCORE

@@ -21,7 +21,7 @@ typedef enum{
     TRUE
 }Booleen;
 
-typedef enum{P, F, C, O, S}Arme;
+typedef enum{P=1, F, C, O, S}Arme;
 
 typedef struct{
     char nom[30];
@@ -195,3 +195,4 @@ void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, i
 
 /*Fonctions concernant les attaques*/
 Arme choixArmeJoueur(void);
+int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM);

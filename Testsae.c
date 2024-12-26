@@ -131,29 +131,9 @@ void testTriEchangeScore(void){
     for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
 }
 
+//TEST MONSTRE
 
-void testFileMonstres(void){
-    File fM;
-    int longueur, i;
-    Monstre testMonstre, autreMonstre;
-    fM = fileVideMonstre();
-    strcpy(testMonstre.nom, "dragon");
-    testMonstre.PV = 20;
-    testMonstre.degat = 2;
-    testMonstre.nbArmes = 3;
-    fM = enfilerMonstre(fM, testMonstre);
-    autreMonstre = tete(fM);
-    affichageMonstre(autreMonstre);
-    longueur = longueurFileMonstres(fM);
-    printf("Longueur de la file : %d\n", longueur);
-    i = estVide(fM);
-    printf("File vide ? %d\n", i);
-    affichageFileMonstres(fM);
-    fM = defilerMonstre(fM);
-    i = estVide(fM);
-    printf("File vide ? %d\n", i);
-    affichageFileMonstres(fM);
-}
+
 
 void testPileMonstre(void){
     PileM pM;
@@ -169,11 +149,11 @@ void testPileMonstre(void){
     affichageMonstre(autreMonstre);
     h = hauteur(pM);
     printf("Hauteur de la pile : %d\n", h);
-    i = EstPilevide(pM);
+    i = estPileVide(pM);
     printf("Pile vide ? %d\n", i);
     affichagePileMonstre(pM);
     pM = depiler(pM);
-    i = EstPilevide(pM);
+    i = estPileVide(pM);
     printf("Pile vide ? %d\n", i);
     if(i == 1){
         printf("Plus de monstre à afficher\n");
@@ -214,6 +194,8 @@ void testDeuxiemeGroupe(void){
 }
 
 
+// TEST ATTAQUE
+
 void testChoixArmeJoueur(void){
     Arme a;
     a = choixArmeJoueur();
@@ -243,6 +225,8 @@ int main(void){//fonction principale
     testChargement();
     testSauvegarde();
     */
+
+    //TEST MONSTRE
     //testTriEchangeScore();
     //testFileMonstres();
     //testPileMonstre();

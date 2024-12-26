@@ -1,5 +1,5 @@
-exosae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o
-	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o -o exosae
+sae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o
+	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o -o sae
 
 sae.o : sae.c sae.h
 	gcc -Wall -c sae.c
@@ -26,4 +26,4 @@ partie.o : partie.c sae.h
 	gcc -Wall -c partie.c 
 
 clean :
-	rm *.o exosae
+	rm *.o sae

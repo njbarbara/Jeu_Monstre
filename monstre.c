@@ -1,71 +1,80 @@
 #include "sae.h"
 
 
-/*void ascciMonstre(char nom){
+/*void ascciMonstre(char nom []){
 
 }*/
 
 /*Fonctions du File de monstres*/
 
+
 File fileVideMonstre(void){
-    File fM;
-    fM.t = NULL;
-    fM.q = NULL;
+    return NULL;
+}
+
+int estFileVide(File fM){
+    return fM == NULL;
+}
+
+File adjQ(File fM, Monstre x){
+    MaillonM * m;
+
+    m = (MaillonM *)malloc(sizeof(MaillonM));
+
+    if(m==NULL){
+        printf("Pb malloc \n");
+        exit(1);
+    }
+    m->val = x;
+    if(estFileVide(fM)){
+        m->suiv = m;
+        return m;
+    }
+
+    m->suiv = fM->suiv;
+    fM->suiv = m;
+    fM=m;
+
     return fM;
 }
 
-File enfilerMonstre(File fM, Monstre monstre){
-    MaillonM *maillonAEnfiler;
-    maillonAEnfiler = (MaillonM*)malloc(sizeof(MaillonM));
-    if(maillonAEnfiler == NULL){
-        printf("Problème malloc !");
-        exit(1);
-    }
-    maillonAEnfiler->m = monstre;
-    maillonAEnfiler->suiv = NULL;
-    if(estVide(fM)){
-        fM.t = maillonAEnfiler;
-        fM.q = maillonAEnfiler;
-        return fM;
-    }
-    fM.q->suiv = maillonAEnfiler;
-    fM.q = maillonAEnfiler;
-    return fM;
-}
+File supT(File fM){
+    MaillonM * tmp;
 
-File defilerMonstre(File fM){
-    MaillonM * aux;
-    if(fM.t == NULL){
-        printf("Opération interdite, la file est vide !!");
-        exit(1);
+    if(fM == NULL){
+        printf("Opération interdite \n");
+        return NULL;
     }
-    if(fM.t == fM.q){
-        free(fM.t);
+    if(fM->suiv==fM){
+        free(fM);
         return fileVideMonstre();
     }
-    aux = fM.t;
-    fM.t = fM.t->suiv;
-    free(aux);
+
+    tmp = fM->suiv;
+    fM->suiv = fM->suiv->suiv;
+    free(tmp);
     return fM;
 }
 
-int estVide(File fM){
-    return fM.t == NULL && fM.q == NULL;
-}
-
-Monstre tete(File fM){
-    if(estVide(fM)){
-        printf("Opération interdite, la file est vide !!");
+Monstre teteFile(File fM){
+    if(estFileVide(fM)){
+        printf("Opération interdite, la file est vide \n");
         exit(1);
     }
-    return fM.t->m;
+    return fM->suiv->val;
 }
 
 int longueurFileMonstres(File fM){
-    int l=0;
-    while(fM.t != NULL){
+    int l=1;
+    MaillonM * tmp;
+
+    if(estFileVide(fM))return 0;
+
+    tmp = fM->suiv;
+
+    while(tmp != fM){
         l += 1;
-        fM.t = fM.t->suiv;
+        tmp = tmp->suiv;
     }
     return l;
 }
@@ -77,36 +86,35 @@ void affichageMonstre(Monstre monstreAafficher){
 
 
 void affichageFileMonstres(File fM){
-    while(fM.t != NULL){
-        affichageMonstre(fM.t->m);
-        fM.t = fM.t->suiv;
+    MaillonM * tmp;
+    if(estFileVide(fM))return;
+    tmp = fM->suiv;
+    while(tmp != fM){
+        affichageMonstre(fM->val);
+        tmp = tmp->suiv;
     }
+    affichageMonstre(fM->val);
 }
 
 /*Pile Monstre*/
 
-Booleen EstPilevide(PileM p){
-    if(p == NULL){
-        return TRUE;
-    }
-    else{
-        return FALSE;
-    }
-
+int estPileVide(PileM p){
+    return p == NULL;
 }
+
 
 PileM pileVide(void){   
     return NULL;
 }
 
-PileM empiler(PileM p, Monstre val){
+PileM empiler(PileM p, Monstre m){
     MaillonM *Mt;
     Mt =(MaillonM *)malloc(sizeof(MaillonM));
-    if(Mt == NULL){
-        printf("Pb allocation mémoire");
+    if(estPileVide(Mt)){
+        printf("Pb malloc \n");
         exit(1);
     }
-    Mt->m=val;
+    Mt->val=m;
     Mt->suiv=p;//Insertion en tête
     return Mt;
 }
@@ -114,7 +122,7 @@ PileM empiler(PileM p, Monstre val){
 PileM depiler(PileM p){ 
     MaillonM *Mt;
 
-    if(EstPilevide(p)){
+    if(estPileVide(p)){
         printf("Opération interdite");
         exit(1);        
     }
@@ -125,7 +133,11 @@ PileM depiler(PileM p){
 }
 
 Monstre sommet(PileM p){
-    return p->m;
+    if(p==NULL){
+        printf("Opération impossible \n");
+        exit(1);
+    }
+    return p->val;
 }
 
 int hauteur(PileM p){
@@ -161,7 +173,6 @@ void afficheTabMonstre(Monstre **tab, int tlog){
     for(i=0;i<tlog;i++)
         affichageMonstre(*tab[i]);
 }
-
 
 
 Monstre lireMonstre(FILE *flot){
@@ -232,7 +243,7 @@ File deuxiemeGroupe(Monstre **tabMonstres, int *tlog){
     for(i=3;i<=5;i++){
         monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
-        fG2 = enfilerMonstre(fG2, monstrePartie);
+        fG2 = adjQ(fG2, monstrePartie);
     }
     return fG2;
 }

@@ -44,14 +44,11 @@ typedef struct{
 }Joueur;
 
 typedef struct maillonM{
-    Monstre m;
+    Monstre val;
     struct maillonM * suiv;
-}MaillonM, *PileM;
+}MaillonM, *PileM, *File;
 
-typedef struct{
-    MaillonM *t;
-    MaillonM *q;
-}File;
+
 
 int menu(void);
 
@@ -134,13 +131,9 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
 
 File fileVideMonstre(void);
 
-File enfilerMonstre(File fM, Monstre monstre);
+int estFileVide(File fM);
 
-File defilerMonstre(File fM);
-
-int estVide(File fM);
-
-Monstre tete(File fM);
+Monstre teteFile(File fM);
 
 int longueurFileMonstres(File fM);
 
@@ -152,7 +145,11 @@ void affichageFileMonstres(File fM);
 
 int hauteur(PileM p);
 
-Booleen EstPilevide(PileM p);
+int estPileVide(PileM p);
+
+File adjQ(File fM, Monstre x);
+
+File supT(File fM);
 
 PileM pileVide(void);
 
@@ -186,13 +183,27 @@ File deuxiemeGroupe(Monstre **tabMonstres, int *tlog);
 
 /*Parties Déroulement du jeu */
 
-void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
+void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog);
 
-void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog);
+void sauvegardePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog);
+
+void clear(void);
+
+int deroulementPartie(Joueur j, PileM pM, File fM, int *nbPoints);
+
+void affichNouvMonstrePlaine(Joueur j, Monstre m, int nbPoints);
+
+void affichArriveeNouvMonstre(Joueur j, Monstre m, int nbPoints);
 
 //int recherche(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);
 
 
-/*Fonctions concernant les attaques*/
+/*ATTAQUE*/
+
 Arme choixArmeJoueur(void);
+
 int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM);
+
+int combat(Joueur j, Monstre m, int *points);
+
+Arme RandomAttaqueMonstre(Monstre m);

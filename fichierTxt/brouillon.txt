@@ -1,0 +1,115 @@
+#include "sae.h"
+
+typedef struct{
+    MaillonM *t;
+    MaillonM *q;
+}File;
+
+void testFileMonstres(void){
+    File fM;
+    int longueur, i;
+    Monstre testMonstre, autreMonstre;
+    fM = fileVideMonstre();
+    strcpy(testMonstre.nom, "dragon");
+    testMonstre.PV = 20;
+    testMonstre.degat = 2;
+    testMonstre.nbArmes = 3;
+    fM = enfilerMonstre(fM, testMonstre);
+    autreMonstre = tete(fM);
+    affichageMonstre(autreMonstre);
+    longueur = longueurFileMonstres(fM);
+    printf("Longueur de la file : %d\n", longueur);
+    i = estVide(fM);
+    printf("File vide ? %d\n", i);
+    affichageFileMonstres(fM);
+    fM = defilerMonstre(fM);
+    i = estVide(fM);
+    printf("File vide ? %d\n", i);
+    affichageFileMonstres(fM);
+}
+
+File enfilerMonstre(File fM, Monstre monstre);
+
+File defilerMonstre(File fM);
+
+/*void ascciMonstre(char nom []){
+
+}*/
+
+/*Fonctions du File de monstres*/
+
+File fileVideMonstre(void){
+    File fM;
+    fM.t = NULL;
+    fM.q = NULL;
+    return fM;
+}
+
+File enfilerMonstre(File fM, Monstre monstre){
+    MaillonM *maillonAEnfiler;
+    maillonAEnfiler = (MaillonM*)malloc(sizeof(MaillonM));
+    if(maillonAEnfiler == NULL){
+        printf("Problème malloc !");
+        exit(1);
+    }
+    maillonAEnfiler->m = monstre;
+    maillonAEnfiler->suiv = NULL;
+    if(estVide(fM)){
+        fM.t = maillonAEnfiler;
+        fM.q = maillonAEnfiler;
+        return fM;
+    }
+    fM.q->suiv = maillonAEnfiler;
+    fM.q = maillonAEnfiler;
+    return fM;
+}
+
+File defilerMonstre(File fM){
+    MaillonM * aux;
+    if(fM.t == NULL){
+        printf("Opération interdite, la file est vide !!");
+        exit(1);
+    }
+    if(fM.t == fM.q){
+        free(fM.t);
+        return fileVideMonstre();
+    }
+    aux = fM.t;
+    fM.t = fM.t->suiv;
+    free(aux);
+    return fM;
+}
+
+int estFileVide(File fM){
+    return fM.t == NULL && fM.q == NULL;
+}
+
+Monstre teteFile(File fM){
+    if(estVide(fM)){
+        printf("Opération interdite, la file est vide !!");
+        exit(1);
+    }
+    return fM.t->m;
+}
+
+int longueurFileMonstres(File fM){
+    int l=0;
+    while(fM.t != NULL){
+        l += 1;
+        fM.t = fM.t->suiv;
+    }
+    return l;
+}
+
+
+void affichageMonstre(Monstre monstreAafficher){
+    printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", monstreAafficher.nom, monstreAafficher.PV, monstreAafficher.degat, monstreAafficher.nbArmes);
+}
+
+
+void affichageFileMonstres(File fM){
+    while(fM.t != NULL){
+        affichageMonstre(fM.t->m);
+        fM.t = fM.t->suiv;
+    }
+}

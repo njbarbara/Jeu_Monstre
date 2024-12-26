@@ -1,6 +1,6 @@
 goblin Géant
 20 2
-dragon de feu
+Sans
 30 3
 Mega Pekka
 50 4

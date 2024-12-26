@@ -1,4 +1,5 @@
 #!/usr/bin/env bash 
+
 if [ -e "tmp.h" ] ; then 
     rm tmp.h
 fi 

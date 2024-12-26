@@ -2,29 +2,89 @@
 
 
 //Faire une recherche dicho à la place
-void chargePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog){
+void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
     FILE *flot;
-    Joueur j;
-    int nbPile, nbFile, trouve, pos;
+    int nbPile, nbFile, i;
+    char chemin [60] = "fichierSauvegarde/";
 
-    flot = fopen(nomFich, "r");
+    strcat(chemin,nomFich);
 
-    fscanf(flot, "%s%d%d%d%d", j.pseudo, &j.PV, &j.degat, &j.nbParties, &nbPile);
-
-    pos = rechercheDico(tabJoueur, tlog, j.pseudo, &trouve);
-
-    if(trouve == 0){
-        printf("Joueur Inconnu(e) \n");
-        return;
-    }
-
-    *tabJoueur[pos] = j;
-
-    for(int i = 0; i < nbPile; i++) enfilerMonstre(fM, lireMonstre(flot));
+    flot = fopen(chemin, "r");
+    
+    fscanf(flot,"%d",&nbPile);
+    for( i = 0; i < nbPile; i++) empiler(pM, lireMonstre(flot));
     fscanf(flot, "%d", &nbFile);
-    for(int i = 0; i < nbFile; i++) empiler(pM, lireMonstre(flot));
+    for( i = 0; i < nbFile; i++) adjQ(fM, lireMonstre(flot)); 
 }
 
-void sauvegardePartie(Joueur * tabJoueur[],  char *nomFich, File fM, PileM pM, int tlog){
+void sauvegardePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
+    FILE *flot;
+    int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i;
 
+    char chemin [60] = "fichierSauvegarde/";
+
+    strcat(chemin,nomFich);
+
+    flot = fopen(chemin, "w+");
+
+    if(flot == NULL){
+        printf("Pb ouverture fichier \n");
+        return ;
+    }
+
+    fprintf(flot, "%d\n", nbPile);
+
+    for(i=0; i<nbPile; i++){
+        fprintf(flot, "%s%d%d%d", pM->val.nom, pM->val.PV, pM->val.degat, pM->val.nbArmes);
+        depiler(pM);
+    }
+
+    fprintf(flot,"%d\n",nbFile);
+
+    for(i = 0; i< nbFile; i++){
+        fprintf(flot, "%s%d%d%d", fM->suiv->val.nom, fM->suiv->val.PV, fM->suiv->val.degat, fM->suiv->val.nbArmes);
+        supT(fM);
+    } 
+}
+
+int choixSauvegarde(void){
+    char choix;
+
+    printf("Voulez-vous sauvegarder (o : oui / n : non) : ");
+    scanf("%c%*c",&choix);
+    
+    while(choix != 'o' && choix != 'O' && choix != 'n' && choix != 'N'){
+        printf("Choix incorrect \n");
+        printf("Voulez-vous sauvegarder (o : oui / n : non) : ");
+        scanf("%c",&choix);
+    }
+
+    if(choix == 'o' || choix == 'O') return 1;
+    else return 0;
+}
+
+//Il faut une file circulaire 
+int deroulementPartie(Joueur j, PileM pM, File fM, int *nbPoints){
+    int resCombat;
+
+    while(!estPileVide(pM)){
+        affichArriveeNouvMonstre( j, sommet(pM), *nbPoints);
+        resCombat = combat(j, sommet(pM), nbPoints);
+
+        while(resCombat != 1){
+            if(resCombat == -1)return -1;//le joueur est mort
+            resCombat = combat(j, sommet(pM), nbPoints);
+        } 
+        depiler(pM);
+    }
+
+    while(!estFileVide(fM)){
+        affichNouvMonstrePlaine(j, teteFile(fM), *nbPoints);
+        resCombat = combat(j, teteFile(pM), nbPoints);
+        if(resCombat==1) supT(fM);
+        else if(resCombat == -1)return -1;//le joueur est mort
+        pM = pM->suiv;
+    }
+    printf("BIEN JOUÉ...\n");
+    return 0;
 }

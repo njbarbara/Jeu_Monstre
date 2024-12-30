@@ -7,10 +7,10 @@ void global(void){
     choix = menu();
     while(choix !=9){
         if(choix==0){
-            deroulementPartie(Joueur j, PileM pM, File fM, int *nbPoints);
+            printf("A ajouter \n");
         }
 
-        else if(choix == 1)printf("");
+        else if(choix == 1)printf("A implémenter \n");
         else if(choix == 2)printf("A implémenter \n");
         else if(choix == 3)printf("A implémenter \n");
         else if(choix == 4)printf("A implémenter \n");

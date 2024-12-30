@@ -16,9 +16,10 @@ Joueur lireJoueurScores(FILE *flot){
     return j;
 }
 
-Joueur * tabJoueur chargement(int *tlog, char *nomFich){
+Joueur * chargementJoueurs(int *tlog, char *nomFich){
     FILE * flot;
     Joueur * tabJoueur;
+    int i;
 
     flot = fopen(nomFich, "r");
 
@@ -33,13 +34,13 @@ Joueur * tabJoueur chargement(int *tlog, char *nomFich){
         printf("Pb malloc \n");
         exit(1);
     }
-    for(i=0; i<*tlog;i++)tabJoueur[i]=lireJoueurScores(flot)
+    for(i=0; i<*tlog;i++)tabJoueur[i]=lireJoueurScores(flot);
 
     fclose(flot);
     return tabJoueur;
 }
 
-void sauvegardeScoreJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
+void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
     FILE * flot;
     int i;
 
@@ -56,6 +57,7 @@ void sauvegardeScoreJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
         sauvegardeListeScore(flot, tabJoueur[i].l);
     }
     fclose(flot);
+    free(tabJoueur);
 }
 
 int plusGrandScore(Joueur * tabJoueur, int tlog){
@@ -85,45 +87,55 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
 }
 
 
-Joueur initialiserUnJouer(Joueur j){
+Joueur initialiserUnJoueeur(Joueur j){
     j.nbArmes=3;
-    j.PV=20;
-    j.degat = 1;
 
     if(!estListeVide(j.l)){//système de niveau du joueur
-        if(j.l>=50 && j.l<100){
-            j.PV+=10;
-            j.degat+=1;
-        }
-        else if(j.l>=100 && j.l<150 ){
-            j.PV+=20;
+        if(j.l->score >=50 && j.l->score<100){
+            j.PV+=30;
             j.degat+=2;
         }
-        else if(j.l >=150){
-            j.PV+=30;
+        else if(j.l->score>=100 && j.l->score<150 ){
+            j.PV+=40;
             j.degat+=3;
         }
+        else if(j.l->score>=150){
+            j.PV+=50;
+            j.degat+=4;
+        }
     }
-
+    else{
+        j.PV=20;
+        j.degat = 1;
+    }
     return j;
 }
 
-int ajouterJoueur(Joueur tabJoueur, Joueur j, int tlog){
+Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog){
+    Joueur nouvJ;
     Joueur * tabJoueur2;
 
-    tabJoueur2 = (Joueur *)realloc(tabJoueur, tlog)
-    tabJoueur[tlog]=(Joueur *)
+    strcpy(nouvJ.pseudo, nom);
+
+    tabJoueur2 = (Joueur *)realloc(tabJoueur, (*tlog+1)*sizeof(Joueur));
+    if(tabJoueur2==NULL)return NULL;
+    else tabJoueur = tabJoueur2;
+    tabJoueur[*tlog]=nouvJ;
+
+    (*tlog)++;
+
+    return tabJoueur;
     
 }
 
-int recherche(char nom[], Joueur tabJoueur, int tlog){
+int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog){
     int i;
     for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i].pseudo)==0) return i;
     return -1;
 }
 
 
-int rechercheDico(Joueur tabJoueur, int tlog, char * nom, int * trouve){
+int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve){
     int m, inf =0, sup = tlog-1;
 
     while(inf<=sup){

@@ -39,6 +39,7 @@ typedef struct{
     char pseudo[30];
     int PV;
     int degat;
+    int nbArmes;
     ListeScore l; //par ordre décroissant
 }Joueur;
 
@@ -100,6 +101,8 @@ ListeScore supprimerEntete(ListeScore l);
 */
 ListeScore supprimer(ListeScore l, int s);
 
+int estListeVide(ListeScore l);
+
 int longueur(ListeScore l);
 
 void sauvegardeListeScore(FILE *flot, ListeScore l);
@@ -108,20 +111,26 @@ void sauvegardeListeScore(FILE *flot, ListeScore l);
 
 Joueur lireJoueurScores(FILE *flot);
 
-int chargement(Joueur * tabJoueur[], char *nomFich, int tmax);
+Joueur * chargementJoueurs(int *tlog, char *nomFich);
 
-void sauvegardeScoreJoueur(Joueur * tabJoueur[], char *nomFich, int tlog);
+void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog);
 
-void affichListeJoueursScores(Joueur * tabJoueur[], int tlog);
-void affichJoueurMeilleurs(Joueur * tabJoueur [], int tlog);
+void affichListeJoueursScores(Joueur * tabJoueur, int tlog);
+void affichJoueurMeilleursScores(Joueur * tabJoueur, int tlog);
 
-int rechercheDico(Joueur * tabJoueur[], int tlog, char * nom, int * trouve);
+int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve);
 
-int plusGrandScore(Joueur * tabJoueur[], int tlog);
+int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog);
 
-void echange(Joueur * tabJoueur[], int i, int j);
+Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog);
 
-void triEnchangeMeilleurScore(Joueur * tabJoueur[], int tlog);
+Joueur initialiserUnJoueeur(Joueur j);
+
+int plusGrandScore(Joueur * tabJoueur, int tlog);
+
+void echange(Joueur * tabJoueur, int i, int j);
+
+void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog);
 
 
 /*PARTIE MONSTRES*/

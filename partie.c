@@ -1,7 +1,7 @@
 #include "sae.h"
 
 
-void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
+void chargePartie(char *nomFich, File fM, PileM pM){
     FILE *flot;
     int nbPile, nbFile, i;
     char chemin [60] = "fichierSauvegarde/";
@@ -16,7 +16,7 @@ void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
     for( i = 0; i < nbFile; i++) adjQ(fM, lireMonstre(flot)); 
 }
 
-void sauvegardePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
+void sauvegardePartie(char *nomFich, File fM, PileM pM){
     FILE *flot;
     int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i;
 
@@ -62,51 +62,64 @@ int choixSauvegarde(void){
     else return 0;
 }
 
-void creerUnePartie(Joueur tabJoueur){
-    char nom[30];
-    Joueur j;
-    int trouve;
+void creerPartie(){
+
+}
+
+int Partie(Joueur tabJoueur, int tlog){
+    char nomJoueur[30], nomPartie[30];
+    File fM;
+    Pile pM;
+    int pos, nbPoints;
 
     printf("Saisir votre nom de joueur : \n");
-    fgets(nom,30,stdin);
+    fgets(nomJoueur,30,stdin);
 
-    nom[strlen(nom)-1]='\0';
+    printf("Saisir une partie : ");
+    fgets(nomPartie,30,stdin);
 
-    pos = recherche(nom, tabJoueur, tlog);
+    nomJoueur[strlen(nomJoueur)-1]='\0';
+    nomPartie[strlen(nomPartie)-1]='\0';
 
+    pos = rechercheNomJoueur(nomJoueur, tabJoueur, tlog);
 
     if(pos==-1){
-        strcpy(j.pseudo,nom)
-        j = initialiserUnJouer(j);
+        pos = tlog;
+        tabJoueur = ajouterJoueur(tabJoueur, nomJoueur, &tlog);
     } 
-    else {
-        j=initialiserUnJouer(tabJoueur[pos]);
+    else j=initialiserUnJouer(tabJoueur[pos]);
 
-    }
+    chargePartie(nomPartie, fM, pM);
+
+    nbPoints = deroulementPartie(tabJoueur[pos], pM, fM);
+
+    tabJoueur[pos]->l = ajouter(tabJoueur[pos]->l, nbPoints);
+
+    return tlog;
 }
 
 //Il faut une file circulaire 
-int deroulementPartie(Joueur j, PileM pM, File fM, int *nbPoints){
-    int resCombat;
+int deroulementPartie(Joueur j, PileM pM, File fM){
+    int resCombat, nbPoints=0;
 
     while(!estPileVide(pM)){
-        affichArriveeNouvMonstre( j, sommet(pM), *nbPoints);
-        resCombat = combat(j, sommet(pM), nbPoints);
+        affichArriveeNouvMonstre( j, sommet(pM), nbPoints);
+        resCombat = combat(j, sommet(pM), &nbPoints);
 
         while(resCombat != 1){
-            if(resCombat == -1)return -1;//le joueur est mort
-            resCombat = combat(j, sommet(pM), nbPoints);
+            if(resCombat == -1)return nbPoints;//le joueur est mort
+            resCombat = combat(j, sommet(pM), &nbPoints);
         } 
         depiler(pM);
     }
 
     while(!estFileVide(fM)){
-        affichNouvMonstrePlaine(j, teteFile(fM), *nbPoints);
-        resCombat = combat(j, teteFile(pM), nbPoints);
+        affichNouvMonstrePlaine(j, teteFile(fM), nbPoints);
+        resCombat = combat(j, teteFile(pM), &nbPoints);
         if(resCombat==1) supT(fM);
-        else if(resCombat == -1)return -1;//le joueur est mort
+        else if(resCombat == -1)return nbPoints;//le joueur est mort
         pM = pM->suiv;
     }
     printf("BIEN JOUÉ...\n");
-    return 0;
+    return nbPoints;
 }

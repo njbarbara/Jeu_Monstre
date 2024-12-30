@@ -96,10 +96,10 @@ void testMenu(void){
 //TEST JOUEUR
 
 void testChargement(void){
-    int tmax =20, tlog;
-    Joueur * tabJoueur[tmax];
+    int tlog;
+    Joueur * tabJoueur;
 
-    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+    tabJoueur = chargementJoueurs(&tlog, "fichierSauvegarde/Scores.txt");
 
     affichListeJoueursScores(tabJoueur, tlog);
 
@@ -107,27 +107,28 @@ void testChargement(void){
 }
 
 void testSauvegarde(void){
-    int tmax=20, tlog;
-    Joueur tabJoueur;
+    int tlog;
+    Joueur * tabJoueur;
 
-    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+    tabJoueur = chargementJoueurs(&tlog, "fichierSauvegarde/Scores.txt");
 
-    sauvegardeScoreJoueur(tabJoueur, "fichierSauvegarde/Scores.txt", tlog);
+    sauvegardeJoueur(tabJoueur, "fichierSauvegarde/Scores.txt", tlog);
 
-    free(tabJoueur);
 }
 
 void testTriEchangeScore(void){
-    int tmax=20, tlog;
-    Joueur * tabJoueur[tmax];
+    int tlog;
+    Joueur * tabJoueur;
 
-    tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
+    tabJoueur = chargementJoueurs(&tlog, "fichierSauvegarde/Scores.txt");
 
     triEnchangeMeilleurScore(tabJoueur, tlog);
 
     affichListeJoueursScores(tabJoueur, tlog);
 
-    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
+    free(tabJoueur);
+
+
 }
 
 //TEST MONSTRE

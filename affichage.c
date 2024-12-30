@@ -42,22 +42,22 @@ int menu(void){
 
 
 //AFFICHAGE JOUEUR 
-void affichListeJoueursScores(Joueur * tabJoueur[], int tlog){
+void affichListeJoueursScores(Joueur * tabJoueur, int tlog){
     int i;
 
     for(i =0; i<tlog; i++){
-        printf("Nom du joueur : %s\n",tabJoueur[i]->pseudo);
+        printf("Nom du joueur : %s\n",tabJoueur[i].pseudo);
         printf("scores associés : \n");
-        afficherScore(tabJoueur[i]->l);
+        afficherScore(tabJoueur[i].l);
     }
 }
 
-void affichJoueurMeilleurs(Joueur * tabJoueur [], int tlog){
+void affichJoueurMeilleursScores(Joueur * tabJoueur, int tlog){
     int i;
 
     triEnchangeMeilleurScore(tabJoueur, tlog);
 
-    for(i=0; i<tlog; i++) printf("Nom du joueur : %s \t Son meilleur score : %d",tabJoueur[i]->pseudo, tabJoueur[i]->l->score);
+    for(i=0; i<tlog; i++) printf("Nom du joueur : %s \t Son meilleur score : %d",tabJoueur[i].pseudo, tabJoueur[i].l->score);
 
 }
 

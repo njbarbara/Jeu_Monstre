@@ -7,11 +7,8 @@ un monstre si elle est battu / une partie est finie si le joueur meurt
  car la partie doit charger rapidement !!! ET DONC UTILISER DES TABLEAUX DYNAMIQUES
 
 
-Najib : 
 - test score
 - Affichage Joueur 
-
-Aron : 
 - Affichage Monstre
 - * sur le menu principale
 
@@ -20,4 +17,4 @@ Aron :
 Fonctionnalités : 
 - utiliser rand avec le modulo et le temps pour calculer les dégats 
 - afficher chaque img ascii de monstre correspondant au monstre
-- 
+- après un certain score le joueur commence avec 

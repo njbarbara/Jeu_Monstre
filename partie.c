@@ -1,7 +1,6 @@
 #include "sae.h"
 
 
-//Faire une recherche dicho à la place
 void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
     FILE *flot;
     int nbPile, nbFile, i;
@@ -50,7 +49,7 @@ void sauvegardePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog){
 int choixSauvegarde(void){
     char choix;
 
-    printf("Voulez-vous sauvegarder (o : oui / n : non) : ");
+    printf("Voulez-vous sauvegarder votre progression (o : oui / n : non) : ");
     scanf("%c%*c",&choix);
     
     while(choix != 'o' && choix != 'O' && choix != 'n' && choix != 'N'){
@@ -61,6 +60,29 @@ int choixSauvegarde(void){
 
     if(choix == 'o' || choix == 'O') return 1;
     else return 0;
+}
+
+void creerUnePartie(Joueur tabJoueur){
+    char nom[30];
+    Joueur j;
+    int trouve;
+
+    printf("Saisir votre nom de joueur : \n");
+    fgets(nom,30,stdin);
+
+    nom[strlen(nom)-1]='\0';
+
+    pos = recherche(nom, tabJoueur, tlog);
+
+
+    if(pos==-1){
+        strcpy(j.pseudo,nom)
+        j = initialiserUnJouer(j);
+    } 
+    else {
+        j=initialiserUnJouer(tabJoueur[pos]);
+
+    }
 }
 
 //Il faut une file circulaire 

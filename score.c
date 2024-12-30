@@ -5,6 +5,10 @@ ListeScore ensemble(void){
     return NULL;
 }
 
+int estListeVide(ListeScore l){
+    return l == NULL;
+}
+
 void afficherScore(ListeScore l){
     if(l == NULL) return;
     printf("- %d \n", l->score);

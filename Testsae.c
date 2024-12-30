@@ -103,19 +103,18 @@ void testChargement(void){
 
     affichListeJoueursScores(tabJoueur, tlog);
 
-    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
+    free(tabJoueur);
 }
 
 void testSauvegarde(void){
     int tmax=20, tlog;
-    Joueur * tabJoueur[tmax];
+    Joueur tabJoueur;
 
     tlog = chargement(tabJoueur, "fichierSauvegarde/Scores.txt", tmax);
 
     sauvegardeScoreJoueur(tabJoueur, "fichierSauvegarde/Scores.txt", tlog);
 
-    for (int i = 0; i < tlog; i++) free(tabJoueur[i]);
-
+    free(tabJoueur);
 }
 
 void testTriEchangeScore(void){

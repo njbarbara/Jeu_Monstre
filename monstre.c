@@ -185,7 +185,7 @@ Monstre lireMonstre(FILE *flot){
 }
 
 int chargementMonstres(Monstre **tabMonstres){
-    int k=0;
+    int tlog=0;
     FILE *flot;
     Monstre monstreAAjouter;
     flot = fopen("fichierSauvegarde/monstres.txt", "r");
@@ -196,17 +196,16 @@ int chargementMonstres(Monstre **tabMonstres){
     
     monstreAAjouter = lireMonstre(flot);
     while(!feof(flot)){
-        
-        tabMonstres[k] = (Monstre*)malloc(sizeof(Monstre));
-        if(tabMonstres[k] == NULL){
+        tabMonstres[tlog] = (Monstre*)malloc(sizeof(Monstre));
+        if(tabMonstres[tlog] == NULL){
             printf("Probléme malloc !");
             exit(1);
         }
-        *tabMonstres[k] = monstreAAjouter;
+        *tabMonstres[tlog] = monstreAAjouter;
         monstreAAjouter = lireMonstre(flot);
-        k += 1;
-    }
-    return k;
+        tlog += 1;
+    }   
+    return tlog;
 }
 
 Monstre randomMonstre(Monstre **tabMonstres, int *tlog){

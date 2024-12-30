@@ -50,8 +50,6 @@ Arme RandomAttaqueMonstre(Monstre m){
     else return S;
 }
 
-/*A REGARDER, REFAIRE, UTILISER AUTREMENT - TESTER*/
-//si tu v comprendre les modif va voir dans partie.c dans la fct déroulement de partie
 int combat(Joueur j, Monstre m, int *points){
     Arme armeJ, armeM;
     int compa;
@@ -73,7 +71,7 @@ int combat(Joueur j, Monstre m, int *points){
         if(m.PV <= 0){
             printf("%s meurt sous le coup de l'attaque\t\t\t + 50pts", m.nom);
             *points += 50;
-            return 1;/*Monstre tué - que faire?*/
+            return 1;
         }
     }
     else {

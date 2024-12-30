@@ -39,7 +39,6 @@ typedef struct{
     char pseudo[30];
     int PV;
     int degat;
-    int nbParties;
     ListeScore l; //par ordre décroissant
 }Joueur;
 

@@ -87,7 +87,7 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
 }
 
 
-Joueur initialiserUnJoueeur(Joueur j){
+Joueur initialiserUnJoueur(Joueur j){
     j.nbArmes=3;
 
     if(!estListeVide(j.l)){//système de niveau du joueur

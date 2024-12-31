@@ -1,26 +1,26 @@
 #include "sae.h"
 
 
-void chargePartie(char *nomFich, File fM, PileM pM){
+void chargePartie(char *nomFich, File * fM, PileM * pM){
     FILE *flot;
     int nbPile, nbFile, i;
-    char chemin [60] = "fichierSauvegarde/";
+    char chemin[60] = "fichierSauvegarde/";
 
     strcat(chemin,nomFich);
 
     flot = fopen(chemin, "r");
     
     fscanf(flot,"%d",&nbPile);
-    for( i = 0; i < nbPile; i++) empiler(pM, lireMonstre(flot));
+    for( i = 0; i < nbPile; i++) empiler(*pM, lireMonstre(flot));
     fscanf(flot, "%d", &nbFile);
-    for( i = 0; i < nbFile; i++) adjQ(fM, lireMonstre(flot)); 
+    for( i = 0; i < nbFile; i++) adjQ(*fM, lireMonstre(flot)); 
 }
 
 void sauvegardePartie(char *nomFich, File fM, PileM pM){
     FILE *flot;
     int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i;
 
-    char chemin [60] = "fichierSauvegarde/";
+    char chemin[60] = "fichierSauvegarde/";
 
     strcat(chemin,nomFich);
 
@@ -66,10 +66,10 @@ void creerPartie(){
 
 }
 
-int Partie(Joueur tabJoueur, int tlog){
+int Partie(Joueur * tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
     File fM;
-    Pile pM;
+    PileM pM;
     int pos, nbPoints;
 
     printf("Saisir votre nom de joueur : \n");
@@ -87,13 +87,13 @@ int Partie(Joueur tabJoueur, int tlog){
         pos = tlog;
         tabJoueur = ajouterJoueur(tabJoueur, nomJoueur, &tlog);
     } 
-    else j=initialiserUnJouer(tabJoueur[pos]);
+    tabJoueur[pos]=initialiserUnJoueur(tabJoueur[pos]);
 
-    chargePartie(nomPartie, fM, pM);
+    chargePartie(nomPartie, &fM, &pM);
 
     nbPoints = deroulementPartie(tabJoueur[pos], pM, fM);
 
-    tabJoueur[pos]->l = ajouter(tabJoueur[pos]->l, nbPoints);
+    tabJoueur[pos].l = ajouter(tabJoueur[pos].l, nbPoints);
 
     return tlog;
 }
@@ -101,6 +101,10 @@ int Partie(Joueur tabJoueur, int tlog){
 //Il faut une file circulaire 
 int deroulementPartie(Joueur j, PileM pM, File fM){
     int resCombat, nbPoints=0;
+
+    if(estPileVide(pM))return 0;
+
+    affichScenario1erGrpe();
 
     while(!estPileVide(pM)){
         affichArriveeNouvMonstre( j, sommet(pM), nbPoints);
@@ -113,6 +117,10 @@ int deroulementPartie(Joueur j, PileM pM, File fM){
         depiler(pM);
     }
 
+    if(estFileVide(fM))return nbPoints;
+
+    affichScenario2ndGrpe();
+    
     while(!estFileVide(fM)){
         affichNouvMonstrePlaine(j, teteFile(fM), nbPoints);
         resCombat = combat(j, teteFile(pM), &nbPoints);

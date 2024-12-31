@@ -124,7 +124,7 @@ int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog);
 
 Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog);
 
-Joueur initialiserUnJoueeur(Joueur j);
+Joueur initialiserUnJoueur(Joueur j);
 
 int plusGrandScore(Joueur * tabJoueur, int tlog);
 
@@ -191,13 +191,19 @@ File deuxiemeGroupe(Monstre **tabMonstres, int *tlog);
 
 /*Parties Déroulement du jeu */
 
-void chargePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog);
+void affichScenario1erGrpe(void);
 
-void sauvegardePartie(Joueur j,  char *nomFich, File fM, PileM pM, int tlog);
+void affichScenario2ndGrpe(void);
+
+void chargePartie(char *nomFich, File * fM, PileM * pM);
+
+void sauvegardePartie(char *nomFich, File fM, PileM pM);
+
+int Partie(Joueur * tabJoueur, int tlog);
 
 void clear(void);
 
-int deroulementPartie(Joueur j, PileM pM, File fM, int *nbPoints);
+int deroulementPartie(Joueur j, PileM pM, File fM);
 
 void affichNouvMonstrePlaine(Joueur j, Monstre m, int nbPoints);
 

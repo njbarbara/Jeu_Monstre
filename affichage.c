@@ -70,14 +70,19 @@ void affichPartie(File fM, PileM pM, int tlog){
 
 void clear(void){
     for(int i =0; i < 33; i++)printf("\n");
+}   
+
+void affichScenario1erGrpe(void){
+    printf("Contexte :vous arrivez dans un corridor, bordé par deux falaises des monstres arriventles uns après les autres.");
 }
 
+void affichScenario2ndGrpe(void){
+    printf("tous les monstres sont morts... \nvous arrivez au bout du corridor, une plaine herbeuse apparaît. Malheureusement des monstres sortent de partout pour tous vous attaquer en même tempsou presque...");
+}
 void affichArriveeNouvMonstre(Joueur j, Monstre m, int nbPoints){
-    printf("Le monstre %s(%dptV, %dAtt) s'avance pour vous attaquer %s(%dptV, %dAtt)\n", m.nom, m.PV, m.degat, j.pseudo, j.PV, j.degat);
-    printf("%s (%dpts), ", j.pseudo, nbPoints);
+    printf("Le monstre %s(%dptV, %dAtt) accoure et se prépare à t'attaquer %s(%dptV, %dAtt)\n", m.nom, m.PV, m.degat, j.pseudo, j.PV, j.degat);
 }
 
 void affichNouvMonstrePlaine(Joueur j, Monstre m, int nbPoints){
     printf("Le monstre %s(%dptV, %dAtt) s'avance pour vous attaquer %s(%dptV, %dAtt)\n", m.nom, m.PV, m.degat, j.pseudo, j.PV, j.degat);
-    printf("%s (%dpts), ", j.pseudo, nbPoints);
 }

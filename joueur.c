@@ -68,24 +68,18 @@ int plusGrandScore(Joueur * tabJoueur, int tlog){
     return pg;
 }
 
-void echange(Joueur * tabJoueur, int i, int j){
-    Joueur tmp;
+int * triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
+    int pos, *tabJoueurPos, i=0;
 
-    tmp = tabJoueur[i];
-    tabJoueur[i]= tabJoueur[j];
-    tabJoueur[j]=tmp;
-}
-
-void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
-    int I;
+    tabJoueurPos = (Joueur *)malloc(sizeof(Joueur)*tlog);
 
     while(tlog > 1){
-        I = plusGrandScore(tabJoueur, tlog);
-        echange(tabJoueur, tlog-1,I);
+        pos = plusGrandScore(tabJoueur, tlog);
+        tabJoueurPos[i]= pos;
         tlog--;
+        i++;
     }
 }
-
 
 Joueur initialiserUnJoueur(Joueur j){
     j.nbArmes=3;
@@ -124,8 +118,7 @@ Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog){
 
     (*tlog)++;
 
-    return tabJoueur;
-    
+    return tabJoueur; 
 }
 
 int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog){
@@ -147,7 +140,6 @@ int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve){
             *trouve =1;
             return m;
         }
-
     }
     *trouve = 0;
     return inf; 

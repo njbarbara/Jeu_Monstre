@@ -1,5 +1,6 @@
 #include "sae.h"
 
+/*FONCTIONS LIÉES AUX MONSTRE*/
 
 /*void ascciMonstre(char nom []){
 

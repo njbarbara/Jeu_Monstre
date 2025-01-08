@@ -1,5 +1,6 @@
 #include "sae.h"
 
+/*FICHIER DES FONCTIONS LIÉES À LA GESTION DES SCORES*/
 
 ListeScore ensemble(void){
     return NULL;

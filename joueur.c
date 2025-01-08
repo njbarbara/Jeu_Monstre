@@ -1,5 +1,7 @@
 #include "sae.h"
 
+/*FICHIER DES FONCTIONNALITÉS DES JOUEURS*/
+
 Joueur lireJoueurScores(FILE *flot){
     Joueur j;
     int nb, i, scoresJ;
@@ -60,6 +62,8 @@ void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
     free(tabJoueur);
 }
 
+//Fonctions de trie
+
 int plusGrandScore(Joueur * tabJoueur, int tlog){
     int i, pg=0;
 
@@ -79,6 +83,56 @@ int * triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
         tlog--;
         i++;
     }
+}
+
+void copier(Joueur * tabJoueur, int i, int j, Joueur * R){
+    int k = 0;
+
+    while(i<j){
+        R[k]=T[i];
+        i++;
+        k++;
+    }
+}
+
+void fusion(Joueur * R, int n, Joueur * S, int m, Joueur * tabJoueur){
+    int i = 0, j=0, k =0;
+
+    while(i<n && j <m){
+        if(strcmp(R[i].nom, S[j].nom)<0){
+            tabJoueur[k]=R[i];
+            i+=1;
+            k+=1;
+        }
+        else{
+            tabJoueur[k]=S[j];
+            j+=1;
+            k+=1;
+        }
+    }
+}
+
+void triDicho(Joueur * tabJoueur, int tlog){
+    Joueur * R, *S;
+
+    R = (Joueur *)malloc((tlog/2));
+    S = (Joueur *)malloc((tlog - (tlog / 2)));
+
+    if(R==NULL || S == NULL){
+        printf("Pb malloc \n");
+        return;
+    }
+
+    copier(tabJoueur,0,tlog/2, R);
+    copier(tabJoueur,tlog/2,tlog, S);
+
+    triDicho(R,  tlog/2);
+    triDicho(S, (tlog - tlog/2));
+
+    fusion(R,  tlog/2, S, (tlog - tlog/2), T);
+
+    free(R);
+    free(S);
 }
 
 Joueur initialiserUnJoueur(Joueur j){
@@ -145,8 +199,4 @@ int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve){
     return inf; 
 }
 
-
-// JE VAIS LA FAIRE APRÈS
-
-//void ajoutNouvJoueur
 

@@ -9,6 +9,8 @@
     - affichage 
 */
 
+/*FICHIER CONTENANT LES FONCTIONNALITÉS LIÉES AU COMBAT */
+
 
 Arme choixArmeJoueur(void){
     char choix;

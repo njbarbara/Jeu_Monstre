@@ -1,5 +1,6 @@
 #include "sae.h"
 
+/*FICHIER CONTENANT TOUT LES AFFICHAGES DU JEU */
 
 //AFFICHAGE PRINCIPAL 
 
@@ -19,7 +20,7 @@ int menu(void){
     printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
     scanf("%d", &choix);
 
-    while((choix != 1) && (choix != 2) && (choix != 3) && (choix != 3) && (choix != 4) && (choix != 5) && (choix != 9)){
+    while(choix != 1 && choix != 2 && choix != 3 && choix != 3 && choix != 4 && choix != 5 && choix != 9){
         printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
         printf("*\t                                                          \t*\n");
         printf("*\t                      CHOIX INVALIDE                      \t*\n");

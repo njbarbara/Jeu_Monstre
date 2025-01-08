@@ -1,6 +1,13 @@
 #include "sae.h"
 
+/*FICHIER DES FONCTIONS LIÉES AUX FONCTIONNEMENTS DU JEU */
 
+/**
+    \brief cette fonction permet de charger une partie à partir d'un nom fichier passer en paramètre
+    \param nomFich nom du fichier à utiliser
+    \param fM file de monstre à charger
+    \param pM pile de monstre à charger 
+*/
 void chargePartie(char *nomFich, File * fM, PileM * pM){
     FILE *flot;
     int nbPile, nbFile, i;
@@ -16,6 +23,13 @@ void chargePartie(char *nomFich, File * fM, PileM * pM){
     for( i = 0; i < nbFile; i++) adjQ(*fM, lireMonstre(flot)); 
 }
 
+
+/**
+    \brief cette fonction permet de sauvegarder une partie à l'intérieur d'un fichier 
+    \param nomFich nom du fichier à utiliser
+    \param fM file de monstre à sauvegarder
+    \param pM pile de monstre à sauvegarder 
+*/
 void sauvegardePartie(char *nomFich, File fM, PileM pM){
     FILE *flot;
     int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i;
@@ -66,6 +80,12 @@ void creerPartie(){
 
 }
 
+/**
+    \brief 
+    \param
+    \param 
+*/
+
 int Partie(Joueur * tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
     File fM;
@@ -98,10 +118,9 @@ int Partie(Joueur * tabJoueur, int tlog){
     return tlog;
 }
 
-//Il faut une file circulaire 
 int deroulementPartie(Joueur j, PileM pM, File fM){
     int resCombat, nbPoints=0;
-
+    
     if(estPileVide(pM))return 0;
 
     affichScenario1erGrpe();

@@ -209,15 +209,20 @@ int chargementMonstres(Monstre **tabMonstres){
     return tlog;
 }
 
-Monstre randomMonstre(Monstre **tabMonstres, int *tlog){
+Monstre randomMonstre(Monstre **tabMonstres, int tlog){
     int indice;
     time_t seconds;
     Monstre monstreChoisi;
+
     seconds = time(NULL);
-    indice = (rand()+seconds)%(*tlog);
+    indice = (rand()+seconds)%(tlog);
     monstreChoisi = *tabMonstres[indice];
+
+    /*
     decalageAGauche(tabMonstres, indice, *tlog);
     *tlog -= 1;
+    */
+
     return monstreChoisi;
 }
 
@@ -247,3 +252,6 @@ File deuxiemeGroupe(Monstre **tabMonstres, int *tlog){
     }
     return fG2;
 }
+
+///CREER UNE FONCTION QUI TRI LES MONSTRES PAR ORDRE ALPHABÉTIQUE
+

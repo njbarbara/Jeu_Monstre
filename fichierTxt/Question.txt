@@ -4,3 +4,4 @@ nb armes, et du nombre de dégats ?????
 sauv  après avoir tué chaque monstre ???
 - Est il possible de faire un système de level ???
 - Est il possible de quitter la partie quand le joueur le souhaite et ainsi sauvegarder sa progression ?
+- Est ce que créer une structure partie 

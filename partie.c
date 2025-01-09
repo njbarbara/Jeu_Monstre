@@ -76,7 +76,50 @@ int choixSauvegarde(void){
     else return 0;
 }
 
-void creerPartie(){
+void generePartieAleatoire(File *fM, Pile *pM, Monstre **tabMonstres, int tlog){
+    int choix;
+
+    
+
+    *pM = premierGroupe( tabMonstres, &tlog);
+    *fM = deuxiemeGroupe( tabMonstres, &tlog);
+
+
+}
+
+void saisiePartie(int *nbPile, int *nbFile){
+
+    printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
+    scanf("%d", nbPile);    
+    while(*nbPile < 1 && *nbPile>10){
+        printf("Saisie incorrect \n");
+        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
+        scanf("%d", nbPile);    
+    }
+
+    printf("Saisir le nombre de monstre du second groupe (entre 1 et 10): \n"); 
+    scanf("%d", nbFile); 
+    while(*nbFile < 1 && *nbFile>10){
+        printf("Saisie incorrect \n");
+        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
+        scanf("%d", nbFile);    
+    }   
+}
+
+void creerPartie(Monstre **tabMonstres, int tlog){
+    File fM;
+    Pile pM;
+    int i, nbPile, nbFile;
+
+    afficheTabMonstre(tabMonstres, tlog);
+    saisiePartie(&nbPile, &nbFile);
+
+    for(i=0; i<5; i++){
+
+    }
+
+
+
 
 }
 

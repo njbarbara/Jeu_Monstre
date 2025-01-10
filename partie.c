@@ -76,19 +76,23 @@ int choixSauvegarde(void){
     else return 0;
 }
 
-void generePartieAleatoire(File *fM, Pile *pM, Monstre **tabMonstres, int tlog){
+void generePartieAleatoire(Monstre **tabMonstres, int tlog){
     int choix;
+    File fM; 
+    Pile pM;
+    char nomFich[30];
 
-    
+    pM = premierGroupe( tabMonstres, tlog);
+    fM = deuxiemeGroupe( tabMonstres, tlog);
 
-    *pM = premierGroupe( tabMonstres, &tlog);
-    *fM = deuxiemeGroupe( tabMonstres, &tlog);
+    printf("Saisir le nom de fichier ou les sauvegarder : \n");
+    scanf("%s", nomFich);
 
+    SauvegardePartie(nomFich, fM, pM);
 
 }
 
 void saisiePartie(int *nbPile, int *nbFile){
-
     printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
     scanf("%d", nbPile);    
     while(*nbPile < 1 && *nbPile>10){
@@ -106,21 +110,46 @@ void saisiePartie(int *nbPile, int *nbFile){
     }   
 }
 
+Monstre saisirMonstre(Monstre **tabMonstres, int tlog){
+    char nom[30];
+
+    printf("Saisir le monstre");
+    fgets(nom,30,stdin);
+    nom[strlen(nom)-1]='\0';
+
+    pos = rechDichoMonstre(tabMonstres, tlog, nom, &trouve);
+
+    while(trouve == 0){
+        printf("Monstre inconnue \n");
+        printf("Saisir le monstre");
+        fgets(nom,30,stdin);
+        nom[strlen(nom)-1]='\0';
+    }
+}
+
 void creerPartie(Monstre **tabMonstres, int tlog){
     File fM;
     Pile pM;
     int i, nbPile, nbFile;
+    Monstre m;
+    char nomFich[15];
 
     afficheTabMonstre(tabMonstres, tlog);
     saisiePartie(&nbPile, &nbFile);
 
-    for(i=0; i<5; i++){
-
+    for(i=0; i<nbPile; i++){
+        m = saisirMonstre(tabMonstres, tlog);
+        pM =empiler(pM, m);
+    }
+    for(i=0; i<nbFile; i++){
+        m = saisirMonstre(tabMonstres, tlog);
+        fM = adjQ(fM, m);
     }
 
+    printf("Saisir le nom de fichier ou les sauvegarder : \n");
+    scanf("%s", nomFich);
 
-
-
+    sauvegardePartie(nomFich, fM, pM);
 }
 
 /**

@@ -162,7 +162,6 @@ void affichagePileMonstre(PileM p){
 
 /*Fonctions des monstres*/
 
-
 void decalageAGauche(Monstre **tab, int indice, int tlog){
     int i;
     for(i=indice;i<tlog-1;i++)
@@ -217,11 +216,6 @@ Monstre randomMonstre(Monstre **tabMonstres, int tlog){
     seconds = time(NULL);
     indice = (rand()+seconds)%(tlog);
     monstreChoisi = *tabMonstres[indice];
-
-    /*
-    decalageAGauche(tabMonstres, indice, *tlog);
-    *tlog -= 1;
-    */
 
     return monstreChoisi;
 }

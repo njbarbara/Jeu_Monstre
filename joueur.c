@@ -1,7 +1,6 @@
 #include "sae.h"
 
 /*FICHIER DES FONCTIONNALITÉS DES JOUEURS*/
-
 Joueur lireJoueurScores(FILE *flot){
     Joueur j;
     int nb, i, scoresJ;
@@ -18,31 +17,59 @@ Joueur lireJoueurScores(FILE *flot){
     return j;
 }
 
-Joueur * chargementJoueurs(int *tlog, char *nomFich){
-    FILE * flot;
-    Joueur * tabJoueur;
+void decalageADroite(Joueur ** tabJoueur, int tlog, int pos){
     int i;
 
-    flot = fopen(nomFich, "r");
+    for(i=tlog; i>pos; i++)tabJoueur[i]=tabJoueur[i-1];
+}
+
+int chargementJoueurs(Joueur * tabJoueur[], int tmax){
+    FILE * flot;
+    Joueur j;
+    int tlog, pos;
+
+    flot = fopen("fichierSauvegarde/joueurs.txt", "r");
 
     if(flot==NULL){
         printf("Pb ouverture de fichier \n");
         exit(1);
     }
-    fscanf(flot,"%d",tlog);
 
-    tabJoueur = (Joueur *)malloc(*tlog*sizeof(Joueur));
-    if(tabJoueur==NULL){
-        printf("Pb malloc \n");
-        exit(1);
+    j = lireJoueurScores(flot);
+
+    while(!feof(flot)){
+        if(tlog == tmax){
+            printf("Tableau plein \n");
+            fclose(flot);
+            return tlog;
+        }
+
+        tabJoueur[tlog] = (Joueur *)malloc(sizeof(Joueur));
+
+        if(tabJoueur[tlog]==NULL){
+            printf("Pb malloc \n");
+            exit(1);
+        }
+
+        pos = rechercheDico(tabJoueur, tlog, j.pseudo, &trouve);
+        if(trouve == 0)decalageADroite(tabJoueur, tlog, pos);
+            
+        tabJoueur[pos] = j;
+        tlog++;
+
+        j = lireJoueurScores(flot);
     }
-    for(i=0; i<*tlog;i++)tabJoueur[i]=lireJoueurScores(flot);
-
     fclose(flot);
-    return tabJoueur;
+    return tlog;
 }
 
-void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
+void libereTabJoueur(Joueur ** tabJoueur, int tlog){
+    int i;
+
+    for(i=0; i<tlog; i++)free(tabJoueur[i]);
+}
+
+void sauvegardeJoueur(Joueur ** tabJoueur, char *nomFich, int tlog){
     FILE * flot;
     int i;
 
@@ -55,15 +82,15 @@ void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog){
 
     fprintf(flot,"%d\n",tlog);
     for(i=0; i<tlog; i++){
-        fprintf(flot, "%s %d\n",tabJoueur[i].pseudo, longueur(tabJoueur[i].l));
-        sauvegardeListeScore(flot, tabJoueur[i].l);
+        fprintf(flot, "%s %d\n",tabJoueur[i]->pseudo, longueur(tabJoueur[i]->l));
+        sauvegardeListeScore(flot, tabJoueur[i]->l);
     }
     fclose(flot);
-    free(tabJoueur);
+
 }
 
 //Fonctions de trie
-
+/*
 int plusGrandScore(Joueur * tabJoueur, int tlog){
     int i, pg=0;
 
@@ -85,6 +112,7 @@ int * triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
     }
 }
 
+/*
 void copier(Joueur * tabJoueur, int i, int j, Joueur * R){
     int k = 0;
 
@@ -134,6 +162,7 @@ void triDicho(Joueur * tabJoueur, int tlog){
     free(R);
     free(S);
 }
+*/
 
 Joueur initialiserUnJoueur(Joueur j){
     j.nbArmes=3;
@@ -159,37 +188,37 @@ Joueur initialiserUnJoueur(Joueur j){
     return j;
 }
 
-Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog){
+
+
+int ajouterJoueur(Joueur ** tabJoueur, char nom[], int tlog, int pos){
     Joueur nouvJ;
-    Joueur * tabJoueur2;
 
     strcpy(nouvJ.pseudo, nom);
 
-    tabJoueur2 = (Joueur *)realloc(tabJoueur, (*tlog+1)*sizeof(Joueur));
-    if(tabJoueur2==NULL)return NULL;
-    else tabJoueur = tabJoueur2;
-    tabJoueur[*tlog]=nouvJ;
+    decalageADroite(tabJoueur, tlog, pos);
 
-    (*tlog)++;
+    tabJoueur[pos]=nouvJ;
+
+    tlog++;
 
     return tabJoueur; 
 }
 
-int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog){
+int rechercheNomJoueur(char nom[], Joueur ** tabJoueur, int tlog){
     int i;
     for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i].pseudo)==0) return i;
     return -1;
 }
 
 
-int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve){
+int rechercheDico(Joueur ** tabJoueur, int tlog, char nom[], int * trouve){
     int m, inf =0, sup = tlog-1;
 
     while(inf<=sup){
         m = (inf + sup)/2;
 
-        if(strcmp(tabJoueur[m].pseudo, nom)>0) sup = m-1;
-        else if (strcmp(tabJoueur[m].pseudo, nom)<0) inf = m+1;
+        if(strcmp(tabJoueur[m]->pseudo, nom)>0) sup = m-1;
+        else if (strcmp(tabJoueur[m]->pseudo, nom)<0) inf = m+1;
         else{
             *trouve =1;
             return m;

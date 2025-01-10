@@ -2,6 +2,8 @@
 
 /*FICHIER DES FONCTIONS LIÉES AUX FONCTIONNEMENTS DU JEU */
 
+
+
 /**
     \brief cette fonction permet de charger une partie à partir d'un nom fichier passer en paramètre
     \param nomFich nom du fichier à utiliser
@@ -85,11 +87,10 @@ void generePartieAleatoire(Monstre **tabMonstres, int tlog){
     pM = premierGroupe( tabMonstres, tlog);
     fM = deuxiemeGroupe( tabMonstres, tlog);
 
-    printf("Saisir le nom de fichier ou les sauvegarder : \n");
+    printf("Saisir le nom de fichier où les sauvegarder : ");
     scanf("%s", nomFich);
 
     SauvegardePartie(nomFich, fM, pM);
-
 }
 
 void saisiePartie(int *nbPile, int *nbFile){
@@ -110,31 +111,36 @@ void saisiePartie(int *nbPile, int *nbFile){
     }   
 }
 
-Monstre saisirMonstre(Monstre **tabMonstres, int tlog){
+Monstre saisirMonstre(void){
     char nom[30];
+    Monstre m;
+    int niv;
 
-    printf("Saisir le monstre");
-    fgets(nom,30,stdin);
-    nom[strlen(nom)-1]='\0';
+    printf("Saisir le nom du monstre : ");
+    fgets(m.nom,30,stdin);
+    m.nom[strlen(m.nom)-1]='\0';
 
-    pos = rechDichoMonstre(tabMonstres, tlog, nom, &trouve);
+    printf("Saisir le niveau du monstre (entre 1 et 3) : ");
+    scanf("%d", &niv);
 
-    while(trouve == 0){
-        printf("Monstre inconnue \n");
-        printf("Saisir le monstre");
-        fgets(nom,30,stdin);
-        nom[strlen(nom)-1]='\0';
+    while(niv < 1 && niv > 3){
+        printf("Niveau incorrect \n");
+        printf("Saisir le niveau du monstre (entre 1 et 3) : ");
+        scanf("%d", &niv);
     }
+
+    m = convertisseurNiveauEnStat(m, niv);
+
+    return m;
 }
 
-void creerPartie(Monstre **tabMonstres, int tlog){
+void creerPartie(void){
     File fM;
     Pile pM;
     int i, nbPile, nbFile;
     Monstre m;
     char nomFich[15];
 
-    afficheTabMonstre(tabMonstres, tlog);
     saisiePartie(&nbPile, &nbFile);
 
     for(i=0; i<nbPile; i++){
@@ -146,7 +152,7 @@ void creerPartie(Monstre **tabMonstres, int tlog){
         fM = adjQ(fM, m);
     }
 
-    printf("Saisir le nom de fichier ou les sauvegarder : \n");
+    printf("Saisir le nom du fichier où les sauvegarder : ");
     scanf("%s", nomFich);
 
     sauvegardePartie(nomFich, fM, pM);
@@ -158,7 +164,7 @@ void creerPartie(Monstre **tabMonstres, int tlog){
     \param 
 */
 
-int Partie(Joueur * tabJoueur, int tlog){
+int Partie(Joueur ** tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
     File fM;
     PileM pM;
@@ -173,9 +179,10 @@ int Partie(Joueur * tabJoueur, int tlog){
     nomJoueur[strlen(nomJoueur)-1]='\0';
     nomPartie[strlen(nomPartie)-1]='\0';
 
-    pos = rechercheNomJoueur(nomJoueur, tabJoueur, tlog);
+    pos = rechercheDico(tabJoueur,  tlog,  nom, &trouve)
 
-    if(pos==-1){
+
+    if(trouve==0){
         pos = tlog;
         tabJoueur = ajouterJoueur(tabJoueur, nomJoueur, &tlog);
     } 

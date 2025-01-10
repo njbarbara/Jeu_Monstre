@@ -111,18 +111,18 @@ void sauvegardeListeScore(FILE *flot, ListeScore l);
 
 Joueur lireJoueurScores(FILE *flot);
 
-Joueur * chargementJoueurs(int *tlog, char *nomFich);
+int chargementJoueurs(Joueur * tabJoueur[], int tmax);
 
-void sauvegardeJoueur(Joueur * tabJoueur, char *nomFich, int tlog);
+void sauvegardeJoueur(Joueur ** tabJoueur, char *nomFich, int tlog);
 
-void affichListeJoueursScores(Joueur * tabJoueur, int tlog);
-void affichJoueurMeilleursScores(Joueur * tabJoueur, int tlog);
+void affichListeJoueursScores(Joueur ** tabJoueur, int tlog);
+void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog);
 
 int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve);
 
 int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog);
 
-Joueur * ajouterJoueur(Joueur * tabJoueur, char nom[], int * tlog);
+int ajouterJoueur(Joueur ** tabJoueur, char nom[], int tlog, int pos);
 
 Joueur initialiserUnJoueur(Joueur j);
 

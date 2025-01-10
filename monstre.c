@@ -162,6 +162,40 @@ void affichagePileMonstre(PileM p){
 
 /*Fonctions des monstres*/
 
+Monstre convertisseurNiveauEnStat(Monstre m, int niveau){
+    if(niveau==3){
+        m.PV=4;
+        m.degat=2;
+        m.nbArmes=5;
+    }
+    else if(niveau == 2){
+        m.PV=6;
+        m.degat=1;
+        m.nbArmes=3;
+    }
+    else{
+        m.PV=4;
+        m.degat=1;
+        m.nbArmes=4;
+    }
+}
+
+int ajouterMonstre(Monstre **tab, int tlog, int tmax){
+    Monstre m;
+
+    if(tlog == tmax){
+        printf("Tableau plein \n");
+        return tlog;
+    }
+
+    tab[tlog] = (Monstre *)malloc(sizeof(Monstre));
+
+    trieEchangeNomMonstre(tab, tlog);  
+
+    tlog++;
+    return tlog;  
+} 
+
 void decalageAGauche(Monstre **tab, int indice, int tlog){
     int i;
     for(i=indice;i<tlog-1;i++)
@@ -173,7 +207,6 @@ void afficheTabMonstre(Monstre **tab, int tlog){
     for(i=0;i<tlog;i++)
         affichageMonstre(*tab[i]);
 }
-
 
 Monstre lireMonstre(FILE *flot){
     Monstre m;
@@ -190,7 +223,7 @@ int chargementMonstres(Monstre **tabMonstres){
     Monstre monstreAAjouter;
     flot = fopen("fichierSauvegarde/monstres.txt", "r");
     if(flot == NULL){
-        printf("Probléme de chargement !");
+        printf("Problème de chargement !");
         exit(1);
     }
     
@@ -220,7 +253,7 @@ Monstre randomMonstre(Monstre **tabMonstres, int tlog){
     return monstreChoisi;
 }
 
-PileM premierGroupe(Monstre **tabMonstres, int *tlog){
+PileM premierGroupe(Monstre **tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     PileM pG2;
@@ -234,7 +267,7 @@ PileM premierGroupe(Monstre **tabMonstres, int *tlog){
 }
 
 
-File deuxiemeGroupe(Monstre **tabMonstres, int *tlog){
+File deuxiemeGroupe(Monstre **tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     File fG2;
@@ -248,4 +281,3 @@ File deuxiemeGroupe(Monstre **tabMonstres, int *tlog){
 }
 
 ///CREER UNE FONCTION QUI TRI LES MONSTRES PAR ORDRE ALPHABÉTIQUE
-

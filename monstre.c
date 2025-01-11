@@ -180,7 +180,7 @@ Monstre convertisseurNiveauEnStat(Monstre m, int niveau){
     }
     return m;
 }
-
+/*
 int ajouterMonstre(Monstre **tab, int tlog, int tmax){
     Monstre m;
     int niveau;
@@ -213,11 +213,7 @@ int ajouterMonstre(Monstre **tab, int tlog, int tmax){
     return tlog;  
 } 
 
-void decalageAGauche(Monstre **tab, int indice, int tlog){
-    int i;
-    for(i=indice;i<tlog-1;i++)
-        tab[i] = tab[i+1];
-}
+*/
 
 void afficheTabMonstre(Monstre **tab, int tlog){
     int i;
@@ -243,6 +239,7 @@ int chargementMonstres(Monstre **tabMonstres){
         exit(1);
     }
     
+
     monstreAAjouter = lireMonstre(flot);
     while(!feof(flot)){
         tabMonstres[tlog] = (Monstre*)malloc(sizeof(Monstre));

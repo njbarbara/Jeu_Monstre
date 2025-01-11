@@ -210,7 +210,11 @@ void sauvegardePartie(char *nomFich, File *fM, PileM *pM);
 
 int Partie(Joueur ** tabJoueur, int tlog);
 
+void creerPartie(void);
+
 void clear(void);
+
+void generePartieAleatoire(void);
 
 int deroulementPartie(Joueur j, PileM pM, File fM);
 

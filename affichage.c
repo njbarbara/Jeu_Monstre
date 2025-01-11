@@ -94,7 +94,9 @@ void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog){
 
 //fct utilisé pour tester le chargement et la sauvegarde de partie
 void affichPartie(File fM, PileM pM){
+    printf("Premier groupe : \n");
     affichagePileMonstre(pM);
+    printf("Second groupe : \n");
     affichageFileMonstres(fM);
 }
 

@@ -37,7 +37,6 @@ void chargePartie(char *nomFich, File *fM, PileM *pM){
     fclose(flot);
 }
 
-
 /**
     \brief cette fonction permet de sauvegarder une partie à l'intérieur d'un fichier 
     \param nomFich nom du fichier à utiliser
@@ -90,13 +89,22 @@ int choixSauvegarde(void){
     else return 0;
 }
 */
-void generePartieAleatoire(Monstre **tabMonstres, int tlog){
+void generePartieAleatoire(void){
     File fM; 
     PileM pM;
     char nomFich[30];
+    int tlog;
+    Monstre *tabMonstres[6];
+
+    tlog = chargementMonstres(tabMonstres);
+
+    printf("Monstre qui vont être tirés aux sorts : \n");
+    afficheTabMonstre(tabMonstres, tlog);
 
     pM = premierGroupe(tabMonstres, tlog);
     fM = deuxiemeGroupe(tabMonstres, tlog);
+
+    affichPartie(fM, pM);
 
     printf("Saisir le nom de fichier où les sauvegarder : ");
     scanf("%s", nomFich);
@@ -163,7 +171,7 @@ void creerPartie(void){
     }
 
     printf("Saisir le nom du fichier où les sauvegarder : ");
-    scanf("%s", nomFich);
+    scanf("%s%*c", nomFich);
 
     sauvegardePartie(nomFich, &fM, &pM);
 }

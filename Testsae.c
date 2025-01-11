@@ -356,14 +356,44 @@ void testSauvegardePartie(void){
     affichPartie(fM, pM);
 
     sauvegardePartie("essai2.txt", &fM, &pM);
-    affichPartie(fM, pM);
 
-    /*
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
 
     chargePartie("essai2.txt", &fM, &pM);
     printf("Après chargement : \n");
     affichPartie(fM, pM);
-*/
+}
+
+//A tester 
+
+void testGenerePartieAleatoire(void){
+    generePartieAleatoire();
+}
+
+void testCreePartie(void){
+    File fM;
+    PileM pM;
+    char nomFich[30];
+
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
+    creerPartie();
+    printf("Saisir le fichier où vous avez enregistré la partie : \n");
+    scanf("%s", nomFich);
+    chargePartie(nomFich, &fM, &pM);
+
+    affichPartie(fM, pM);
+
+}
+
+void testDeroulementPartie(void){
+
+}
+
+void testPartie(void){
+    
 }
 
 int main(void){//fonction principale
@@ -400,7 +430,8 @@ int main(void){//fonction principale
 
     //TEST PARTIE 
     //testChargementPartie();
-    testSauvegardePartie();
+    //testSauvegardePartie();
+    //testGenerePartieAleatoire();
 
 
     return 0;

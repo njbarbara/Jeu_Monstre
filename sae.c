@@ -9,7 +9,6 @@ void global(void){
         if(choix==0){
             printf("A ajouter \n");
         }
-
         else if(choix == 1)printf("A implémenter \n");
         else if(choix == 2)printf("A implémenter \n");
         else if(choix == 3)printf("A implémenter \n");

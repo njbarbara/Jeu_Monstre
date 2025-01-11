@@ -1,17 +1,5 @@
 #include "sae.h"
 
-/*
-    - comparer les attaques + ajouter 10 points si gagné par le joueur + ajouter 50points si le monstre meurt soit tete/sommet->PV <= 0 + s'il meurt apprès l'ajoute des points il faut le defélier/dépiler
-    - choix de l'attaque du joueur entre P, F, C
-    - attaque aléatoire du monstre en fonction de son nombres d'armes. Si tete/sommet->nbArmes = 3, entre P, F, C
-                                                                       Si tete/sommet->nbArmes = 4, entre P, F, C, O
-                                                                       Si tete/sommet->nbArmes = 5, entre P, F, C, O, # soit S
-    - affichage 
-*/
-
-/*FICHIER CONTENANT LES FONCTIONNALITÉS LIÉES AU COMBAT */
-
-
 Arme choixArmeJoueur(void){
     char choix;
     printf("Choisis ton attaque parmi P, F, C : ");
@@ -26,18 +14,18 @@ Arme choixArmeJoueur(void){
 
 int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM){
     if(attaqueJ == attaqueM) return 2;
-    else if(attaqueM == S) return 0;
-    else if(attaqueM == O) return 1;
-    else if(attaqueJ == P){
-        if(attaqueM == C) return 1;
+    else if(attaqueM == 'S') return 0;
+    else if(attaqueM == 'O') return 1;
+    else if(attaqueJ == 'P'){
+        if(attaqueM == 'C') return 1;//le joueur gagne le duel
         return 0;
     }
-    else if(attaqueJ == C){
-        if(attaqueM == F) return 1;
+    else if(attaqueJ == 'C'){
+        if(attaqueM == 'F') return 1;
         return 0;
     }
     else {
-        if(attaqueM == P) return 1;
+        if(attaqueM == 'P') return 1;
         return 0;
     }
 }
@@ -45,11 +33,11 @@ int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM){
 Arme RandomAttaqueMonstre(Monstre m){
     time_t seconds = time(NULL);
     int att = (rand()+seconds)%(m.nbArmes);
-    if(att==0)return P;
-    else if(att==1) return F;
-    else if(att==2) return C;
-    else if(att==3) return O;
-    else return S;
+    if(att==0)return 'P';
+    else if(att==1) return 'F';
+    else if(att==2) return 'C';
+    else if(att==3) return 'O';
+    else return 'S';
 }
 
 int combat(Joueur j, Monstre m, int *points){
@@ -63,11 +51,10 @@ int combat(Joueur j, Monstre m, int *points){
 
     compa = gagneAttaqueJoueur(armeJ, armeM);
 
-    if(compa == 2)printf("\tAucune de %s(%dptV) et %s(%dptV) ne gagne l'attaque\n", j.pseudo, j.PV, m.nom, m.PV);
+    if(compa == 2)printf("Ni %s(%dptV) ni %s(%dptV) ne gagne l'attaque\n", j.pseudo, j.PV, m.nom, m.PV);
     else if(compa == 1){
-
         m.PV -= j.degat;
-        printf("\t%s(%dptV) gagne l'attaque contre %s(%dptV)\t\t+ 10pts\n", j.pseudo, j.PV, m.nom, m.PV);
+        printf("%s(%dptV) gagne l'attaque contre %s(%dptV)\t\t+ 10pts\n", j.pseudo, j.PV, m.nom, m.PV);
         *points += 10;
 
         if(m.PV <= 0){
@@ -78,7 +65,7 @@ int combat(Joueur j, Monstre m, int *points){
     }
     else {
         j.PV -= m.degat;
-        printf("\t%s(%dptV) perd l'attaque contre %s(%dptV)\n", j.pseudo, j.PV, m.nom, m.PV);
+        printf("%s(%dptV) perd l'attaque contre %s(%dptV)\n", j.pseudo, j.PV, m.nom, m.PV);
         if(j.PV <= 0){
             printf("VOUS ÊTES MORT... nombre de points acquis : %d", *points);
             return -1;

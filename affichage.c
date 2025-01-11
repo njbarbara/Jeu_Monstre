@@ -47,26 +47,55 @@ void affichListeJoueursScores(Joueur ** tabJoueur, int tlog){
     int i;
 
     for(i =0; i<tlog; i++){
-        printf("Nom du joueur : %s\n",tabJoueur[i]->pseudo);
-        printf("scores associés : \n");
-        afficherScore(tabJoueur[i]->l);
+        printf("Nom du joueur : %s \n",tabJoueur[i]->pseudo);
+        if(!estListeVide(tabJoueur[i]->l)){
+            printf("Scores associés : \n");
+            afficherScore(tabJoueur[i]->l);
+        }
     }
 }
 
+void affichStatJoueur(Joueur ** tabJoueur, int tlog){
+    char nom[30];
+    int pos;
+
+    printf("Saisir le nom du joueur à rechercher : ");
+    fgets(nom,30,stdin);
+    nom[strlen(nom)-1]='\0';
+
+    pos = rechercheNomJoueur( nom, tabJoueur, tlog);
+
+    if(pos == -1){
+        printf("Joueur/Joueuse inconnu(e)\n");
+        return;
+    }
+    else printf("Le joueur %s a joué  à %d parties \n avec pour meilleur score : %d", tabJoueur[pos]->pseudo, longueur(tabJoueur[pos]->l), tabJoueur[pos]->l->score);
+
+}
+
 void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog){
-    int i;
+    int i, j, classement=0;
+    Joueur * tmp;
 
-    triEnchangeMeilleurScore(tabJoueur, tlog);
+    tmp = (Joueur *)malloc(sizeof(Joueur)*tlog);
 
-    for(i=0; i<tlog; i++) printf("Nom du joueur : %s \t Son meilleur score : %d",tabJoueur[i]->pseudo, tabJoueur[i].l->score);
+    for(j = 0; j<tlog; j++ )tmp[j]=*tabJoueur[j];
 
+    triEnchangeMeilleurScore(tmp, tlog);
+
+    for(i=0; i<tlog; i++){
+        classement++;
+        printf("Le joueur présent en position %d est %s, avec pour meilleur meilleur score : %d \n",classement,tmp[i].pseudo, tmp[i].l->score);
+    } 
+    free(tmp);
 }
 
 // AFFICHAGE PARTIE
 
 //fct utilisé pour tester le chargement et la sauvegarde de partie
-void affichPartie(File fM, PileM pM, int tlog){
-
+void affichPartie(File fM, PileM pM){
+    affichagePileMonstre(pM);
+    affichageFileMonstres(fM);
 }
 
 void clear(void){
@@ -74,7 +103,7 @@ void clear(void){
 }   
 
 void affichScenario1erGrpe(void){
-    printf("Contexte :vous arrivez dans un corridor, bordé par deux falaises des monstres arriventles uns après les autres.");
+    printf("Contexte : vous arrivez dans un corridor, bordé par deux falaises des monstres arriventles uns après les autres.");
 }
 
 void affichScenario2ndGrpe(void){

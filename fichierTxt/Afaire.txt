@@ -1,20 +1,2 @@
-Tache à faire : 
-- Relire 
-- pour une partie les niveaux et les monstres sont stocker dans un pile / sauvgarder 
-la pile si partie non finie content seulement les monstres,niveaux restant / on dépile 
-un monstre si elle est battu / une partie est finie si le joueur meurt
-- Le chargement d'une partie doit se faire à partir d'un fichier binaire,
- car la partie doit charger rapidement !!! ET DONC UTILISER DES TABLEAUX DYNAMIQUES
-
-
-- test score
-- Affichage Joueur 
-- Affichage Monstre
-- * sur le menu principale
-
-
-(Après)
-Fonctionnalités : 
-- utiliser rand avec le modulo et le temps pour calculer les dégats 
-- afficher chaque img ascii de monstre correspondant au monstre
-- après un certain score le joueur commence avec 
+A faire : 
+- test file monstre, test partie, test attaque

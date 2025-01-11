@@ -3,26 +3,38 @@
 /*FICHIER DES FONCTIONS LIÉES AUX FONCTIONNEMENTS DU JEU */
 
 
-
 /**
     \brief cette fonction permet de charger une partie à partir d'un nom fichier passer en paramètre
     \param nomFich nom du fichier à utiliser
     \param fM file de monstre à charger
     \param pM pile de monstre à charger 
 */
-void chargePartie(char *nomFich, File * fM, PileM * pM){
+void chargePartie(char *nomFich, File *fM, PileM *pM){
     FILE *flot;
     int nbPile, nbFile, i;
     char chemin[60] = "fichierSauvegarde/";
+    Monstre m;
 
     strcat(chemin,nomFich);
 
     flot = fopen(chemin, "r");
+
+    if(flot==NULL){
+        printf("Pb ouverture fichier \n");
+        return;
+    }
     
-    fscanf(flot,"%d",&nbPile);
-    for( i = 0; i < nbPile; i++) empiler(*pM, lireMonstre(flot));
-    fscanf(flot, "%d", &nbFile);
-    for( i = 0; i < nbFile; i++) adjQ(*fM, lireMonstre(flot)); 
+    fscanf(flot,"%d%*c",&nbPile);
+    for(i = 0; i < nbPile; i++){
+        m = lireMonstre(flot);
+        *pM = empiler(*pM, m);
+    } 
+    fscanf(flot, "%d%*c", &nbFile);
+    for( i = 0; i < nbFile; i++){
+        m = lireMonstre(flot);
+        *fM = adjQ(*fM, m); 
+    } 
+    fclose(flot);
 }
 
 
@@ -32,9 +44,9 @@ void chargePartie(char *nomFich, File * fM, PileM * pM){
     \param fM file de monstre à sauvegarder
     \param pM pile de monstre à sauvegarder 
 */
-void sauvegardePartie(char *nomFich, File fM, PileM pM){
+void sauvegardePartie(char *nomFich, File *fM, PileM *pM){
     FILE *flot;
-    int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i;
+    int nbPile = hauteur(*pM), nbFile = longueurFileMonstres(*fM), i,j;
 
     char chemin[60] = "fichierSauvegarde/";
 
@@ -44,24 +56,24 @@ void sauvegardePartie(char *nomFich, File fM, PileM pM){
 
     if(flot == NULL){
         printf("Pb ouverture fichier \n");
-        return ;
+        return;
     }
 
     fprintf(flot, "%d\n", nbPile);
-
     for(i=0; i<nbPile; i++){
-        fprintf(flot, "%s%d%d%d", pM->val.nom, pM->val.PV, pM->val.degat, pM->val.nbArmes);
-        depiler(pM);
+        fprintf(flot, "%s\n%d %d %d\n", sommet(*pM).nom, sommet(*pM).PV, sommet(*pM).degat, sommet(*pM).nbArmes);
+        depiler(*pM);
     }
 
     fprintf(flot,"%d\n",nbFile);
-
-    for(i = 0; i< nbFile; i++){
-        fprintf(flot, "%s%d%d%d", fM->suiv->val.nom, fM->suiv->val.PV, fM->suiv->val.degat, fM->suiv->val.nbArmes);
-        supT(fM);
+    for(j = 0; j< nbFile; j++){
+        fprintf(flot, "%s\n%d %d %d\n", teteFile(*fM).nom, teteFile(*fM).PV, teteFile(*fM).degat, teteFile(*fM).nbArmes);
+        supT(*fM);
     } 
+    fclose(flot);
 }
 
+/*
 int choixSauvegarde(void){
     char choix;
 
@@ -77,20 +89,19 @@ int choixSauvegarde(void){
     if(choix == 'o' || choix == 'O') return 1;
     else return 0;
 }
-
+*/
 void generePartieAleatoire(Monstre **tabMonstres, int tlog){
-    int choix;
     File fM; 
-    Pile pM;
+    PileM pM;
     char nomFich[30];
 
-    pM = premierGroupe( tabMonstres, tlog);
-    fM = deuxiemeGroupe( tabMonstres, tlog);
+    pM = premierGroupe(tabMonstres, tlog);
+    fM = deuxiemeGroupe(tabMonstres, tlog);
 
     printf("Saisir le nom de fichier où les sauvegarder : ");
     scanf("%s", nomFich);
 
-    SauvegardePartie(nomFich, fM, pM);
+    sauvegardePartie(nomFich, &fM, &pM);
 }
 
 void saisiePartie(int *nbPile, int *nbFile){
@@ -112,7 +123,6 @@ void saisiePartie(int *nbPile, int *nbFile){
 }
 
 Monstre saisirMonstre(void){
-    char nom[30];
     Monstre m;
     int niv;
 
@@ -121,12 +131,12 @@ Monstre saisirMonstre(void){
     m.nom[strlen(m.nom)-1]='\0';
 
     printf("Saisir le niveau du monstre (entre 1 et 3) : ");
-    scanf("%d", &niv);
+    scanf("%d%*c", &niv);
 
-    while(niv < 1 && niv > 3){
+    while(niv < 1 || niv > 3){
         printf("Niveau incorrect \n");
         printf("Saisir le niveau du monstre (entre 1 et 3) : ");
-        scanf("%d", &niv);
+        scanf("%d%*c", &niv);
     }
 
     m = convertisseurNiveauEnStat(m, niv);
@@ -136,7 +146,7 @@ Monstre saisirMonstre(void){
 
 void creerPartie(void){
     File fM;
-    Pile pM;
+    PileM pM;
     int i, nbPile, nbFile;
     Monstre m;
     char nomFich[15];
@@ -144,18 +154,18 @@ void creerPartie(void){
     saisiePartie(&nbPile, &nbFile);
 
     for(i=0; i<nbPile; i++){
-        m = saisirMonstre(tabMonstres, tlog);
+        m = saisirMonstre();
         pM =empiler(pM, m);
     }
     for(i=0; i<nbFile; i++){
-        m = saisirMonstre(tabMonstres, tlog);
+        m = saisirMonstre();
         fM = adjQ(fM, m);
     }
 
     printf("Saisir le nom du fichier où les sauvegarder : ");
     scanf("%s", nomFich);
 
-    sauvegardePartie(nomFich, fM, pM);
+    sauvegardePartie(nomFich, &fM, &pM);
 }
 
 /**
@@ -163,36 +173,33 @@ void creerPartie(void){
     \param
     \param 
 */
-
 int Partie(Joueur ** tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
     File fM;
     PileM pM;
-    int pos, nbPoints;
+    int pos, nbPoints, trouve;
 
-    printf("Saisir votre nom de joueur : \n");
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
+    printf("Saisir le nom d'une partie : ");
+    scanf("%s%*c",nomPartie);
+
+    printf("Saisir votre nom de joueur : ");
     fgets(nomJoueur,30,stdin);
 
-    printf("Saisir une partie : ");
-    fgets(nomPartie,30,stdin);
-
     nomJoueur[strlen(nomJoueur)-1]='\0';
-    nomPartie[strlen(nomPartie)-1]='\0';
 
-    pos = rechercheDico(tabJoueur,  tlog,  nom, &trouve)
+    pos = rechercheDico(tabJoueur,  tlog,  nomJoueur, &trouve);
 
-
-    if(trouve==0){
-        pos = tlog;
-        tabJoueur = ajouterJoueur(tabJoueur, nomJoueur, &tlog);
-    } 
-    tabJoueur[pos]=initialiserUnJoueur(tabJoueur[pos]);
+    if(trouve==0)tlog = ajouterJoueur(tabJoueur, nomJoueur, tlog, pos);
+    *tabJoueur[pos]=initialiserUnJoueur(*tabJoueur[pos]);
 
     chargePartie(nomPartie, &fM, &pM);
 
-    nbPoints = deroulementPartie(tabJoueur[pos], pM, fM);
+    nbPoints = deroulementPartie(*tabJoueur[pos],pM, fM);
 
-    tabJoueur[pos].l = ajouter(tabJoueur[pos].l, nbPoints);
+    tabJoueur[pos]->l = ajouter(tabJoueur[pos]->l, nbPoints);
 
     return tlog;
 }

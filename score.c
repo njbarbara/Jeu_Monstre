@@ -2,7 +2,7 @@
 
 /*FICHIER DES FONCTIONS LIÉES À LA GESTION DES SCORES*/
 
-ListeScore ensemble(void){
+ListeScore creerListeVide(void){
     return NULL;
 }
 
@@ -79,5 +79,5 @@ void sauvegardeListeScore(FILE *flot, ListeScore l){
     if(l == NULL) return;
     fprintf(flot,"%d\n", l->score);
     l = supprimerEntete(l);
-    sauvegardeListeScore(flot, l->suiv);
+    sauvegardeListeScore(flot, l);
 }

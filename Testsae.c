@@ -5,7 +5,7 @@
 void testInsertionEnTete(void){
     ListeScore l;
 
-    l=ensemble();
+    l=creerListeVide();
 
     l= ajouterEntete( l, 10);
     l= ajouterEntete( l, 5);
@@ -25,7 +25,7 @@ void testInsertionEnTete(void){
 void testInsertion(void){
     ListeScore l;
 
-    l=ensemble();
+    l=creerListeVide();
 
     l= ajouter( l, 10);
     l= ajouter( l, 5);
@@ -46,7 +46,7 @@ void testInsertion(void){
 void testSuppressionEnTete(void){
     ListeScore l;
 
-    l=ensemble();
+    l=creerListeVide();
 
     l= ajouter( l, 10);
     l= ajouter( l, 5);
@@ -67,7 +67,7 @@ void testSuppressionEnTete(void){
 void testSuppression(void){
     ListeScore l;
 
-    l=ensemble();
+    l=creerListeVide();
 
     l= ajouter( l, 10);
     l= ajouter( l, 5);
@@ -103,7 +103,6 @@ void testChargement(void){
 
     affichListeJoueursScores(tabJoueur, tlog);
 
-    free(tabJoueur);
 }
 
 void testSauvegarde(void){
@@ -112,30 +111,91 @@ void testSauvegarde(void){
 
     tlog = chargementJoueurs(tabJoueur, tmax);
 
-    sauvegardeJoueur(tabJoueur, "fichierSauvegarde/Scores.txt", tlog);
+    sauvegardeJoueur(tabJoueur, tlog);
 
 }
 
-void testTriEchangeScore(void){
+void testTriEchangeMeilleurScore(void){
     int tlog, tmax =100;
     Joueur * tabJoueur[tmax];
 
     tlog = chargementJoueurs(tabJoueur, tmax);
 
-    //triEnchangeMeilleurScore(tabJoueur, tlog);
+    affichListeJoueursScores(tabJoueur, tlog);
+
+    affichJoueurMeilleursScores(tabJoueur,tlog);//cette fonction utilise la fonction de tri échange
+}
+
+void testRechNormalJoueur(void){
+    int tlog, tmax =100, pos;
+    Joueur * tabJoueur[tmax];
+    char nom[30];
+
+    tlog = chargementJoueurs(tabJoueur, tmax);
 
     affichListeJoueursScores(tabJoueur, tlog);
+
+    printf("Saisir le nom du joueur : ");
+    fgets(nom,30,stdin);
+    nom[strlen(nom)-1]='\0';
+
+    pos = rechercheNomJoueur(nom, tabJoueur, tlog);
+    
+    printf("Pos = %d \n",pos);
+}
+
+void testRechDicoJoueur(void){
+    int tlog, tmax =100, pos, trouve;
+    Joueur * tabJoueur[tmax];
+    char nom[30];
+
+    tlog = chargementJoueurs(tabJoueur, tmax);
+
+    affichListeJoueursScores(tabJoueur, tlog);
+
+    printf("Saisir le nom du joueur : ");
+    fgets(nom,30,stdin);
+    nom[strlen(nom)-1]='\0';
+
+    pos = rechercheDico(tabJoueur,tlog , nom, &trouve);
+
+    printf("Pos = %d \n",pos);
+} 
+
+void testAjoutJoueur(void){
+    int tlog, tmax =100, trouve, pos;
+    Joueur * tabJoueur[tmax];
+    char nom[30];
+
+    printf("Saisir le nom du joueur : ");
+    fgets(nom,30,stdin);
+    nom[strlen(nom)-1]='\0';
+
+    tlog = chargementJoueurs(tabJoueur, tmax);
+
+    printf("Avant ajout : \n");
+    affichListeJoueursScores(tabJoueur, tlog);
+
+    pos = rechercheDico(tabJoueur,tlog , nom, &trouve);
+    printf("pos : %d", pos);
+
+    if(trouve == 0){
+        tlog = ajouterJoueur(tabJoueur,  nom, tlog, pos);
+        printf("\nAprès ajout : \n\n");
+        affichListeJoueursScores(tabJoueur, tlog);
+    }
+    else printf("Joueur déjà existant \n"); 
+
 }
 
 //TEST MONSTRE
 
-
-
+//TEST PILE MONSTRE
 void testPileMonstre(void){
     PileM pM;
     int h, i;
     Monstre testMonstre, autreMonstre;
-    pM = pileVide();
+    pM = CreerPileVide();
     strcpy(testMonstre.nom, "dragon");
     testMonstre.PV = 20;
     testMonstre.degat = 2;
@@ -157,12 +217,48 @@ void testPileMonstre(void){
     else affichagePileMonstre(pM);
 }
 
+//TEST FILE MONSTRE
+
+void testAdjQ(void){
+    File fM;
+    Monstre m;
+
+    fM = CreerfileVideMonstre();
+
+    m = saisirMonstre();
+    fM = adjQ(fM, m);
+    m = saisirMonstre();
+    fM = adjQ(fM, m);
+
+    affichageFileMonstres(fM);
+}
+
+void testSupT(void){
+    File fM;
+    Monstre m;
+
+    fM = CreerfileVideMonstre();
+
+    m = saisirMonstre();
+    fM = adjQ(fM, m);
+    m = saisirMonstre();
+    fM = adjQ(fM, m);
+
+    printf("Avant suppression : \n");
+    affichageFileMonstres(fM);
+    fM = supT(fM);
+    printf("Après suppression : \n");
+    affichageFileMonstres(fM);
+}
+
+//TEST GENERATION ALÉATOIRE D'UNE PARTIE
+
 void testChargementMonstresEtRandomMonstre(void){
     Monstre *tab[6], testm;
     int tlog;
     tlog = chargementMonstres(tab);
     afficheTabMonstre(tab, tlog);
-    testm = randomMonstre(tab, &tlog);
+    testm = randomMonstre(tab, tlog);
     printf("Monstre choisi : ");
     affichageMonstre(testm);
     printf("Tableau de monstres après random : \n");
@@ -175,7 +271,7 @@ void testPremierGroupe(void){
     int tlog;
     PileM pM;
     tlog = chargementMonstres(tab);
-    pM = premierGroupe(tab, &tlog);
+    pM = premierGroupe(tab, tlog);
     affichagePileMonstre(pM);
 }
 
@@ -185,17 +281,16 @@ void testDeuxiemeGroupe(void){
     int tlog;
     File fM;
     tlog = chargementMonstres(tab);
-    fM = deuxiemeGroupe(tab, &tlog);
+    fM = deuxiemeGroupe(tab, tlog);
     affichageFileMonstres(fM);
 }
-
 
 // TEST ATTAQUE
 
 void testChoixArmeJoueur(void){
     Arme a;
     a = choixArmeJoueur();
-    printf("Arme choisi %c", a);
+    printf("Arme choisi %c \n", a);
 }
 
 void testGagneAttaqueJoueur(void){
@@ -204,31 +299,109 @@ void testGagneAttaqueJoueur(void){
     if(a == 2) printf("Rejouer");
     if(a == 1) printf("Le joueur a gagné l'attaque");
     if(a == 0) printf("Le monstre remporte l'attaque");
+    printf("\n");
 }
 
+void testAttRandom(void){
+    char a; 
+    Monstre m;
+
+    m = saisirMonstre();
+    a = RandomAttaqueMonstre(m);
+
+    printf("Attaque random du monstre : %c \n",a);
+}
+
+void testCombat(void){
+    int nbPoints=0, resCombat;
+    Joueur j;
+    Monstre m;
+
+    printf("Saisir votre nom de joueur : ");
+    fgets(j.pseudo,30,stdin);
+    j.pseudo[strlen(j.pseudo)-1]='\0';
+
+    j = initialiserUnJoueur(j);
+
+    m = saisirMonstre();
+
+    resCombat = combat( j,  m, &nbPoints);
+
+    printf("Nb points : %d \nResCombat : %d\n", nbPoints, resCombat);
+}
+
+//TEST PARTIE 
+
+void testChargementPartie(void){
+    File fM;
+    PileM pM;
+
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
+    chargePartie("essai.txt", &fM, &pM);
+    affichPartie(fM, pM);
+}
+
+void testSauvegardePartie(void){
+    File fM;
+    PileM pM;
+
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
+    chargePartie("essai.txt", &fM, &pM);
+    printf("Avant chargement : \n");
+
+    affichPartie(fM, pM);
+
+    sauvegardePartie("essai2.txt", &fM, &pM);
+    affichPartie(fM, pM);
+
+    /*
+
+    chargePartie("essai2.txt", &fM, &pM);
+    printf("Après chargement : \n");
+    affichPartie(fM, pM);
+*/
+}
 
 int main(void){//fonction principale
     //TEST SCORE
-    /*
-    testInsertionEnTete();
-    testInsertion();
-    testSuppressionEnTete();
-    testSuppression();
-    */
+    //testInsertionEnTete();
+    //testInsertion();
+    //testSuppressionEnTete();
+    //testSuppression();
+    
 
     //TEST JOUEUR
-    /*
-    testChargement();
-    testSauvegarde();
-    */
+    //testChargement();
+    //testSauvegarde();
+    //testTriEchangeMeilleurScore();
+    //testRechNormalJoueur();
+    //testRechDicoJoueur();
+    //testAjoutJoueur();
+    
 
     //TEST MONSTRE
-    //testTriEchangeScore();
-    //testFileMonstres();
     //testPileMonstre();
+    //testAdjQ();
+    //testSupT();
     //testChargementMonstresEtRandomMonstre();
     //testPremierGroupe();
     //testDeuxiemeGroupe();
-    testChoixArmeJoueur();
+    //testChoixArmeJoueur();
+
+    //TEST ATTAQUE 
+    //testChoixArmeJoueur();
+    //testGagneAttaqueJoueur();
+    //testAttRandom();
+    //testCombat();
+
+    //TEST PARTIE 
+    //testChargementPartie();
+    testSauvegardePartie();
+
+
     return 0;
 }

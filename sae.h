@@ -65,7 +65,7 @@ void global(void);
     \param
     \return
 */
-ListeScore ensemble(void);
+ListeScore creerListeVide(void);
 
 /**
     \brief 
@@ -113,14 +113,17 @@ Joueur lireJoueurScores(FILE *flot);
 
 int chargementJoueurs(Joueur * tabJoueur[], int tmax);
 
-void sauvegardeJoueur(Joueur ** tabJoueur, char *nomFich, int tlog);
+void sauvegardeJoueur(Joueur ** tabJoueur, int tlog);
 
 void affichListeJoueursScores(Joueur ** tabJoueur, int tlog);
+
 void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog);
 
-int rechercheDico(Joueur * tabJoueur, int tlog, char nom[], int * trouve);
+void affichStatJoueur(Joueur ** tabJoueur, int tlog);
 
-int rechercheNomJoueur(char nom[], Joueur * tabJoueur, int tlog);
+int rechercheDico(Joueur ** tabJoueur, int tlog, char nom[], int * trouve);
+
+int rechercheNomJoueur(char nom[], Joueur ** tabJoueur, int tlog);
 
 int ajouterJoueur(Joueur ** tabJoueur, char nom[], int tlog, int pos);
 
@@ -137,11 +140,13 @@ void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog);
 
 //File
 
-File fileVideMonstre(void);
+File CreerfileVideMonstre(void);
 
 int estFileVide(File fM);
 
 Monstre teteFile(File fM);
+
+
 
 int longueurFileMonstres(File fM);
 
@@ -159,7 +164,7 @@ File adjQ(File fM, Monstre x);
 
 File supT(File fM);
 
-PileM pileVide(void);
+PileM CreerPileVide(void);
 
 PileM empiler(PileM p, Monstre val);
 
@@ -177,29 +182,33 @@ void afficheTabMonstre(Monstre **tab, int tlog);
 
 void decalageAGauche(Monstre **tab, int indice, int tlog);
 
-
 Monstre lireMonstre(FILE *flot);
 
 int chargementMonstres(Monstre **tabMonstres);
 
-Monstre randomMonstre(Monstre **tabMonstres, int *tlog);
+Monstre randomMonstre(Monstre **tabMonstres, int tlog);
 
-PileM premierGroupe(Monstre **tabMonstres, int *tlog);
+PileM premierGroupe(Monstre **tabMonstres, int tlog);
 
-File deuxiemeGroupe(Monstre **tabMonstres, int *tlog);
+File deuxiemeGroupe(Monstre **tabMonstres, int tlog);
 
+Monstre convertisseurNiveauEnStat(Monstre m, int niveau);
 
 /*Parties Déroulement du jeu */
+
+void affichPartie(File fM, PileM pM);
+
+Monstre saisirMonstre(void);
 
 void affichScenario1erGrpe(void);
 
 void affichScenario2ndGrpe(void);
 
-void chargePartie(char *nomFich, File * fM, PileM * pM);
+void chargePartie(char *nomFich, File *fM, PileM *pM);
 
-void sauvegardePartie(char *nomFich, File fM, PileM pM);
+void sauvegardePartie(char *nomFich, File *fM, PileM *pM);
 
-int Partie(Joueur * tabJoueur, int tlog);
+int Partie(Joueur ** tabJoueur, int tlog);
 
 void clear(void);
 

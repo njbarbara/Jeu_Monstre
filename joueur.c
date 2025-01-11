@@ -5,12 +5,15 @@ Joueur lireJoueurScores(FILE *flot){
     Joueur j;
     int nb, i, scoresJ;
 
-    j.l= ensemble();
+    j.l= creerListeVide();
 
-    fscanf(flot, "%s%d", j.pseudo, &nb);
+    fgets(j.pseudo,30,flot);
+    j.pseudo[strlen(j.pseudo)-1]='\0';
+
+    fscanf(flot, "%d%*c",&nb);
 
     for(i=0; i<nb;i++){
-        fscanf(flot,"%d", &scoresJ);
+        fscanf(flot,"%d%*c", &scoresJ);
         j.l = ajouter(j.l,scoresJ);
     } 
 
@@ -20,15 +23,15 @@ Joueur lireJoueurScores(FILE *flot){
 void decalageADroite(Joueur ** tabJoueur, int tlog, int pos){
     int i;
 
-    for(i=tlog; i>pos; i++)tabJoueur[i]=tabJoueur[i-1];
+    for(i=tlog; i>pos; i--)tabJoueur[i]=tabJoueur[i-1];
 }
 
 int chargementJoueurs(Joueur * tabJoueur[], int tmax){
     FILE * flot;
     Joueur j;
-    int tlog, pos;
+    int tlog=0, pos, trouve;
 
-    flot = fopen("fichierSauvegarde/joueurs.txt", "r");
+    flot = fopen("fichierSauvegarde/Joueurs.txt", "r");
 
     if(flot==NULL){
         printf("Pb ouverture de fichier \n");
@@ -50,12 +53,21 @@ int chargementJoueurs(Joueur * tabJoueur[], int tmax){
             printf("Pb malloc \n");
             exit(1);
         }
-
+        
         pos = rechercheDico(tabJoueur, tlog, j.pseudo, &trouve);
-        if(trouve == 0)decalageADroite(tabJoueur, tlog, pos);
-            
-        tabJoueur[pos] = j;
-        tlog++;
+
+        if(trouve == 0) {
+            decalageADroite(tabJoueur, tlog, pos);
+            tabJoueur[pos] = malloc(sizeof(Joueur));
+            if (tabJoueur[pos] == NULL) {
+                printf("Pb malloc \n");
+                exit(1);
+            }
+            *tabJoueur[pos] = j;
+            tlog++;
+        } else{
+            printf("Erreur, Joueur déjà présent : %s\n", j.pseudo);
+        }
 
         j = lireJoueurScores(flot);
     }
@@ -69,20 +81,19 @@ void libereTabJoueur(Joueur ** tabJoueur, int tlog){
     for(i=0; i<tlog; i++)free(tabJoueur[i]);
 }
 
-void sauvegardeJoueur(Joueur ** tabJoueur, char *nomFich, int tlog){
+void sauvegardeJoueur(Joueur ** tabJoueur, int tlog){
     FILE * flot;
     int i;
 
-    flot = fopen(nomFich, "w");
+    flot = fopen("fichierSauvegarde/Joueurs.txt", "w");
 
     if(flot==NULL){
         printf("Pb ouverture de fichier \n");
         exit(1);
     }
 
-    fprintf(flot,"%d\n",tlog);
     for(i=0; i<tlog; i++){
-        fprintf(flot, "%s %d\n",tabJoueur[i]->pseudo, longueur(tabJoueur[i]->l));
+        fprintf(flot, "%s\n%d\n",tabJoueur[i]->pseudo, longueur(tabJoueur[i]->l));
         sauvegardeListeScore(flot, tabJoueur[i]->l);
     }
     fclose(flot);
@@ -90,25 +101,30 @@ void sauvegardeJoueur(Joueur ** tabJoueur, char *nomFich, int tlog){
 }
 
 //Fonctions de trie
-/*
+
 int plusGrandScore(Joueur * tabJoueur, int tlog){
     int i, pg=0;
 
-    for(i=0; i < tlog; i++)if(tabJoueur[i].l->score > tabJoueur[pg].l->score) pg = i;
+    for(i=0; i < tlog; i++)if(tabJoueur[i].l->score < tabJoueur[pg].l->score) pg = i;
 
     return pg;
 }
 
-int * triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
-    int pos, *tabJoueurPos, i=0;
+void echange(Joueur * tabJoueur, int I, int i){
+    Joueur j;
 
-    tabJoueurPos = (Joueur *)malloc(sizeof(Joueur)*tlog);
+    j=tabJoueur[i];
+    tabJoueur[i]=tabJoueur[I];
+    tabJoueur[I]=j;
+}
+
+void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
+    int pos;
 
     while(tlog > 1){
         pos = plusGrandScore(tabJoueur, tlog);
-        tabJoueurPos[i]= pos;
+        echange(tabJoueur, pos, tlog-1);
         tlog--;
-        i++;
     }
 }
 
@@ -189,24 +205,31 @@ Joueur initialiserUnJoueur(Joueur j){
 }
 
 
+int ajouterJoueur(Joueur **tabJoueur, char nom[], int tlog, int pos) {
+    Joueur *nouvJ;
+    nouvJ = (Joueur *)malloc(sizeof(Joueur));
+    if (nouvJ == NULL) {
+        printf("Pb malloc \n");
+        exit(1);
+    }
 
-int ajouterJoueur(Joueur ** tabJoueur, char nom[], int tlog, int pos){
-    Joueur nouvJ;
-
-    strcpy(nouvJ.pseudo, nom);
+    strcpy(nouvJ->pseudo, nom);
+    nouvJ->l = creerListeVide();
 
     decalageADroite(tabJoueur, tlog, pos);
 
-    tabJoueur[pos]=nouvJ;
+    tabJoueur[pos] = nouvJ;
 
     tlog++;
-
-    return tabJoueur; 
+    return tlog;
 }
 
 int rechercheNomJoueur(char nom[], Joueur ** tabJoueur, int tlog){
     int i;
-    for(i=0; i< tlog; i++ ) if(strcmp(nom, tabJoueur[i].pseudo)==0) return i;
+    for(i=0; i< tlog; i++ ){
+        if(strcmp(nom, tabJoueur[i]->pseudo)==0) return i;
+        else if(strcmp(nom, tabJoueur[i]->pseudo)<0)return -1;
+    } 
     return -1;
 }
 

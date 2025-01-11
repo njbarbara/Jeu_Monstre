@@ -6,10 +6,9 @@
 
 }*/
 
-/*Fonctions du File de monstres*/
+/*File de monstres*/
 
-
-File fileVideMonstre(void){
+File CreerfileVideMonstre(void){
     return NULL;
 }
 
@@ -48,7 +47,7 @@ File supT(File fM){
     }
     if(fM->suiv==fM){
         free(fM);
-        return fileVideMonstre();
+        return CreerfileVideMonstre();
     }
 
     tmp = fM->suiv;
@@ -85,13 +84,12 @@ void affichageMonstre(Monstre monstreAafficher){
     printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", monstreAafficher.nom, monstreAafficher.PV, monstreAafficher.degat, monstreAafficher.nbArmes);
 }
 
-
 void affichageFileMonstres(File fM){
     MaillonM * tmp;
     if(estFileVide(fM))return;
     tmp = fM->suiv;
     while(tmp != fM){
-        affichageMonstre(fM->val);
+        affichageMonstre(tmp->val);
         tmp = tmp->suiv;
     }
     affichageMonstre(fM->val);
@@ -104,7 +102,7 @@ int estPileVide(PileM p){
 }
 
 
-PileM pileVide(void){   
+PileM CreerPileVide(void){   
     return NULL;
 }
 
@@ -153,6 +151,8 @@ int hauteur(PileM p){
 
 void affichagePileMonstre(PileM p){
     MaillonM * ptm = p;
+
+    if(estPileVide(p)) return;
     while (ptm != NULL){
         affichageMonstre(sommet(ptm));
         ptm = ptm->suiv;
@@ -163,7 +163,7 @@ void affichagePileMonstre(PileM p){
 /*Fonctions des monstres*/
 
 Monstre convertisseurNiveauEnStat(Monstre m, int niveau){
-    if(niveau==3){
+    if(niveau == 3){
         m.PV=4;
         m.degat=2;
         m.nbArmes=5;
@@ -178,19 +178,36 @@ Monstre convertisseurNiveauEnStat(Monstre m, int niveau){
         m.degat=1;
         m.nbArmes=4;
     }
+    return m;
 }
 
 int ajouterMonstre(Monstre **tab, int tlog, int tmax){
     Monstre m;
+    int niveau;
 
     if(tlog == tmax){
         printf("Tableau plein \n");
         return tlog;
     }
 
-    tab[tlog] = (Monstre *)malloc(sizeof(Monstre));
+    printf("Saisir le nom du monstre : ");
+    fgets(m.nom,30,stdin);
 
-    trieEchangeNomMonstre(tab, tlog);  
+    m.nom[strlen(m.nom)-1]='\0';
+
+    printf("Saisir son niveau (entre 1 et 3) : ");
+    scanf("%d", &niveau);
+
+    while(niveau <1 || niveau > 3 ){
+        printf("Niveau incorrect \n");
+        printf("Saisir son niveau (entre 1 et 3) : ");
+        scanf("%d", &niveau);
+    }
+
+    m = convertisseurNiveauEnStat(m, niveau);
+
+    tab[tlog] = (Monstre *)malloc(sizeof(Monstre));
+    *tab[tlog] = m;
 
     tlog++;
     return tlog;  
@@ -212,8 +229,7 @@ Monstre lireMonstre(FILE *flot){
     Monstre m;
     fgets(m.nom, 30, flot);
     m.nom[strlen(m.nom)-1] = '\0';
-    fscanf(flot, "%d%d%*c", &m.PV, &m.degat);
-    m.nbArmes = 0;
+    fscanf(flot, "%d%d%d%*c", &m.PV, &m.degat, &m.nbArmes);
     return m;
 }
 
@@ -231,7 +247,7 @@ int chargementMonstres(Monstre **tabMonstres){
     while(!feof(flot)){
         tabMonstres[tlog] = (Monstre*)malloc(sizeof(Monstre));
         if(tabMonstres[tlog] == NULL){
-            printf("Probléme malloc !");
+            printf("Pb malloc \n");
             exit(1);
         }
         *tabMonstres[tlog] = monstreAAjouter;
@@ -257,7 +273,7 @@ PileM premierGroupe(Monstre **tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     PileM pG2;
-    pG2 = pileVide();
+    pG2 = CreerPileVide();
     for(i=4;i>=3;i--){
         monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
@@ -271,7 +287,7 @@ File deuxiemeGroupe(Monstre **tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     File fG2;
-    fG2 = fileVideMonstre();
+    fG2 = CreerfileVideMonstre();
     for(i=3;i<=5;i++){
         monstrePartie = randomMonstre(tabMonstres, tlog);
         monstrePartie.nbArmes = i;
@@ -279,5 +295,3 @@ File deuxiemeGroupe(Monstre **tabMonstres, int tlog){
     }
     return fG2;
 }
-
-///CREER UNE FONCTION QUI TRI LES MONSTRES PAR ORDRE ALPHABÉTIQUE

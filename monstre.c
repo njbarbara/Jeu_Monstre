@@ -8,14 +8,27 @@
 
 /*File de monstres*/
 
+/**
+    \brief Crée une file vide de monstre.
+*/
 File CreerfileVideMonstre(void){
     return NULL;
 }
 
+
+/**
+    \brief  Vérifie si la file est vide
+*/
 int estFileVide(File fM){
     return fM == NULL;
 }
 
+/**
+    \brief Ajoute un monstre à la fin de la file.
+    \param fM La file de monstres.
+    \param x Le monstre à ajouter.
+    \return La file mise à jour contenant le nouveau monstre.
+*/
 File adjQ(File fM, Monstre x){
     MaillonM * m;
 
@@ -38,6 +51,12 @@ File adjQ(File fM, Monstre x){
     return fM;
 }
 
+
+/**
+    \brief Supprime le monstre en tête de la file.
+    \param fM La file de monstres.
+    \return La file mise à jour après la suppression du premier monstre.
+*/
 File supT(File fM){
     MaillonM * tmp;
 
@@ -56,6 +75,11 @@ File supT(File fM){
     return fM;
 }
 
+/**
+    \brief Récupère le monstre en tete de file.
+    \param fM La file de monstres.
+    \return Le monstre en tete de  file.
+*/
 Monstre teteFile(File fM){
     if(estFileVide(fM)){
         printf("Opération interdite, la file est vide \n");
@@ -64,6 +88,12 @@ Monstre teteFile(File fM){
     return fM->suiv->val;
 }
 
+
+/**
+    \brief Calcule la longueur de la file de monstres.
+    \param fM La file à analyser.
+    \return Le nombre de monstres dans la file.
+*/
 int longueurFileMonstres(File fM){
     int l=1;
     MaillonM * tmp;
@@ -79,11 +109,18 @@ int longueurFileMonstres(File fM){
     return l;
 }
 
-
+/**
+    \brief Affiche les détails d'un monstre.
+    \param monstreAafficher Le monstre à afficher.
+*/
 void affichageMonstre(Monstre monstreAafficher){
     printf("Nom : %s \t PV : %d \t Dégat : %d \t Nb Armes : %d\n", monstreAafficher.nom, monstreAafficher.PV, monstreAafficher.degat, monstreAafficher.nbArmes);
 }
 
+/**
+    \brief Affiche tous les monstres présents dans la file.
+    \param fM La file contenant les monstres à afficher.
+*/
 void affichageFileMonstres(File fM){
     MaillonM * tmp;
     if(estFileVide(fM))return;
@@ -97,6 +134,9 @@ void affichageFileMonstres(File fM){
 
 /*Pile Monstre*/
 
+/**
+    \brief Fonction pour savoir si la pile est vide
+*/
 int estPileVide(PileM p){
     return p == NULL;
 }
@@ -106,6 +146,12 @@ PileM CreerPileVide(void){
     return NULL;
 }
 
+/**
+    \brief Ajoute un monstre au sommet de la pile.
+    \param p La pile de monstres.
+    \param val Le monstre à ajouter.
+    \return La pile mise à jour avec le nouveau monstre au sommet.
+*/
 PileM empiler(PileM p, Monstre m){
     MaillonM *Mt;
     Mt =(MaillonM *)malloc(sizeof(MaillonM));
@@ -118,6 +164,12 @@ PileM empiler(PileM p, Monstre m){
     return Mt;
 }
 
+
+/**
+    \brief Supprime le monstre au sommet de la pile.
+    \param p La pile de monstres.
+    \return La pile mise à jour après la suppression du sommet.
+*/
 PileM depiler(PileM p){ 
     MaillonM *Mt;
 
@@ -131,6 +183,11 @@ PileM depiler(PileM p){
     return p;
 }
 
+/**
+    \brief Récupère le monstre au sommet de la pile.
+    \param p La pile de monstres.
+    \return Le monstre situé au sommet de la pile.
+*/
 Monstre sommet(PileM p){
     if(p==NULL){
         printf("Opération impossible \n");
@@ -139,6 +196,9 @@ Monstre sommet(PileM p){
     return p->val;
 }
 
+/**
+    \brief Fonction qui renvoit la hauteur de la pile de monstre.
+*/
 int hauteur(PileM p){
     int cpt=0;
     MaillonM * ptm = p;
@@ -149,6 +209,11 @@ int hauteur(PileM p){
     return cpt;
 }
 
+
+/**
+    \brief Affiche les monstres présents dans la pile.
+    \param p La pile de monstres à afficher.
+*/
 void affichagePileMonstre(PileM p){
     MaillonM * ptm = p;
 
@@ -162,6 +227,12 @@ void affichagePileMonstre(PileM p){
 
 /*Fonctions des monstres*/
 
+/**
+    \brief Modifie les statistiques d'un monstre en fonction de son niveau.
+    \param m Monstre à modifier.
+    \param niveau Niveau du monstre.
+    \return Le monstre avec ses statistiques en fct du nivea.
+*/
 Monstre convertisseurNiveauEnStat(Monstre m, int niveau){
     if(niveau == 3){
         m.PV=4;
@@ -216,13 +287,22 @@ int ajouterMonstre(Monstre **tab, int tlog, int tmax){
 */
 
 
-
+/**
+    \brief Affiche les  monstres présents dans le tableau.
+    \param tab Tableau de monstres.
+    \param tlog Nombre de monstres dans le tableau.
+*/
 void afficheTabMonstre(Monstre *tab, int tlog){
     int i;
     for(i=0;i<tlog;i++)
         affichageMonstre(tab[i]);
 }
 
+/**
+    \brief Lit les données d'un monstre depuis un fichier.
+    \param flot Fichier contenant les données du monstre.
+    \return Le monstre lu depuis le fichier.
+*/
 Monstre lireMonstre(FILE *flot){
     Monstre m;
     fgets(m.nom, 30, flot);
@@ -231,6 +311,11 @@ Monstre lireMonstre(FILE *flot){
     return m;
 }
 
+/**
+    \brief Charge un tableau de monstres depuis un fichier de monstre.
+    \param tlog Pointeur vels  le nombre de monstres chargés.
+    \return Un tableau de monstres chargé depuis le fichier de monstre.
+*/
 Monstre *chargementMonstres(int *tlog){
     int i;
     FILE *flot;
@@ -251,6 +336,12 @@ Monstre *chargementMonstres(int *tlog){
     return tabMonstres;
 }
 
+/**
+    \brief Sélectionne aléatoirement un monstre dans un tableau.
+    \param tabMonstres Tableau de monstres.
+    \param tlog Nombre de monstres dans le tableau.
+    \return Un monstre sélectionné aléatoirement.
+*/
 Monstre randomMonstre(Monstre *tabMonstres, int tlog){
     int indice;
     time_t seconds;
@@ -263,6 +354,12 @@ Monstre randomMonstre(Monstre *tabMonstres, int tlog){
     return monstreChoisi;
 }
 
+/**
+    \brief Crée un premier groupe de monstres.
+    \param tabMonstres Tableau de monstres.
+    \param tlog Nombre de monstres dans le tableau.
+    \return Une pile contenant le premier groupe de monstres.
+*/
 PileM premierGroupe(Monstre *tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
@@ -275,7 +372,12 @@ PileM premierGroupe(Monstre *tabMonstres, int tlog){
     return pG2;
 }
 
-
+/**
+    \brief Crée un second groupe de monstres.
+    \param tabMonstres Tableau de monstres.
+    \param tlog Nombre de monstres dans le tableau.
+    \return Une file contenant le second groupe de monstres.
+*/
 File deuxiemeGroupe(Monstre *tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;

@@ -1,4 +1,8 @@
 #include "sae.h"
+
+/**
+    \brief Affiche le logo  du jeu.
+*/
 void logo(void){
     printf("         />_________________________________\n");
     printf("[########[]_________________________________>\n");
@@ -13,6 +17,10 @@ void logo(void){
     printf("               |___/               \n");
 }
 
+/**
+    \brief Affiche le menu principal du jeu.
+    \return Le choix de l'utilisateur.
+*/
 void global(void){
     int choix, tlog, tmax =100;
     Joueur * tabJoueur[tmax];
@@ -34,6 +42,7 @@ void global(void){
     }
     printf("Merci d'avoir utilisé  l'application \n");
     sauvegardeJoueur(tabJoueur, tlog);
+    libereTabJoueur(tabJoueur, tlog);
 }
 
 

@@ -341,7 +341,7 @@ void testChargementPartie(void){
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
-    res = chargePartie("essai.txt", &fM, &pM);
+    res = chargePartie("t.txt", &fM, &pM);
     if(res ==-1)return;
     affichPartie(fM, pM);
 }

@@ -47,6 +47,12 @@ int menu(void){
 
 
 //AFFICHAGE JOUEUR 
+
+/**
+    \brief Affiche la liste des joueurs et de leurs scores.
+    \param tabJoueur Tableau de pointeurs vers les joueurs à afficher.
+    \param tlog Nombre de joueurs.
+*/
 void affichListeJoueursScores(Joueur ** tabJoueur, int tlog){
     int i;
 
@@ -59,6 +65,12 @@ void affichListeJoueursScores(Joueur ** tabJoueur, int tlog){
     }
 }
 
+
+/**
+    \brief Affiche les stat d'un joueur en question.
+    \param tabJoueur Tableau de pointeurs vers les joueurs.
+    \param tlog Nombre actuel de joueurs dans le tableau.
+*/
 void affichStatJoueur(Joueur ** tabJoueur, int tlog){
     char nom[30];
     int pos;
@@ -94,6 +106,11 @@ void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog){
     free(tmp);
 }
 
+/**
+    \brief Affiche nom et meilleurs score les joueur .
+    \param tabJoueur Tableau de pointeurs vers les joueurs à analyser.
+    \param tlog Nombre de joueurs.
+*/
 void affichJoueurParNom(Joueur ** tabJoueur, int tlog){
     int i;
 
@@ -112,6 +129,8 @@ void affichPartie(File fM, PileM pM){
     affichageFileMonstres(fM);
 }
 
+
+//Toutes ces fonctions sont utiliser pour afficher les différtens phrase à afficher
 void clear(void){
     for(int i =0; i < 33; i++)printf("\n");
 }   

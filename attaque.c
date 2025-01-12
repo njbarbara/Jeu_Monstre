@@ -1,5 +1,9 @@
 #include "sae.h"
 
+/**
+    \brief Permet au joueur de choisir une arme pour attaquer.
+    \return L'arme choisie par le joueur.
+*/
 Arme choixArmeJoueur(void){
     char choix;
     printf("Choisis ton attaque parmi P, F, C : ");
@@ -12,6 +16,15 @@ Arme choixArmeJoueur(void){
     return choix;
 }
 
+/**
+    \brief Détermine le résultat des 2 attques du joueur et un monstre.
+    \param attaqueJ L'arme utilisée par le joueur.
+    \param attaqueM L'arme utilisée par le monstre.
+    \return Un nombre représentant le résultat de la comparaison des 2 attaque :
+            - 0 si le joueur perd le duel
+            - 1 si l'attaque gangne le duel re,
+            - 2 si les attaques sont identiques.
+*/
 int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM){
     if(attaqueJ == attaqueM) return 2;
     else if(attaqueM == 'S') return 0;
@@ -30,6 +43,11 @@ int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM){
     }
 }
 
+/**
+    \brief Génére une attaque aléatoire pour le monstre.
+    \param m Le monstre qui effectue l'attaque.
+    \return L'arme utilisée par le monstre pour attaquer.
+*/
 Arme RandomAttaqueMonstre(Monstre m){
     time_t seconds = time(NULL);
     int att = (rand()+seconds)%(m.nbArmes);
@@ -40,6 +58,17 @@ Arme RandomAttaqueMonstre(Monstre m){
     else return 'S';
 }
 
+
+/**
+    \brief Gère le combat entre un joueur et un monstre.
+    \param j Pointeur vers le joueur participant au combat.
+    \param m Pointeur vers le monstre avec lequel le joueur combat.
+    \param points Pointeur vers le compteur de points du joueur.
+    \return Un nombre indiquant le résultat du combat :
+            - 1 si le monstre est vaincu,
+            - -1 si le joueur est mort,
+            - 0 si le combat continue.
+*/
 int combat(Joueur *j, Monstre *m, int *points) {
     Arme armeJ, armeM;
     int compa;

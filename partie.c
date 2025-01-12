@@ -92,6 +92,10 @@ int choixSauvegarde(void){
     else return 0;
 }
 */
+
+/**
+    \brief Génère une partie aléatoire avec des monstres aléatoires tirés au sort dans un fichier.
+*/
 void generePartieAleatoire(void){
     File fM; 
     PileM pM;
@@ -120,6 +124,10 @@ void generePartieAleatoire(void){
 
 }
 
+/**
+    \brief Permet de saisir manuellement les données d'un monstre (nivrau et nom).
+    \return Le monstre saisi par l'utilisateur.
+*/
 void saisiePartie(int *nbPile, int *nbFile){
     printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): ");     
     scanf("%d", nbPile);    
@@ -138,6 +146,10 @@ void saisiePartie(int *nbPile, int *nbFile){
     }   
 }
 
+/**
+    \brief Permet de saisir manuellement les données d'un monstre (nivrau et nom).
+    \return Le monstre saisi par l'utilisateur.
+*/
 Monstre saisirMonstre(void){
     Monstre m;
     int niv;
@@ -160,6 +172,9 @@ Monstre saisirMonstre(void){
     return m;
 }
 
+/**
+    \brief Crée une nouvelle partie définis par l'utilisateur.
+*/
 void creerPartie(void){
     File fM;
     PileM pM;
@@ -190,9 +205,10 @@ void creerPartie(void){
 }
 
 /**
-    \brief 
-    \param
-    \param 
+    \brief Cette fonction permet d'initialiser une parti et d'appeler la fonction deroulement partie pour la charger. 
+    \param tabJoueur Tableau des joueurs.
+    \param tlog Nombre de joueurs dans le tableau.
+    \return La taille logique du tab. 
 */
 int Partie(Joueur ** tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
@@ -233,6 +249,14 @@ int Partie(Joueur ** tabJoueur, int tlog){
     return tlog;
 }
 
+
+/**
+    \brief Gère le déroulement complet d'une partie, incluant les combats.
+    \param j Le joueur participant à la partie.
+    \param pM Pile contenant le premier groupe de monstres.
+    \param fM File contenant le second groupe de monstres.
+    \return Le score total du joueur à la fin de la partie.
+*/
 int deroulementPartie(Joueur j, PileM pM, File fM) {
     int resCombat, nbPoints = 0;
     Monstre tmpMonstre;//monstre de à chaque combat
@@ -257,6 +281,7 @@ int deroulementPartie(Joueur j, PileM pM, File fM) {
 
     if (estFileVide(fM)) return nbPoints;
 
+    printf("\n");
     affichScenario2ndGrpe();
 
     while (!estFileVide(fM)) {
@@ -267,20 +292,11 @@ int deroulementPartie(Joueur j, PileM pM, File fM) {
         resCombat = combat(&j, &tmpMonstre, &nbPoints);
         printf("\n");
 
+        fM->suiv->val = tmpMonstre;
         
         if (resCombat == -1)return nbPoints;  // Le joueur est mort
-        /*
-        if(!estFileVide(fM)){
-            if (resCombat == 1) fM = supT(fM);//le monstre meurt 
-            else fM->suiv->val = tmpMonstre;
-            fM = fM->suiv; 
-        }*/
-
-        if (resCombat == 1)fM = supT(fM);  
-        else {
-            if (!estFileVide(fM)) fM->suiv->val = tmpMonstre;
-        }
-        if (!estFileVide(fM)) fM = fM->suiv; 
+        else if(resCombat == 1)fM = supT(fM);
+        else fM = fM->suiv;  
     }
 
     printf("Nombre de points acquis : %d\n", nbPoints);

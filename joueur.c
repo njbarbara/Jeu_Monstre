@@ -1,6 +1,12 @@
 #include "sae.h"
 
 /*FICHIER DES FONCTIONNALITÉS DES JOUEURS*/
+
+/**
+    \brief Lit les informations d'un joueur à partir d'un fichier.
+    \param flot fichier contenant les données du joueur.
+    \return Un Joueur contenant les informations lues depuis le fichier passé en param.
+*/
 Joueur lireJoueurScores(FILE *flot){
     Joueur j;
     int nb, i, scoresJ;
@@ -26,6 +32,13 @@ void decalageADroite(Joueur ** tabJoueur, int tlog, int pos){
     for(i=tlog; i>pos; i--)tabJoueur[i]=tabJoueur[i-1];
 }
 
+
+/**
+    \brief Charge les joueurs depuis un fichier et les stocke dans un tableau.
+    \param tabJoueur Tableau de pointeurs vers les joueurs à remplir.
+    \param tmax Taille maximale du tableau de joueurs.
+    \return Le nombre de joueurs chargés.
+*/
 int chargementJoueurs(Joueur * tabJoueur[], int tmax){
     FILE * flot;
     Joueur j;
@@ -75,12 +88,23 @@ int chargementJoueurs(Joueur * tabJoueur[], int tmax){
     return tlog;
 }
 
+
+/**
+    \brief Libère la mémoire allouée pour le tableau de joueurs.
+    \param tabJoueur Tableau de pointeurs vers les joueurs à libérer.
+    \param tlog Nombre de joueurs.
+*/
 void libereTabJoueur(Joueur ** tabJoueur, int tlog){
     int i;
 
     for(i=0; i<tlog; i++)free(tabJoueur[i]);
 }
 
+/**
+    \brief Sauvegarde les joueurs dans un fichier.
+    \param tabJoueur Tableau de pointeurs vers les joueurs à sauvegarder.
+    \param tlog Nombre de joueurs.
+*/
 void sauvegardeJoueur(Joueur ** tabJoueur, int tlog){
     FILE * flot;
     int i;
@@ -102,6 +126,12 @@ void sauvegardeJoueur(Joueur ** tabJoueur, int tlog){
 
 //Fonctions de trie
 
+/**
+    \brief Trouve le plus grand score parmi les joueurs.
+    \param tabJoueur Tableau de joueurs à analyser.
+    \param tlog Nombre de joueurs dans le tableau.
+    \return la pos du plus grand score trouvé.
+*/
 int plusGrandScore(Joueur * tabJoueur, int tlog){
     int i, pg=0;
 
@@ -110,6 +140,12 @@ int plusGrandScore(Joueur * tabJoueur, int tlog){
     return pg;
 }
 
+/**
+    \brief Échange deux joueurs dans le tableau.
+    \param tabJoueur Tableau de joueurs.
+    \param i Index du premier joueur à échanger.
+    \param j Index du deuxième joueur à échanger.
+*/
 void echange(Joueur * tabJoueur, int I, int i){
     Joueur j;
 
@@ -118,6 +154,12 @@ void echange(Joueur * tabJoueur, int I, int i){
     tabJoueur[I]=j;
 }
 
+
+/**
+    \brief Trie les joueurs par leur meilleur score en utilisant le trie d'échange.
+    \param tabJoueur Tableau dynamque de joueurs à trier.
+    \param tlog Nombre actuel de joueurs dans le tableau.
+*/
 void triEnchangeMeilleurScore(Joueur * tabJoueur, int tlog){
     int pos;
 
@@ -180,6 +222,11 @@ void triDicho(Joueur * tabJoueur, int tlog){
 }
 */
 
+/**
+    \brief Initialise un joueur slon son meilleur score (si il en a un).
+    \param j Joueur à initialiser.
+    \return Joueur initialisé.
+*/
 Joueur initialiserUnJoueur(Joueur j){
     j.nbArmes=3;
 
@@ -207,6 +254,14 @@ Joueur initialiserUnJoueur(Joueur j){
 }
 
 
+/**
+    \brief Ajoute un joueur au tableau à une position donnée.
+    \param tabJoueur Tableau de pointeurs vers les joueurs.
+    \param nom Nom du joueur à ajouter.
+    \param tlog Nombre  joueurs.
+    \param pos Position où ajouter le joueur.
+    \return la taille logique.
+*/
 int ajouterJoueur(Joueur **tabJoueur, char nom[], int tlog, int pos) {
     Joueur *nouvJ;
     nouvJ = (Joueur *)malloc(sizeof(Joueur));
@@ -226,6 +281,13 @@ int ajouterJoueur(Joueur **tabJoueur, char nom[], int tlog, int pos) {
     return tlog;
 }
 
+/**
+    \brief Vérifie si un joueur avec un nom donné existe dans le tableau.
+    \param nom Nom du joueur à rechercher.
+    \param tabJoueur Tableau de pointeurs vers les joueurs.
+    \param tlog Nombre actuel de joueurs dans le tableau.
+    \return Indice du joueur ou -1 si le joueur n'est pas trouvé.
+*/
 int rechercheNomJoueur(char nom[], Joueur ** tabJoueur, int tlog){
     int i;
     for(i=0; i< tlog; i++ ){
@@ -236,6 +298,14 @@ int rechercheNomJoueur(char nom[], Joueur ** tabJoueur, int tlog){
 }
 
 
+/**
+    \brief Recherche dichotomique d' un joueur dans le tableau en utilisant son nom.
+    \param tabJoueur Tableau de pointeurs vers les joueurs.
+    \param tlog Nombre de joueurs.
+    \param nom Nom du joueur à rechercher.
+    \param trouve Pointeur pour indiquer si le joueur a été trouvé.
+    \return Index du joueur dans le tableau ou pos d'insertion si pas trouvé.
+*/
 int rechercheDico(Joueur ** tabJoueur, int tlog, char nom[], int * trouve){
     int m, inf =0, sup = tlog-1;
 

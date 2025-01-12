@@ -1,0 +1,6 @@
+<map id="Joueur" name="Joueur">
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,93,72,119"/>
+<area shape="rect" id="Node000002" href="$structmaillon.html" title=" " alt="" coords="5,5,76,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,45,43,93,38,93,38,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="91,9,99,12,103,18,94,27,77,29,76,23,92,22,97,18,96,16,89,14"/>
+</map>

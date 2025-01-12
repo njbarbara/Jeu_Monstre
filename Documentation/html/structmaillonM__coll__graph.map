@@ -1,0 +1,6 @@
+<map id="maillonM" name="maillonM">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,88,119"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="102,97,111,100,115,106,106,114,88,117,88,111,104,109,109,106,108,104,101,102"/>
+<area shape="rect" id="Node000002" href="$structMonstre.html" title=" " alt="" coords="9,5,84,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="49,45,49,93,44,93,44,45"/>
+</map>

@@ -2,8 +2,9 @@ antoine
 1
 123
 bob le joueur
-1
+2
 600
+310
 najib
 3
 700

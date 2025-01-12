@@ -8,34 +8,38 @@ int menu(void){
     int choix;
     printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
     printf("*\t                                                          \t*\n");
-    printf("*\t    Veuiller choisir en tapant le numéro correspondant    \t*\n");
+    printf("*\t    Veuillez choisir en tapant le numéro correspondant    \t*\n");
     printf("*\t                                                          \t*\n");
     printf("*\t 1. jouer une partie prédéfinie                           \t*\n");
     printf("*\t 2. créer une nouvelle partie                             \t*\n");
     printf("*\t 3. afficher la liste des joueurs triée par nom           \t*\n");
     printf("*\t 4. afficher la liste des joueurs triée par meilleur score\t*\n");
     printf("*\t 5. afficher les statistiques d'un joueur                 \t*\n");
+    printf("*\t 6. Génerer une partie aléatoire                          \t*\n");
     printf("*\t 9. Quitter                                               \t*\n");
     printf("*\t                                                          \t*\n");
     printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-    scanf("%d", &choix);
+    printf("Choix : ");
+    scanf("%d%*c", &choix);
 
-    while(choix != 1 && choix != 2 && choix != 3 && choix != 3 && choix != 4 && choix != 5 && choix != 9){
+    while(choix != 1 && choix != 2 && choix != 3 && choix != 3 && choix != 4 && choix != 5 && choix != 6 && choix != 9){
         printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
         printf("*\t                                                          \t*\n");
         printf("*\t                      CHOIX INVALIDE                      \t*\n");
         printf("*\t                                                          \t*\n");
-        printf("*\t    Veuiller choisir en tapant le numéro correspondant    \t*\n");
+        printf("*\t    Veuillez choisir en tapant le numéro correspondant    \t*\n");
         printf("*\t                                                          \t*\n");
         printf("*\t 1. jouer une partie prédéfinie                           \t*\n");
         printf("*\t 2. créer une nouvelle partie                             \t*\n");
         printf("*\t 3. afficher la liste des joueurs triée par nom           \t*\n");
         printf("*\t 4. afficher la liste des joueurs triée par meilleur score\t*\n");
         printf("*\t 5. afficher les statistiques d'un joueur                 \t*\n");
+        printf("*\t 6. Génerer une partie aléatoire                          \t*\n");
         printf("*\t 9. Quitter                                               \t*\n");
         printf("*\t                                                          \t*\n");
         printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-        scanf("%d", &choix);
+        printf("Choix : ");
+        scanf("%d%*c", &choix);
     }
     return choix;
 }
@@ -69,7 +73,7 @@ void affichStatJoueur(Joueur ** tabJoueur, int tlog){
         printf("Joueur/Joueuse inconnu(e)\n");
         return;
     }
-    else printf("Le joueur %s a joué  à %d parties \n avec pour meilleur score : %d", tabJoueur[pos]->pseudo, longueur(tabJoueur[pos]->l), tabJoueur[pos]->l->score);
+    else printf("Le joueur %s a joué  à %d parties, avec pour meilleur score : %d \n", tabJoueur[pos]->pseudo, longueur(tabJoueur[pos]->l), tabJoueur[pos]->l->score);
 
 }
 
@@ -90,6 +94,14 @@ void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog){
     free(tmp);
 }
 
+void affichJoueurParNom(Joueur ** tabJoueur, int tlog){
+    int i;
+
+    for(i=0; i<tlog; i++)printf("Le joueur  %s, a pour meilleur meilleur score : %d \n",tabJoueur[i]->pseudo, tabJoueur[i]->l->score);
+}
+
+
+
 // AFFICHAGE PARTIE
 
 //fct utilisé pour tester le chargement et la sauvegarde de partie
@@ -105,11 +117,12 @@ void clear(void){
 }   
 
 void affichScenario1erGrpe(void){
-    printf("Contexte : vous arrivez dans un corridor, bordé par deux falaises des monstres arriventles uns après les autres.");
+    printf("\n");
+    printf("Contexte : vous arrivez dans un corridor, bordé par deux falaises des monstres arrivent les uns après les autres. \n");
 }
 
 void affichScenario2ndGrpe(void){
-    printf("tous les monstres sont morts... \nvous arrivez au bout du corridor, une plaine herbeuse apparaît. Malheureusement des monstres sortent de partout pour tous vous attaquer en même tempsou presque...");
+    printf("Tous les monstres sont morts... \nvous arrivez au bout du corridor, une plaine herbeuse apparaît. Malheureusement des monstres sortent de partout pour tous vous attaquer en même temps ou presque...");
 }
 void affichArriveeNouvMonstre(Joueur j, Monstre m, int nbPoints){
     printf("Le monstre %s(%dptV, %dAtt) accoure et se prépare à t'attaquer %s(%dptV, %dAtt)\n", m.nom, m.PV, m.degat, j.pseudo, j.PV, j.degat);

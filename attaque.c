@@ -40,37 +40,36 @@ Arme RandomAttaqueMonstre(Monstre m){
     else return 'S';
 }
 
-int combat(Joueur j, Monstre m, int *points){
+int combat(Joueur *j, Monstre *m, int *points) {
     Arme armeJ, armeM;
     int compa;
 
     armeJ = choixArmeJoueur();
-    armeM = RandomAttaqueMonstre(m);
+    armeM = RandomAttaqueMonstre(*m);
 
-    printf("%s (%c) attaque %s(%c)\n", j.pseudo, armeJ, m.nom, armeM);
+    printf("%s (%c) attaque %s(%c)\n", j->pseudo, armeJ, m->nom, armeM);
 
     compa = gagneAttaqueJoueur(armeJ, armeM);
 
-    if(compa == 2)printf("Ni %s(%dptV) ni %s(%dptV) ne gagne l'attaque\n", j.pseudo, j.PV, m.nom, m.PV);
-    else if(compa == 1){
-        m.PV -= j.degat;
-        printf("%s(%dptV) gagne l'attaque contre %s(%dptV)\t\t+ 10pts\n", j.pseudo, j.PV, m.nom, m.PV);
+    if (compa == 2) printf("Ni %s(%dptV) ni %s(%dptV) ne gagne l'attaque\n", j->pseudo, j->PV, m->nom, m->PV);
+    else if (compa == 1) {
+        m->PV -= j->degat;
+        printf("%s(%dptV) gagne l'attaque contre %s(%dptV)\t\t+ 10pts\n", j->pseudo, j->PV, m->nom, m->PV);
         *points += 10;
 
-        if(m.PV <= 0){
-            printf("%s meurt sous le coup de l'attaque\t\t\t + 50pts", m.nom);
+        if (m->PV <= 0) {
+            printf("%s meurt sous le coup de l'attaque\t\t\t + 50pts", m->nom);
             *points += 50;
             return 1;
         }
     }
     else {
-        j.PV -= m.degat;
-        printf("%s(%dptV) perd l'attaque contre %s(%dptV)\n", j.pseudo, j.PV, m.nom, m.PV);
-        if(j.PV <= 0){
-            printf("VOUS ÊTES MORT... nombre de points acquis : %d", *points);
+        j->PV -= m->degat;
+        printf("%s(%dptV) perd l'attaque contre %s(%dptV)\n", j->pseudo, j->PV, m->nom, m->PV);
+        if (j->PV <= 0) {
+            printf("VOUS ÊTES MORT... nombre de points acquis : %d \n", *points);
             return -1;
         }
     }        
     return 0;
-
 }

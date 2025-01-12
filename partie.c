@@ -9,7 +9,7 @@
     \param fM file de monstre à charger
     \param pM pile de monstre à charger 
 */
-void chargePartie(char *nomFich, File *fM, PileM *pM){
+int chargePartie(char *nomFich, File *fM, PileM *pM){
     FILE *flot;
     int nbPile, nbFile, i;
     char chemin[60] = "fichierSauvegarde/";
@@ -21,7 +21,7 @@ void chargePartie(char *nomFich, File *fM, PileM *pM){
 
     if(flot==NULL){
         printf("Pb ouverture fichier \n");
-        return;
+        return -1;
     }
     
     fscanf(flot,"%d%*c",&nbPile);
@@ -35,6 +35,7 @@ void chargePartie(char *nomFich, File *fM, PileM *pM){
         *fM = adjQ(*fM, m); 
     } 
     fclose(flot);
+    return 0;
 }
 
 /**
@@ -43,9 +44,9 @@ void chargePartie(char *nomFich, File *fM, PileM *pM){
     \param fM file de monstre à sauvegarder
     \param pM pile de monstre à sauvegarder 
 */
-void sauvegardePartie(char *nomFich, File *fM, PileM *pM){
+void sauvegardePartie(char *nomFich, File fM, PileM pM){
     FILE *flot;
-    int nbPile = hauteur(*pM), nbFile = longueurFileMonstres(*fM), i,j;
+    int nbPile = hauteur(pM), nbFile = longueurFileMonstres(fM), i,j;
 
     char chemin[60] = "fichierSauvegarde/";
 
@@ -59,15 +60,17 @@ void sauvegardePartie(char *nomFich, File *fM, PileM *pM){
     }
 
     fprintf(flot, "%d\n", nbPile);
+
+
     for(i=0; i<nbPile; i++){
-        fprintf(flot, "%s\n%d %d %d\n", sommet(*pM).nom, sommet(*pM).PV, sommet(*pM).degat, sommet(*pM).nbArmes);
-        depiler(*pM);
+        fprintf(flot, "%s\n%d %d %d\n", sommet(pM).nom, sommet(pM).PV, sommet(pM).degat, sommet(pM).nbArmes);
+        pM = pM->suiv;
     }
 
     fprintf(flot,"%d\n",nbFile);
     for(j = 0; j< nbFile; j++){
-        fprintf(flot, "%s\n%d %d %d\n", teteFile(*fM).nom, teteFile(*fM).PV, teteFile(*fM).degat, teteFile(*fM).nbArmes);
-        supT(*fM);
+        fprintf(flot, "%s\n%d %d %d\n", teteFile(fM).nom, teteFile(fM).PV, teteFile(fM).degat, teteFile(fM).nbArmes);
+        fM = fM->suiv;
     } 
     fclose(flot);
 }
@@ -96,6 +99,9 @@ void generePartieAleatoire(void){
     int tlog;
     Monstre *tabMonstres;
 
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
     tabMonstres = chargementMonstres(&tlog);
 
     printf("Monstre qui vont être tirés aux sorts : \n");
@@ -106,29 +112,29 @@ void generePartieAleatoire(void){
 
     affichPartie(fM, pM);
 
-    free(tabMonstres);
-
     printf("Saisir le nom de fichier où les sauvegarder : ");
     scanf("%s", nomFich);
 
-    sauvegardePartie(nomFich, &fM, &pM);
+    sauvegardePartie(nomFich, fM, pM);
+    free(tabMonstres);
+
 }
 
 void saisiePartie(int *nbPile, int *nbFile){
-    printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
+    printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): ");     
     scanf("%d", nbPile);    
     while(*nbPile < 1 && *nbPile>10){
         printf("Saisie incorrect \n");
-        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
+        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): ");     
         scanf("%d", nbPile);    
     }
 
-    printf("Saisir le nombre de monstre du second groupe (entre 1 et 10): \n"); 
-    scanf("%d", nbFile); 
+    printf("Saisir le nombre de monstre du second groupe (entre 1 et 10): "); 
+    scanf("%d%*c", nbFile); 
     while(*nbFile < 1 && *nbFile>10){
         printf("Saisie incorrect \n");
-        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): \n");     
-        scanf("%d", nbFile);    
+        printf("Saisir le nombre de monstre du premier groupe (entre 1 et 10): ");     
+        scanf("%d%*c", nbFile);    
     }   
 }
 
@@ -161,12 +167,17 @@ void creerPartie(void){
     Monstre m;
     char nomFich[15];
 
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
     saisiePartie(&nbPile, &nbFile);
 
+    printf("Premier groupe : \n");
     for(i=0; i<nbPile; i++){
         m = saisirMonstre();
         pM =empiler(pM, m);
     }
+    printf("Second groupe : \n");
     for(i=0; i<nbFile; i++){
         m = saisirMonstre();
         fM = adjQ(fM, m);
@@ -175,7 +186,7 @@ void creerPartie(void){
     printf("Saisir le nom du fichier où les sauvegarder : ");
     scanf("%s%*c", nomFich);
 
-    sauvegardePartie(nomFich, &fM, &pM);
+    sauvegardePartie(nomFich, fM, pM);
 }
 
 /**
@@ -187,13 +198,18 @@ int Partie(Joueur ** tabJoueur, int tlog){
     char nomJoueur[30], nomPartie[30];
     File fM;
     PileM pM;
-    int pos, nbPoints, trouve;
+    int pos, nbPoints, trouve, res;
+    Joueur j;
+    
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
     printf("Saisir le nom d'une partie : ");
     scanf("%s%*c",nomPartie);
+
+    res = chargePartie(nomPartie, &fM, &pM);
+    if(res ==-1)return tlog;
 
     printf("Saisir votre nom de joueur : ");
     fgets(nomJoueur,30,stdin);
@@ -202,47 +218,74 @@ int Partie(Joueur ** tabJoueur, int tlog){
 
     pos = rechercheDico(tabJoueur,  tlog,  nomJoueur, &trouve);
 
-    if(trouve==0)tlog = ajouterJoueur(tabJoueur, nomJoueur, tlog, pos);
-    *tabJoueur[pos]=initialiserUnJoueur(*tabJoueur[pos]);
+    if(trouve==0){
+        printf("Le joueur %s n'a pas été trouvé, vous allez être ajouté à la liste des joueurs \n", nomJoueur);
+        tlog = ajouterJoueur(tabJoueur, nomJoueur, tlog, pos);
+    }
+    j = *tabJoueur[pos];
+    j=initialiserUnJoueur(j);
 
-    chargePartie(nomPartie, &fM, &pM);
 
-    nbPoints = deroulementPartie(*tabJoueur[pos],pM, fM);
+    nbPoints = deroulementPartie(j,pM, fM);
 
     tabJoueur[pos]->l = ajouter(tabJoueur[pos]->l, nbPoints);
 
     return tlog;
 }
 
-int deroulementPartie(Joueur j, PileM pM, File fM){
-    int resCombat, nbPoints=0;
-    
-    if(estPileVide(pM))return 0;
+int deroulementPartie(Joueur j, PileM pM, File fM) {
+    int resCombat, nbPoints = 0;
+    Monstre tmpMonstre;//monstre de à chaque combat
+
+    if (estPileVide(pM)) return 0;
 
     affichScenario1erGrpe();
 
-    while(!estPileVide(pM)){
-        affichArriveeNouvMonstre( j, sommet(pM), nbPoints);
-        resCombat = combat(j, sommet(pM), &nbPoints);
+    while (!estPileVide(pM)) {
+        tmpMonstre = sommet(pM);  
+        affichArriveeNouvMonstre(j, tmpMonstre, nbPoints);
+        resCombat = combat(&j, &tmpMonstre, &nbPoints);
+        printf("\n");
 
-        while(resCombat != 1){
-            if(resCombat == -1)return nbPoints;//le joueur est mort
-            resCombat = combat(j, sommet(pM), &nbPoints);
-        } 
-        depiler(pM);
+        while (resCombat != 1) {
+            if (resCombat == -1) return nbPoints;  // Le joueur est mort
+            resCombat = combat(&j, &tmpMonstre, &nbPoints);
+            printf("\n");
+        }
+        pM = depiler(pM);
     }
 
-    if(estFileVide(fM))return nbPoints;
+    if (estFileVide(fM)) return nbPoints;
 
     affichScenario2ndGrpe();
-    
-    while(!estFileVide(fM)){
-        affichNouvMonstrePlaine(j, teteFile(fM), nbPoints);
-        resCombat = combat(j, teteFile(pM), &nbPoints);
-        if(resCombat==1) supT(fM);
-        else if(resCombat == -1)return nbPoints;//le joueur est mort
-        pM = pM->suiv;
+
+    while (!estFileVide(fM)) {
+        tmpMonstre = teteFile(fM); 
+        printf("\n");
+        affichNouvMonstrePlaine(j, tmpMonstre, nbPoints);
+        printf("\n");
+        resCombat = combat(&j, &tmpMonstre, &nbPoints);
+        printf("\n");
+
+        
+        if (resCombat == -1)return nbPoints;  // Le joueur est mort
+        /*
+        if(!estFileVide(fM)){
+            if (resCombat == 1) fM = supT(fM);//le monstre meurt 
+            else fM->suiv->val = tmpMonstre;
+            fM = fM->suiv; 
+        }*/
+
+        if (resCombat == 1)fM = supT(fM);  
+        else {
+            if (!estFileVide(fM)) fM->suiv->val = tmpMonstre;
+        }
+        if (!estFileVide(fM)) fM = fM->suiv; 
     }
-    printf("BIEN JOUÉ...\n");
+
+    printf("Nombre de points acquis : %d\n", nbPoints);
+    printf("\n\nBIEN JOUÉ...\n \n");
+
+    
     return nbPoints;
 }

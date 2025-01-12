@@ -185,22 +185,24 @@ Joueur initialiserUnJoueur(Joueur j){
 
     if(!estListeVide(j.l)){//système de niveau du joueur
         if(j.l->score >=50 && j.l->score<100){
-            j.PV+=30;
-            j.degat+=2;
+            j.PV=30;
+            j.degat=2;
         }
-        else if(j.l->score>=100 && j.l->score<150 ){
-            j.PV+=40;
-            j.degat+=3;
+        else if(j.l->score>=100 && j.l->score<300 ){
+            j.PV=40;
+            j.degat=3;
         }
-        else if(j.l->score>=150){
-            j.PV+=50;
-            j.degat+=4;
+        else if(j.l->score>=300){
+            j.PV=50;
+            j.degat=4;
         }
     }
     else{
         j.PV=20;
         j.degat = 1;
     }
+
+
     return j;
 }
 

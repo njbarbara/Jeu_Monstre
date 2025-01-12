@@ -1,12 +1,12 @@
 2
-Slime Vert
-6 1 3
 goblin Géant
+4 2 5
+Pekka
 4 2 5
 3
 Sans
 4 1 4
+Pekka
+4 2 5
 Slime Vert
 6 1 3
-Lutin Cordial
-4 2 5

@@ -49,16 +49,18 @@ typedef struct maillonM{
 }MaillonM, *PileM, *File;
 
 
-
+/**
+    \brief affiche le menu principal du jeu 
+*/
 int menu(void);
 
-/*PARTIE SCORE*/
 
 /**
-    \brief 
-    \param
+    \brief fonction global du jeu 
 */
 void global(void);
+
+/*PARTIE SCORE*/
 
 /**
     \brief 
@@ -118,6 +120,9 @@ void sauvegardeJoueur(Joueur ** tabJoueur, int tlog);
 void affichListeJoueursScores(Joueur ** tabJoueur, int tlog);
 
 void affichJoueurMeilleursScores(Joueur ** tabJoueur, int tlog);
+
+void affichJoueurParNom(Joueur ** tabJoueur, int tlog);
+
 
 void affichStatJoueur(Joueur ** tabJoueur, int tlog);
 
@@ -202,9 +207,9 @@ void affichScenario1erGrpe(void);
 
 void affichScenario2ndGrpe(void);
 
-void chargePartie(char *nomFich, File *fM, PileM *pM);
+int chargePartie(char *nomFich, File *fM, PileM *pM);
 
-void sauvegardePartie(char *nomFich, File *fM, PileM *pM);
+void sauvegardePartie(char *nomFich, File fM, PileM pM);
 
 int Partie(Joueur ** tabJoueur, int tlog);
 
@@ -229,6 +234,6 @@ Arme choixArmeJoueur(void);
 
 int gagneAttaqueJoueur(Arme attaqueJ, Arme attaqueM);
 
-int combat(Joueur j, Monstre m, int *points);
+int combat(Joueur *j, Monstre *m, int *points);
 
 Arme RandomAttaqueMonstre(Monstre m);

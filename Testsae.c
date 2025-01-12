@@ -325,7 +325,7 @@ void testCombat(void){
 
     m = saisirMonstre();
 
-    resCombat = combat( j,  m, &nbPoints);
+    resCombat = combat( &j,  &m, &nbPoints);
 
     printf("Nb points : %d \nResCombat : %d\n", nbPoints, resCombat);
 }
@@ -335,76 +335,85 @@ void testCombat(void){
 void testChargementPartie(void){
     File fM;
     PileM pM;
+    int res;
+
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
-    chargePartie("essai.txt", &fM, &pM);
+    res = chargePartie("essai.txt", &fM, &pM);
+    if(res ==-1)return;
     affichPartie(fM, pM);
 }
 
 void testSauvegardePartie(void){
     File fM;
     PileM pM;
+    int res;
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
-    chargePartie("essai.txt", &fM, &pM);
+    res = chargePartie("essai.txt", &fM, &pM);
+    if(res ==-1)return;
+
     printf("Avant chargement : \n");
 
     affichPartie(fM, pM);
 
-    sauvegardePartie("essai2.txt", &fM, &pM);
+    sauvegardePartie("essai2.txt", fM, pM);
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
-    chargePartie("essai2.txt", &fM, &pM);
+    res = chargePartie("essai.txt", &fM, &pM);
+    if(res ==-1)return;
     printf("Après chargement : \n");
     affichPartie(fM, pM);
 }
-
-//A tester 
 
 void testGenerePartieAleatoire(void){
     char nomFich[30];
     File fM;
     PileM pM;
+    int res;
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
 
     generePartieAleatoire();
-    
-    printf("Saisir le fichier où vous avez enregistré la partie : \n");
+
+    printf("Saisir le fichier où vous avez enregistré la partie : ");
     scanf("%s", nomFich);
-    chargePartie(nomFich, &fM, &pM);
-}
+    res = chargePartie("essai.txt", &fM, &pM);
+    if(res ==-1)return;}
 
 void testCreePartie(void){
     File fM;
     PileM pM;
     char nomFich[30];
+    int res;
 
     fM = CreerfileVideMonstre();
     pM = CreerPileVide();
 
     creerPartie();
-    printf("Saisir le fichier où vous avez enregistré la partie : \n");
+    printf("Saisir le fichier où vous avez enregistré la partie : ");
     scanf("%s", nomFich);
-    chargePartie(nomFich, &fM, &pM);
+    res = chargePartie("essai.txt", &fM, &pM);
+    if(res ==-1)return;
 
     affichPartie(fM, pM);
 }
 
-void testDeroulementPartie(void){
-
-}
-
 void testPartie(void){
-    
+    int tlog, tmax =100;
+    Joueur * tabJoueur[tmax];
+
+    tlog = chargementJoueurs(tabJoueur, tmax);
+
+    tlog = Partie(tabJoueur, tlog);
 }
 
 int main(void){//fonction principale
@@ -442,8 +451,11 @@ int main(void){//fonction principale
     //TEST PARTIE 
     //testChargementPartie();
     //testSauvegardePartie();
-    testGenerePartieAleatoire();
+    //testGenerePartieAleatoire();
     //testCreePartie();
+    //testPartie();
+
+    global();
 
     return 0;
 }

@@ -94,9 +94,9 @@ void generePartieAleatoire(void){
     PileM pM;
     char nomFich[30];
     int tlog;
-    Monstre *tabMonstres[6];
+    Monstre *tabMonstres;
 
-    tlog = chargementMonstres(tabMonstres);
+    tabMonstres = chargementMonstres(&tlog);
 
     printf("Monstre qui vont être tirés aux sorts : \n");
     afficheTabMonstre(tabMonstres, tlog);
@@ -105,6 +105,8 @@ void generePartieAleatoire(void){
     fM = deuxiemeGroupe(tabMonstres, tlog);
 
     affichPartie(fM, pM);
+
+    free(tabMonstres);
 
     printf("Saisir le nom de fichier où les sauvegarder : ");
     scanf("%s", nomFich);

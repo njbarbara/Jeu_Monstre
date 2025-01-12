@@ -254,9 +254,9 @@ void testSupT(void){
 //TEST GENERATION ALÉATOIRE D'UNE PARTIE
 
 void testChargementMonstresEtRandomMonstre(void){
-    Monstre *tab[6], testm;
+    Monstre * tab, testm;
     int tlog;
-    tlog = chargementMonstres(tab);
+    tab = chargementMonstres(&tlog);
     afficheTabMonstre(tab, tlog);
     testm = randomMonstre(tab, tlog);
     printf("Monstre choisi : ");
@@ -267,20 +267,20 @@ void testChargementMonstresEtRandomMonstre(void){
 
 
 void testPremierGroupe(void){
-    Monstre *tab[6];
+    Monstre * tab;
     int tlog;
     PileM pM;
-    tlog = chargementMonstres(tab);
+    tab = chargementMonstres(&tlog);
     pM = premierGroupe(tab, tlog);
     affichagePileMonstre(pM);
 }
 
 
 void testDeuxiemeGroupe(void){
-    Monstre *tab[6];
+    Monstre * tab;
     int tlog;
     File fM;
-    tlog = chargementMonstres(tab);
+    tab = chargementMonstres(&tlog);
     fM = deuxiemeGroupe(tab, tlog);
     affichageFileMonstres(fM);
 }
@@ -368,7 +368,19 @@ void testSauvegardePartie(void){
 //A tester 
 
 void testGenerePartieAleatoire(void){
+    char nomFich[30];
+    File fM;
+    PileM pM;
+
+    fM = CreerfileVideMonstre();
+    pM = CreerPileVide();
+
+
     generePartieAleatoire();
+    
+    printf("Saisir le fichier où vous avez enregistré la partie : \n");
+    scanf("%s", nomFich);
+    chargePartie(nomFich, &fM, &pM);
 }
 
 void testCreePartie(void){
@@ -385,7 +397,6 @@ void testCreePartie(void){
     chargePartie(nomFich, &fM, &pM);
 
     affichPartie(fM, pM);
-
 }
 
 void testDeroulementPartie(void){
@@ -431,8 +442,8 @@ int main(void){//fonction principale
     //TEST PARTIE 
     //testChargementPartie();
     //testSauvegardePartie();
-    //testGenerePartieAleatoire();
-
+    testGenerePartieAleatoire();
+    //testCreePartie();
 
     return 0;
 }

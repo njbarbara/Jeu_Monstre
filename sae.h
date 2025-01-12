@@ -178,19 +178,17 @@ void affichagePileMonstre(PileM p);
 
 //tableau
 
-void afficheTabMonstre(Monstre **tab, int tlog);
-
-void decalageAGauche(Monstre **tab, int indice, int tlog);
+void afficheTabMonstre(Monstre *tab, int tlog);
 
 Monstre lireMonstre(FILE *flot);
 
-int chargementMonstres(Monstre **tabMonstres);
+Monstre * chargementMonstres(int *tlog);
 
-Monstre randomMonstre(Monstre **tabMonstres, int tlog);
+Monstre randomMonstre(Monstre *tabMonstres, int tlog);
 
-PileM premierGroupe(Monstre **tabMonstres, int tlog);
+PileM premierGroupe(Monstre *tabMonstres, int tlog);
 
-File deuxiemeGroupe(Monstre **tabMonstres, int tlog);
+File deuxiemeGroupe(Monstre *tabMonstres, int tlog);
 
 Monstre convertisseurNiveauEnStat(Monstre m, int niveau);
 

@@ -215,10 +215,12 @@ int ajouterMonstre(Monstre **tab, int tlog, int tmax){
 
 */
 
-void afficheTabMonstre(Monstre **tab, int tlog){
+
+
+void afficheTabMonstre(Monstre *tab, int tlog){
     int i;
     for(i=0;i<tlog;i++)
-        affichageMonstre(*tab[i]);
+        affichageMonstre(tab[i]);
 }
 
 Monstre lireMonstre(FILE *flot){
@@ -229,65 +231,58 @@ Monstre lireMonstre(FILE *flot){
     return m;
 }
 
-int chargementMonstres(Monstre **tabMonstres){
-    int tlog=0;
+Monstre *chargementMonstres(int *tlog){
+    int i;
     FILE *flot;
-    Monstre monstreAAjouter;
+    Monstre * tabMonstres;
+
     flot = fopen("fichierSauvegarde/monstres.txt", "r");
     if(flot == NULL){
         printf("Problème de chargement !");
         exit(1);
     }
     
+    fscanf(flot,"%d%*c", tlog);
+    tabMonstres = (Monstre *)malloc(*tlog*sizeof(Monstre));
 
-    monstreAAjouter = lireMonstre(flot);
-    while(!feof(flot)){
-        tabMonstres[tlog] = (Monstre*)malloc(sizeof(Monstre));
-        if(tabMonstres[tlog] == NULL){
-            printf("Pb malloc \n");
-            exit(1);
-        }
-        *tabMonstres[tlog] = monstreAAjouter;
-        monstreAAjouter = lireMonstre(flot);
-        tlog += 1;
-    }   
-    return tlog;
+    for(i=0; i<*tlog; i++)tabMonstres[i]=lireMonstre(flot);
+   
+    fclose(flot);
+    return tabMonstres;
 }
 
-Monstre randomMonstre(Monstre **tabMonstres, int tlog){
+Monstre randomMonstre(Monstre *tabMonstres, int tlog){
     int indice;
     time_t seconds;
     Monstre monstreChoisi;
 
     seconds = time(NULL);
     indice = (rand()+seconds)%(tlog);
-    monstreChoisi = *tabMonstres[indice];
+    monstreChoisi = tabMonstres[indice];
 
     return monstreChoisi;
 }
 
-PileM premierGroupe(Monstre **tabMonstres, int tlog){
+PileM premierGroupe(Monstre *tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     PileM pG2;
     pG2 = CreerPileVide();
     for(i=4;i>=3;i--){
         monstrePartie = randomMonstre(tabMonstres, tlog);
-        monstrePartie.nbArmes = i;
         pG2 = empiler(pG2, monstrePartie);
     }
     return pG2;
 }
 
 
-File deuxiemeGroupe(Monstre **tabMonstres, int tlog){
+File deuxiemeGroupe(Monstre *tabMonstres, int tlog){
     int i;
     Monstre monstrePartie;
     File fG2;
     fG2 = CreerfileVideMonstre();
     for(i=3;i<=5;i++){
         monstrePartie = randomMonstre(tabMonstres, tlog);
-        monstrePartie.nbArmes = i;
         fG2 = adjQ(fG2, monstrePartie);
     }
     return fG2;

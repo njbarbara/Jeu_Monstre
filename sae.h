@@ -12,10 +12,6 @@
 #include <stddef.h>
 #include <string.h>
 
-// !!!! 
-// corridor = pile/file mais plus file
-// !!!!
-
 typedef enum{
     FALSE,
     TRUE

@@ -1,3 +1,0 @@
-- le prof devait se basé sur le fait qu'il nétait pas nécessaire de sauvegarder 
-le niveau étant donné qu'on affecte la vie, nbDegat, quand on l'initialise 
-- 

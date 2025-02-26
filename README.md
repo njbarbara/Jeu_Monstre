@@ -1,16 +1,25 @@
-# Bienvenue sur le dépot de la Sae-1.02
+# Bienvenue sur le dépot de la du jeu de monstre
 
-## ⚠️ Norme de codage
+## Contexte 
 
-* Pour chaque fonction faire une fonction de test et la Documentation qui va avec
-* Les fonctions d'affichages sont dans affichage.c
-* Chevalier et monstre ont des fichiers de codes séparés
-* (Modifier le Makefile en conséquence)
+Dans ce projet nous devions réaliser un jeu de combat de monstres sur terminal. Dans ce jeu, le joueur qui incarne un chevalier va affronter une succession de monstres et ainsi gagner.
 
 ## 🌎 Trouver les rubiques suivantes 
 
-* **Lien des trucs à faire :** _Lien_
+* **Lien de la documentation :** [_Lien_](https://github.com/njbarbara/Jeu_Monstre/tree/master/Documentation/html)
+* **Lien du Compte Rendu :** [_Lien_](https://github.com/njbarbara/Jeu_Monstre/blob/master/compteRendu.pdf)
 
-## 📚 Documentation
+## 🎮 Jouer au jeu  
 
-* **Lien de la Documentation :** _Lien_
+### Installation et exécution  
+
+1. **Cloner le dépôt** :  
+   ```bash
+   git clone https://github.com/njbarbara/Jeu_Monstre.git
+   cd Jeu_Monstre
+
+2. **Compiler** :  
+   ```make
+   
+3. **Lancer le jeu** :  
+   ```./jeu  

@@ -1,5 +1,5 @@
-sae: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o
-	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o -o sae
+jeu: sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o
+	gcc sae.o Testsae.o affichage.o score.o joueur.o monstre.o partie.o attaque.o -o jeu
 
 sae.o : sae.c sae.h
 	gcc -Wall -c sae.c
@@ -26,4 +26,4 @@ partie.o : partie.c sae.h
 	gcc -Wall -c partie.c 
 
 clean :
-	rm *.o sae
+	rm *.o jeu

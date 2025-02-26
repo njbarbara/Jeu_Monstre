@@ -1,8 +1,8 @@
-# Bienvenue sur le dépot de la du jeu de monstre
+# Bienvenue sur le dépot du jeu de monstre
 
 ## Contexte 
 
-Dans ce projet nous devions réaliser un jeu de combat de monstres sur terminal. Dans ce jeu, le joueur qui incarne un chevalier va affronter une succession de monstres et ainsi gagner.
+Ce projet développé dans le cadre d'un projet universitaire, est un jeu de combat de monstres sur terminal. Le joueur incarne un chevalier qui doit affronter une série de monstres redoutables. Au fur et à mesure des combats, le chevalier acquiert de l'expérience qui lui permet d'être plus fort et plus resistant. 
 
 ## 🌎 Trouver les rubiques suivantes 
 
@@ -19,7 +19,9 @@ Dans ce projet nous devions réaliser un jeu de combat de monstres sur terminal.
    cd Jeu_Monstre
 
 2. **Compiler** :  
-   ```make
+   ```bash
+   make
    
 3. **Lancer le jeu** :  
-   ```./jeu  
+   ```bash
+   ./jeu  

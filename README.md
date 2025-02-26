@@ -6,8 +6,8 @@ Ce projet développé dans le cadre d'un projet universitaire, est un jeu de com
 
 ## 🌎 Trouver les rubiques suivantes 
 
-* **Lien de la documentation :** [_Lien_](https://github.com/njbarbara/Jeu_Monstre/tree/master/Documentation/html)
-* **Lien du Compte Rendu :** [_Lien_](https://github.com/njbarbara/Jeu_Monstre/blob/master/compteRendu.pdf)
+* **Lien de la documentation :** [_https://github.com/njbarbara/Jeu_Monstre/tree/master/Documentation/html_]()
+* **Lien du Compte Rendu :** [_https://github.com/njbarbara/Jeu_Monstre/blob/master/compteRendu.pdf_]()
 
 ## 🎮 Jouer au jeu  
 
